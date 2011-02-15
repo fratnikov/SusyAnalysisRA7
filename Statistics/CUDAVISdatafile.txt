@@ -1,0 +1,25 @@
+lumi 34.9 0.11
+data cu3mu 0.0 0.06 0.0824 0 0
+data cu2mu1e 1.0 0.05 0.0817 0 0
+data cu2e1mu 0.0 0.05 0.0622 0 0
+data cu3e 0.0 0.15 0.089 0 0
+data cu2mutau 0.0 0.44 0.219 0 0
+data cu2etau 1.0 0.14 0.0987 0 0
+data cuemutau 0.0 0.42 0.2131 0 0
+data cuss2mu1e 0.0 0.0 0.08 0 0
+data cuss2e1mu 0.0 0.0 0.06 0 0
+data cuss2mutau 0.0 0.0 0.08 0 0
+data cuss2etau 0.0 0.01 0.0603 0 0
+data cussemutau 1.0 0.02 0.0808 0 0
+data cu4mu0e0tau 0.0 0.0 0.01 0 0
+data cu3mu1e0tau 0.0 0.0 0.01 0 0
+data cu2mu2e0tau 0.0 0.0 0.01 0 0
+data cu1mu3e0tau 0.0 0.0 0.01 0 0
+data cu0mu4e0tau 0.0 0.0 0.01 0 0
+data cu3mu0e1tau 0.0 0.0 0.01 0 0
+data cu2mu1e1tau 0.0 0.0 0.01 0 0
+data cu1mu2e1tau 0.0 0.0 0.01 0 0
+data cu0mu3e1tau 0.0 0.0 0.01 0 0
+data cu2mu0e2tau 0.0 0.0 0.01 0 0
+data cu1mu1e2tau 0.0 0.0 0.01 0 0
+data cu0mu2e2tau 0.0 0.0 0.01 0 0
