@@ -25,6 +25,13 @@ namespace ra7StatModel {
 
   double sumYield (const Signatures& fSignatures);
 
+  void dump (const Signature& fSignature);
+  void dump (const Signatures& fSignatures);
+
+  int lessByYield (const Signature& a,const Signature& b) {return a.yield < b.yield;}
+  int lessByObserved (const Signature& a,const Signature& b) {return a.observed < b.observed;}
+  int lessByBackground (const Signature& a,const Signature& b) {return a.backgroundDD+a.backgroundMC < b.backgroundDD+b.backgroundMC;}
+
   class Prior {
   public:
     enum Type {Flat, Gauss, Lognormal};
@@ -120,14 +127,16 @@ namespace ra7StatModel {
   void defaultValues (const PriorsIndividual& fPriors, PriorValuesIndividual* fValues);
   void initPriors (Priors* fPriors);
   void initPriorsIndividual (const Signatures& fSignatures, PriorsIndividual* fPriors);
+  void sampleObserved (const Signatures& fBasicSignatures, const Priors& fPriors, const PriorsIndividual& fPriorsIndividual, Signatures* fSignatures, double fTotalYield = 0);
   void sampleSignatures (const Signatures& fBasicSignatures, const Priors& fPriors, const PriorsIndividual& fPriorsIndividual, Signatures* fSignatures, double fTotalYield = 0);
   void sampleSignatures (const Signatures& fBasicSignatures, Signatures* fSignatures);
 
-  void initSignatures (Signatures* fSignatures, int m0, int m12);
-  double runCLs (int m0 = 60, int m12 = 230);
+  void initSignatures (Signatures* fSignatures, int m1, int m2, bool sugra);
+
+  double runCLs (int m0 = 60, int m12 = 230, bool sugra = true);
   double runBayesian ();
-  void expectedLimitCLs (int m0 = 60, int m12 = 230, bool fSimplifyed = false);
-  double coverageCLs (double fTotalYield, int m0 = 60, int m12 = 230);
+  void expectedLimitCLs (double* limits, int m0 = 60, int m12 = 230, bool sugra = true, bool fSimplifyed = false);
+  double coverageCLs (double fTotalYield, int m0 = 60, int m12 = 230, bool sugra = true);
 
   void plotLimitDistribution (const std::string& fName);
 

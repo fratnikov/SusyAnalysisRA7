@@ -39,6 +39,26 @@ namespace ra7StatModel {
     return result;
   }
 
+  void dump (const Signature& fSignature) {
+    cout << "------ " << fSignature.name << " ------" << endl
+	 << " observed: " << fSignature.observed << endl
+	 << " background DD/MC: " << fSignature.backgroundDD << '/' << fSignature.backgroundMC
+	 << " sigma background DD/MC: " << fSignature.sigmaBackgroundDD << '/' << fSignature.sigmaBackgroundMC << endl
+	 << " yield: " << fSignature.yield
+	 << " sigma yield lumi/stat/jes: " << fSignature.sigmaYieldLumi << '/' << fSignature.sigmaYieldStat << '/' << fSignature.sigmaYieldJES
+	 << " sigma yield eff mu/e/track/tau: " << fSignature.sigmaYieldMuon << '/' << fSignature.sigmaYieldElectron << '/' << fSignature.sigmaYieldTrack << '/' << fSignature.sigmaYieldTau << endl
+	 << " --- " << endl;
+  }
+  
+  void dump (const Signatures& fSignatures) {
+    Signatures sigs (fSignatures);
+    sort (sigs.begin(), sigs.end(), lessByBackground);
+    cout << "dump Signatures-> Total yield: " << sumYield (fSignatures) << endl;
+    for (size_t i = 0; i < sigs.size(); ++i) {
+      dump (sigs[i]);
+    }
+  }
+
   Prior::Prior(double fMean, double fSigma, double fMin, double fMax, Type fType) 
     : mMean(fMean),
       mSigma (fSigma),
@@ -176,8 +196,8 @@ namespace ra7StatModel {
     for (; nToys < fToys; ++nToys) {
       samplePriors (fPriors, &priorValues);
       sampleIndividualPriors (fIndividualPriors, &priorValuesIndividual);
-      sampleSignatures (fSignatures, fPriors, fIndividualPriors, &toySignaturesB, 0);
-      sampleSignatures (fSignatures, fPriors, fIndividualPriors, &toySignaturesSB, fTotalYield);
+      sampleObserved (fSignatures, fPriors, fIndividualPriors, &toySignaturesB, 0);
+      sampleObserved (fSignatures, fPriors, fIndividualPriors, &toySignaturesSB, fTotalYield);
       Likelihood dataB (toySignaturesB);
       Likelihood dataSB (toySignaturesSB);
       double dNLLb = 2 * (dataB.getNegLogLikelihood (basePriorValues, basePriorValuesIndividual, fTotalYield) - 
@@ -187,7 +207,7 @@ namespace ra7StatModel {
 
       if (dNLLsb >= dNLLdata) ++nDataNLLsbBetter;
       if (dNLLb >= dNLLdata) ++nDataNLLbBetter;
-      // cout << "runCLs-> " << fTotalYield<<' '<<iToy<<' '<<dNLLdata<<'/'<<dNLLsb<<'/'<<dNLLb<<"->"<<nDataNLLsbBetter<<'/'<<nDataNLLbBetter<<endl;
+      // cout << "runCLs-> " << fTotalYield<<' '<<nToys<<' '<<dNLLdata<<'/'<<dNLLsb<<'/'<<dNLLb<<"->"<<nDataNLLsbBetter<<'/'<<nDataNLLbBetter<<endl;
       // good enough?
       if (nDataNLLsbBetter > 5 && nDataNLLbBetter < nDataNLLsbBetter * 10) break;
       if (nDataNLLsbBetter > 100) break;
@@ -214,7 +234,7 @@ namespace ra7StatModel {
 	cl0 = cl1;
 	x1 *= 2;
 	cl1 = runCLs (fSignatures, fPriors, fIndividualPriors, x1, fToys);
-	if (track) cout << "cls95 1 -> " << x0 <<'/'<<cl0<<'/'<<x1<<'/'<<cl1<<endl;
+	if (track) cout << "cls95 1 -> " << x0 <<'/'<<cl0<<'-'<<x1<<'/'<<cl1<<endl;
       }
     }
     else {
@@ -223,7 +243,7 @@ namespace ra7StatModel {
 	cl1 = cl0;
 	x0 *= 0.5;
 	cl0 = runCLs (fSignatures, fPriors, fIndividualPriors, x0, fToys);
-	if (track) cout << "cls95 2 -> " << x0 <<'/'<<cl0<<'/'<<x1<<'/'<<cl1<<endl;
+	if (track) cout << "cls95 2 -> " << x0 <<'/'<<cl0<<'-'<<x1<<'/'<<cl1<<endl;
 	if (x0 < 1e-3) {
 	  // cout << "cls95-> break infinite loop at " << x0 << endl; 
 	  cout << '!' << flush;
@@ -232,11 +252,11 @@ namespace ra7StatModel {
       }
     }
     double precision = sqrt (target/fToys);
-    while (abs((x0-x1)*2/(x0+x1)) > 0.01) {
+    while (abs((x0-x1)*2/(x0+x1)) > 0.0025) {
       double x = 0.5 * (x0 + x1);
       //      double x = x0 + (cl0-target)/(cl0-cl1)*(x1-x0);
       double cl = runCLs (fSignatures, fPriors, fIndividualPriors, x, fToys);
-      if (track) cout << "cls95 3 -> " << x<<'/'<<cl<<' '<<x0 <<'/'<<cl0<<'/'<<x1<<'/'<<cl1<<'/'<<precision<<endl;
+      if (track) cout << "cls95 3 -> " << x<<'/'<<cl<<' '<<x0 <<'/'<<cl0<<'-'<<x1<<'/'<<cl1<<' '<<precision<<endl;
       if (cl < target) {
 	x1 = x;
 	cl1 = cl;
@@ -339,10 +359,10 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 	  sig.sigmaYieldLumi = sigmaLumi;
 	  sig.backgroundMC = atof (tokens[3].c_str());
 	  if (sig.backgroundMC <= 0) sig.backgroundMC = 1e-6;
-	  sig.sigmaBackgroundMC = atof(tokens[4].c_str()) / sig.backgroundMC;
+	  sig.sigmaBackgroundMC = atof(tokens[4].c_str());
 	  sig.backgroundDD = atof (tokens[5].c_str());
 	  if (sig.backgroundDD <= 0) sig.backgroundDD = 1e-6;
-	  sig.sigmaBackgroundDD = atof(tokens[6].c_str()) / sig.backgroundDD;
+	  sig.sigmaBackgroundDD = atof(tokens[6].c_str());
 	  
 	  fSignatures->push_back (sig);
 	}
@@ -386,7 +406,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       vector<string> tokens = tokenize (string(buffer));
       if (tokens.size() < 4) continue;
       if (tokens[0] != "scan") continue;
-      if (tokens[1] != "m0m12" || int(atof (tokens[2].c_str())) != fM0 || int(atof (tokens[3].c_str())) != fM12) continue;
+      if ((tokens[1] != "m0m12" && tokens[1] != "mcmg") || int(atof (tokens[2].c_str())) != fM0 || int(atof (tokens[3].c_str())) != fM12) continue;
       if (tokens.size() == 7 && tokens[4] == sig->name) {
 	double yield = atof (tokens[5].c_str());
 	if (yield <= 0) yield = 1e-9; 
@@ -413,7 +433,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 	allSigma2 -= sig->sigmaYieldMuon*sig->sigmaYieldMuon;
 	allSigma2 -= sig->sigmaYieldTau*sig->sigmaYieldTau;
 	//sig->sigmaYieldStat = allSigma2 > 0 ? sqrt (allSigma2) : 0.;
-	sig->sigmaYieldStat = allSigma2 > 0 ? sqrt (allSigma2) : 0.002 / yield;
+	sig->sigmaYieldStat = allSigma2 > 0 ? sqrt (allSigma2) * yield : 0.002;
 	
 	return true;
       }
@@ -433,7 +453,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       vector<string> tokens = tokenize (string(buffer));
       if (tokens.size() < 4) continue;
       if (tokens[0] != "scan") continue;
-      if (tokens[1] != "m0m12" || int(atof (tokens[2].c_str())) != fM0 || int(atof (tokens[3].c_str())) != fM12) continue;
+      if ((tokens[1] != "m0m12" && tokens[1] != "mcmg") || int(atof (tokens[2].c_str())) != fM0 || int(atof (tokens[3].c_str())) != fM12) continue;
       if (tokens.size() == 13 && tokens[4] == sig->name) {
 	double yield = atof (tokens[5].c_str());
 	if (yield <= 0) yield = 1e-9;
@@ -441,7 +461,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 	double sigmaStat = atof (tokens[7].c_str());
 	//if (sigmaStat <= 0) sigmaStat = 0.;
 	if (sigmaStat <= 0) sigmaStat = 0.002;
-	sig->sigmaYieldStat = sigmaStat / yield;
+	sig->sigmaYieldStat = sigmaStat;
 	sig->sigmaYieldElectron = atof (tokens[9].c_str()) / yield;
 	sig->sigmaYieldMuon = atof (tokens[8].c_str()) / yield;
 	sig->sigmaYieldTau = atof (tokens[11].c_str()) / yield;
@@ -506,7 +526,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     }
   }
 
-  void sampleSignatures (const Signatures& fBasicSignatures, const Priors& fPriors, const PriorsIndividual& fPriorsIndividual, Signatures* fSignatures, double fTotalYield) {
+  void sampleObserved (const Signatures& fBasicSignatures, const Priors& fPriors, const PriorsIndividual& fPriorsIndividual, Signatures* fSignatures, double fTotalYield) {
     Signatures& result = *fSignatures;
     result = fBasicSignatures;
     size_t nSig = result.size();
@@ -516,10 +536,53 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     sampleIndividualPriors (fPriorsIndividual, &pvi);
     double totalYield = 0;
     vector<double> backgrounds(nSig);
+    vector<double> yields(nSig);
     for (size_t i = 0; i < nSig; ++i) {
       Signature& sig = result[i];
+      //      cout << "sampleSignatures->"<<sig.name<<sig.yield<<endl; 
       double backgroundDD = sig.backgroundDD * pvi[i][SystematicSourceIndividual::backgroundDD]; 
       double backgroundMC = sig.backgroundMC * pvi[i][SystematicSourceIndividual::backgroundMC];
+      double yield = sig.yield;
+      yield *= (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]);
+      yield *= (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]);
+      yield *= pvi[i][SystematicSourceIndividual::yieldMC];
+      yield *= (1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff]);
+      yield *= (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]);
+      yield *= (1 + sig.sigmaYieldTrack  * pv[SystematicSourceShared::tEff]);
+      yield *= (1 + sig.sigmaYieldTau  * pv[SystematicSourceShared::tauEff]);
+      if (yield <= 0) yield = 1e-6;
+      totalYield += yield;
+//       cout << "lumi " << sig.sigmaYieldLumi << '*' << pv[SystematicSourceShared::lumi] << "->" << (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]) << endl;
+//       cout << "jes " << sig.sigmaYieldJES << '*' <<pv[SystematicSourceShared::jes] << "->" << (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]) << endl;
+//       cout << "mc " << pvi[i][SystematicSourceIndividual::yieldMC] << endl;
+//       cout << "e " <<sig.sigmaYieldElectron  << '*' <<pv[SystematicSourceShared::eEff] << "->" <<(1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff])  << endl;
+//       cout << "mu " <<sig.sigmaYieldMuon  << '*' <<pv[SystematicSourceShared::muEff] << "->" << (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]) << endl;
+//       cout << "tra " <<sig.sigmaYieldTrack  << '*' <<pv[SystematicSourceShared::tEff] << "->" <<(1 + sig.sigmaYieldTrack  * pv[SystematicSourceShared::tEff])  << endl;
+//       cout << "tau " <<sig.sigmaYieldTau  << '*' <<pv[SystematicSourceShared::tauEff] << "->" << (1 + sig.sigmaYieldTau  * pv[SystematicSourceShared::tauEff]) << endl;
+//       cout << " result-> " << sig.yield << " sum:" << totalYield << endl;
+      backgrounds[i] = backgroundMC+backgroundDD;
+      yields[i] = yield;
+    }
+    for (size_t i = 0; i < nSig; ++i) {
+      Signature& sig = result[i];
+      double yield = fTotalYield / totalYield * yields[i]; 
+      sig.observed = globalRndm->Poisson (yield + backgrounds[i]);
+    }
+  }
+
+  void sampleSignatures (const Signatures& fBasicSignatures, const Priors& fPriors, const PriorsIndividual& fPriorsIndividual, Signatures* fSignatures, double fTotalYield) {
+    Signatures& result = *fSignatures;
+    result = fBasicSignatures;
+    size_t nSig = result.size();
+    PriorValues pv; 
+    samplePriors (fPriors, &pv);
+    PriorValuesIndividual pvi;
+    sampleIndividualPriors (fPriorsIndividual, &pvi);
+    double totalYield = 0;
+    for (size_t i = 0; i < nSig; ++i) {
+      Signature& sig = result[i];
+      sig.backgroundDD *= pvi[i][SystematicSourceIndividual::backgroundDD]; 
+      sig.backgroundMC *= pvi[i][SystematicSourceIndividual::backgroundMC];
       sig.yield *= (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]);
       sig.yield *= (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]);
       sig.yield *= pvi[i][SystematicSourceIndividual::yieldMC];
@@ -529,15 +592,19 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       sig.yield *= (1 + sig.sigmaYieldTau  * pv[SystematicSourceShared::tauEff]);
       if (sig.yield <= 0) sig.yield = 1e-6;
       totalYield += sig.yield;
-      backgrounds[i] = backgroundMC+backgroundDD;
+//       cout << "lumi " << sig.sigmaYieldLumi << '*' << pv[SystematicSourceShared::lumi] << "->" << (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]) << endl;
+//       cout << "jes " << sig.sigmaYieldJES << '*' <<pv[SystematicSourceShared::jes] << "->" << (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]) << endl;
+//       cout << "mc " << pvi[i][SystematicSourceIndividual::yieldMC] << endl;
+//       cout << "e " <<sig.sigmaYieldElectron  << '*' <<pv[SystematicSourceShared::eEff] << "->" <<(1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff])  << endl;
+//       cout << "mu " <<sig.sigmaYieldMuon  << '*' <<pv[SystematicSourceShared::muEff] << "->" << (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]) << endl;
+//       cout << "tra " <<sig.sigmaYieldTrack  << '*' <<pv[SystematicSourceShared::tEff] << "->" <<(1 + sig.sigmaYieldTrack  * pv[SystematicSourceShared::tEff])  << endl;
+//       cout << "tau " <<sig.sigmaYieldTau  << '*' <<pv[SystematicSourceShared::tauEff] << "->" << (1 + sig.sigmaYieldTau  * pv[SystematicSourceShared::tauEff]) << endl;
+//       cout << " result-> " << sig.yield << " sum:" << totalYield << endl;
     }
     for (size_t i = 0; i < nSig; ++i) {
       Signature& sig = result[i];
-      double yield = fTotalYield / totalYield * sig.yield; 
-      sig.observed = globalRndm->Poisson (yield + backgrounds[i]);
-//       cout << "samplePriors-> " << sig.name << ' ' 
-// 	   <<fTotalYield<<'/'<<totalYield<<'*'<<sig.yield<<'='<<yield<<' '
-// 	   << backgrounds[i]<<' '<<sig.observed<<endl;
+      sig.yield *= (fTotalYield / totalYield); 
+      sig.observed = globalRndm->Poisson (sig.yield + sig.backgroundDD + sig.backgroundMC);
     }
   }
 
@@ -551,15 +618,21 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
   }
 
 
-  void initSignatures (Signatures* fSignatures, int m0, int m12) {
+  void initSignatures (Signatures* fSignatures, int m1, int m2, bool sugra) {
     fSignatures->clear();
     // addDataFile("t2_data.txt",fSignatures);
     //      readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "testscan.txt", 60, 230, fSignatures);
     addDataFile ("data_outfile_V02.txt", fSignatures);
     addDataFile ("CUDAVISdatafile.txt", fSignatures);
-    readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "mSugra_RUTCOMBO_kFactor_V02.txt", m0, m12, fSignatures);
+    if (sugra) {
+      readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "mSugra_RUTCOMBO_kFactor_V02.txt", m1, m2, fSignatures);
+    }
+    else {
+      readMCFiles ("CUDAVISscanfileGGMkfactor.txt", "CONLSP_RUTCOMB_KFactor_V02.txt", m1, m2, fSignatures);
+    }
+    // dump (*fSignatures);
   }
-  
+    
   void initPriors (Priors* fPriors) {
     fPriors->clear();
     fPriors->resize (SystematicSourceShared::size);
@@ -578,20 +651,23 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     for (size_t i = 0; i < fSignatures.size(); ++i) {
       Priors individualPriors (SystematicSourceIndividual::size);
       const Signature& sig = fSignatures[i];
+      double sigmaBkgDD = sig.sigmaBackgroundDD/sig.backgroundDD;
       individualPriors[SystematicSourceIndividual::backgroundDD] = 
-	Prior (1, sig.sigmaBackgroundDD, 0, 1+5*sig.sigmaBackgroundDD, Prior::Gauss);
+	Prior (1, sigmaBkgDD, 0, 1+5*sigmaBkgDD, Prior::Gauss);
+      double sigmaBkgMC = sig.sigmaBackgroundMC/sig.backgroundMC;
       individualPriors[SystematicSourceIndividual::backgroundMC] = 
-	Prior (1, sig.sigmaBackgroundMC, 0, 1+5*sig.sigmaBackgroundMC, Prior::Gauss);
+	Prior (1, sigmaBkgMC, 0, 1+5*sigmaBkgMC, Prior::Gauss);
+      double sigmaYieldMC = sig.sigmaYieldStat / sig.yield;
       individualPriors[SystematicSourceIndividual::yieldMC] = 
-	Prior (1, sig.sigmaYieldStat, 0, 1+5*sig.sigmaYieldStat, Prior::Gauss);
+	Prior (1, sigmaYieldMC, 0, 1+5*sigmaYieldMC, Prior::Gauss);
 
       fPriors->push_back(individualPriors);
     }
   }
 
-  double runCLs (int m0, int m12) {
+  double runCLs (int m0, int m12, bool sugra) {
     Signatures sigs;
-    initSignatures (&sigs, m0, m12);
+    initSignatures (&sigs, m0, m12, sugra);
     Priors priors;
     initPriors (&priors);
     PriorsIndividual individualPriors;
@@ -600,9 +676,9 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     return cls95Yield;
   }
   
-  void expectedLimitCLs (int m0, int m12, bool fSimplifyed) {
+  void expectedLimitCLs (double* limits, int m0, int m12, bool sugra, bool fSimplifyed) {
     Signatures sigs;
-    initSignatures (&sigs, m0, m12);
+    initSignatures (&sigs, m0, m12, sugra);
     Priors priors;
     initPriors (&priors);
     PriorsIndividual individualPriors;
@@ -617,7 +693,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     Signatures toySigs;
     for (int i = 0; i < nToys; ++i) {
       if (fSimplifyed) sampleSignatures (sigs, &toySigs);
-      else sampleSignatures (sigs, priors, individualPriors, &toySigs, 0);
+      else sampleObserved (sigs, priors, individualPriors, &toySigs, 0);
       double cls95Yield = cls95 (toySigs, priors, individualPriors, 2000);
       sample.push_back (cls95Yield);
       if (!(i % 10))  cout << i/10 << flush;
@@ -626,29 +702,29 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     cout << endl;
     sort (sample.begin(), sample.end());
     // extract statystics
-    double Minus2Sigma = sample[int(floor(nToys * twoSigmaQuantile + 0.5))];
-    double Minus1Sigma = sample[int(floor(nToys * oneSigmaQuantile + 0.5))];
-    double Median = sample[int(floor(nToys * 0.5+0.5))];
-    double Plus1Sigma = sample[int(floor(nToys * (1.-oneSigmaQuantile) + 0.5))];
-    double Plus2Sigma = sample[int(floor(nToys * (1.-twoSigmaQuantile) + 0.5))];
+    limits[0] = sample[int(floor(nToys * twoSigmaQuantile + 0.5))];
+    limits[1] = sample[int(floor(nToys * oneSigmaQuantile + 0.5))];
+    limits[2] = sample[int(floor(nToys * 0.5+0.5))];
+    limits[3] = sample[int(floor(nToys * (1.-oneSigmaQuantile) + 0.5))];
+    limits[4] = sample[int(floor(nToys * (1.-twoSigmaQuantile) + 0.5))];
 
-    cout << "expectedLimitCLs-> median: " << Median 
-	 << ", +-1sigma: [" <<  Minus1Sigma << ", " << Plus1Sigma
-	 << ", +-2sigma: [" <<  Minus2Sigma << ", " << Plus2Sigma
-	 << endl;
+     cout << "expectedLimitCLs-> median: " << limits[2] 
+ 	 << ", +-1sigma: [" <<  limits[1] << ", " << limits[3] << ']'
+ 	 << ", +-2sigma: [" <<  limits[0] << ", " << limits[4] << ']'
+ 	 << endl;
 
-    TH1F* h = new TH1F ("cl95", "cl95", 100, 0, sample.back());
-    for (size_t i = 0; i < sample.size(); ++i) h->Fill (sample[i]);
-    h->Draw();
+     TH1F* h = new TH1F ("cl95", "cl95", 100, 0, sample.back());
+     for (size_t i = 0; i < sample.size(); ++i) h->Fill (sample[i]);
+     h->Draw();
   }
 
   double runBayesian () {
     return 0;
   }
 
-  double coverageCLs (double fTotalYield, int m0, int m12) {
+  double coverageCLs (double fTotalYield, int m0, int m12, bool sugra) {
     Signatures sigs;
-    initSignatures (&sigs, m0, m12);
+    initSignatures (&sigs, m0, m12, sugra);
     Priors priors;
     initPriors (&priors);
     PriorsIndividual individualPriors;
@@ -656,11 +732,17 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     int nAbove = 0;
     int nToys = 0;
     Signatures toySigs;
+    PriorsIndividual toyIndividualPriors;
     while (++nToys <= 2000) {
+      //    while (++nToys <= 2000) {
       sampleSignatures (sigs, priors, individualPriors, &toySigs, fTotalYield);
-      double cls95Yield = cls95 (toySigs, priors, individualPriors, 2000);
+      initPriorsIndividual (toySigs, &toyIndividualPriors);
+      // dump (toySigs);
+      double cls95Yield = cls95 (toySigs, priors, toyIndividualPriors, 2000);
       if (cls95Yield < fTotalYield) nAbove++;
-      cout << "coverageCLs-> " << nToys << " " << fTotalYield << '/' << cls95Yield << " -> " << nAbove << '/' << 1.-double (nAbove)/double(nToys) << endl;
+      if (!(nToys % 10)) {
+	    cout << "coverageCLs-> " << nToys << " " << fTotalYield << '/' << cls95Yield << " -> " << nAbove << '/' << 1.-double (nAbove)/double(nToys) << endl;
+      }
     }
     return 1.-double (nAbove)/double(nToys);
   }
