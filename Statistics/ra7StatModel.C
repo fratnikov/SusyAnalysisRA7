@@ -1,3 +1,6 @@
+//
+// F. Ratnikov, KIT, Feb. 2011 (fedor.ratnikov@cern.ch)
+// 
 #include "ra7StatModel.h"
 
 #include <cmath>
@@ -39,6 +42,18 @@ namespace ra7StatModel {
     return result;
   }
 
+  int sumObserved (const Signatures& fSignatures) {
+    int result = 0;
+    for (size_t i = 0; i < fSignatures.size(); ++i) result += fSignatures[i].observed;
+    return result;
+  }
+
+  double sumBackgrounds (const Signatures& fSignatures) {
+    double result = 0;
+    for (size_t i = 0; i < fSignatures.size(); ++i) result += (fSignatures[i].backgroundDD+fSignatures[i].backgroundMC);
+    return result;
+  }
+
   void dump (const Signature& fSignature) {
     cout << "------ " << fSignature.name << " ------" << endl
 	 << " observed: " << fSignature.observed << endl
@@ -52,7 +67,7 @@ namespace ra7StatModel {
   
   void dump (const Signatures& fSignatures) {
     Signatures sigs (fSignatures);
-    sort (sigs.begin(), sigs.end(), lessByBackground);
+    sort (sigs.begin(), sigs.end(), lessByYield);
     cout << "dump Signatures-> Total yield: " << sumYield (fSignatures) << endl;
     for (size_t i = 0; i < sigs.size(); ++i) {
       dump (sigs[i]);
@@ -207,7 +222,7 @@ namespace ra7StatModel {
 
       if (dNLLsb >= dNLLdata) ++nDataNLLsbBetter;
       if (dNLLb >= dNLLdata) ++nDataNLLbBetter;
-      // cout << "runCLs-> " << fTotalYield<<' '<<nToys<<' '<<dNLLdata<<'/'<<dNLLsb<<'/'<<dNLLb<<"->"<<nDataNLLsbBetter<<'/'<<nDataNLLbBetter<<endl;
+      //cout << "runCLs-> " << fTotalYield<<' '<<nToys<<' '<<dNLLdata<<'/'<<dNLLsb<<'/'<<dNLLb<<"->"<<nDataNLLsbBetter<<'/'<<nDataNLLbBetter<<endl;
       // good enough?
       if (nDataNLLsbBetter > 5 && nDataNLLbBetter < nDataNLLsbBetter * 10) break;
       if (nDataNLLsbBetter > 100) break;
@@ -215,7 +230,7 @@ namespace ra7StatModel {
     double cl_sb = double (nDataNLLsbBetter) / nToys;
     double cl_b = double (nDataNLLbBetter) / nToys;
     if (cl_b <= 0) cl_b = 1e-6;
-    // cout << "runCLs-> " << fTotalYield<<" toys: " << nToys<<" cl_sb/cl_b " << cl_sb<<'/'<<cl_b<<endl;
+    //cout << "runCLs-> " << fTotalYield<<" toys: " << nToys<<" cl_sb/cl_b " << cl_sb<<'/'<<cl_b<<endl;
     return cl_sb/cl_b;
   }
 
@@ -393,10 +408,14 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 
   bool readJimMCFile (const string& fName, int fM0, int fM12, Signature* fSignature) {
     // constants
-    double muEffSigma = 0.03;
-    double eEffSigma = 0.03;
-    double tauEffSigma = 0.3;
-    double jesSigma = 0.05;
+     double muEffSigma = 0.03;
+     double eEffSigma = 0.03;
+     double tauEffSigma = 0.3;
+     double jesSigma = 0.05;
+//     double muEffSigma = 1e-6;
+//     double eEffSigma = 1e-6;
+//     double tauEffSigma = 1e-6;
+//     double jesSigma = 1e-6;
 
     char buffer[1024];
     Signature* sig = fSignature;
@@ -620,6 +639,10 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 
   void initSignatures (Signatures* fSignatures, int m1, int m2, bool sugra) {
     fSignatures->clear();
+//     addDataFile ("ToyModel_data.txt", fSignatures);
+//     readMCFiles ("ToyModel_scan.txt", "CONLSP_RUTCOMB_KFactor_V02.txt", 850, 1000, fSignatures);
+//     dump (*fSignatures);
+//     return;
     // addDataFile("t2_data.txt",fSignatures);
     //      readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "testscan.txt", 60, 230, fSignatures);
     addDataFile ("data_outfile_V02.txt", fSignatures);
@@ -672,12 +695,16 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     initPriors (&priors);
     PriorsIndividual individualPriors;
     initPriorsIndividual (sigs, &individualPriors);
+    dump (sigs);
+//     cout << "runCLs -> observed/background/yild: " << sumObserved(sigs) << '/' << sumBackgrounds(sigs) << '/' << sumYield(sigs) << endl;
     double cls95Yield = cls95 (sigs, priors, individualPriors, 20000);
     return cls95Yield;
   }
   
-  void expectedLimitCLs (double* limits, int m0, int m12, bool sugra, bool fSimplifyed) {
+  void expectedLimitCLs (double* fLimits, int m0, int m12, bool sugra, bool fSimplifyed) {
     Signatures sigs;
+    double mLimits[5];
+    double* limits = fLimits ? fLimits : mLimits;
     initSignatures (&sigs, m0, m12, sugra);
     Priors priors;
     initPriors (&priors);
@@ -691,13 +718,36 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     vector<double> sample;
     sample.reserve (nToys);
     Signatures toySigs;
+    TH1F* h31 = new TH1F("h31", "nevents UL < 5", 10, 0, 10); 
+    TH1F* h32 = new TH1F("h32", "nevents UL > 5", 10, 0, 10); 
+    TH1F* h41 = new TH1F("h41", "channels UL < 5", 25, 0, 25); 
+    TH1F* h42 = new TH1F("h42", "channels UL > 5", 25, 0, 25); 
+    TH1F* h51 = new TH1F("h51", "CL95 UL channels without 4l", 500, 0, 10); 
+    TH1F* h52 = new TH1F("h52", "CL95 UL channels with 4l", 500, 0, 10); 
     for (int i = 0; i < nToys; ++i) {
-      if (fSimplifyed) sampleSignatures (sigs, &toySigs);
+      //      if (fSimplifyed) sampleSignatures (sigs, &toySigs);
+      if (fSimplifyed) toySigs = sigs;
       else sampleObserved (sigs, priors, individualPriors, &toySigs, 0);
-      double cls95Yield = cls95 (toySigs, priors, individualPriors, 2000);
+      double cls95Yield = cls95 (toySigs, priors, individualPriors, 20000);
       sample.push_back (cls95Yield);
       if (!(i % 10))  cout << i/10 << flush;
       else cout << '.' << flush;
+      int nObserved = 0;
+      int n4l = 0;
+      for (size_t j = 0; j < toySigs.size(); ++j) {
+	if (toySigs[j].observed > 0) {
+	  if (cls95Yield < 5) h41->Fill (j);
+	  else h42->Fill (j);
+	}
+	nObserved += toySigs[j].observed;
+	if (j >= 12) n4l += toySigs[j].observed;
+      }
+      if (cls95Yield < 5) h31->Fill (nObserved);
+      else h32->Fill (nObserved);
+
+      if (n4l <= 0) h51->Fill (cls95Yield);
+      else h52->Fill (cls95Yield);
+
     }
     cout << endl;
     sort (sample.begin(), sample.end());
@@ -723,6 +773,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
   }
 
   double coverageCLs (double fTotalYield, int m0, int m12, bool sugra) {
+    TH1F* h_coverage = new TH1F ("h_coverage", "h_coverage", 200, 0, 20);
     Signatures sigs;
     initSignatures (&sigs, m0, m12, sugra);
     Priors priors;
@@ -733,15 +784,20 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     int nToys = 0;
     Signatures toySigs;
     PriorsIndividual toyIndividualPriors;
-    while (++nToys <= 2000) {
+    while (++nToys <= 1000) {
       //    while (++nToys <= 2000) {
       sampleSignatures (sigs, priors, individualPriors, &toySigs, fTotalYield);
       initPriorsIndividual (toySigs, &toyIndividualPriors);
       // dump (toySigs);
       double cls95Yield = cls95 (toySigs, priors, toyIndividualPriors, 2000);
-      if (cls95Yield < fTotalYield) nAbove++;
+      h_coverage->Fill (cls95Yield);
+      if (cls95Yield < fTotalYield) {
+	nAbove++;
+	cout << '+' << flush;
+      }
       if (!(nToys % 10)) {
-	    cout << "coverageCLs-> " << nToys << " " << fTotalYield << '/' << cls95Yield << " -> " << nAbove << '/' << 1.-double (nAbove)/double(nToys) << endl;
+	cout << '.' << flush;
+	//	    cout << "coverageCLs-> " << nToys << " " << fTotalYield << '/' << cls95Yield << " -> " << nAbove << '/' << 1.-double (nAbove)/double(nToys) << endl;
       }
     }
     return 1.-double (nAbove)/double(nToys);

@@ -1,3 +1,18 @@
+//
+// F. Ratnikov, KIT, Feb. 2011 (fedor.ratnikov@cern.ch)
+// 
+// KIT CLs model. The stand-alone code implementing complete
+// description of RA7 without simplifications to reduce total number
+// of nuisances.
+// - ra7StatModel.h/C
+// - data_outfile_V02.txt, CUDAVISdatafile.txt - measured data files
+// - mSugra_RUTCOMBO_kFactor_V02.txt, CUDAVISscanfilemSUGRAkfactor.txt - mSUGRA scans
+// - CONLSP_RUTCOMB_KFactor_V02.txt, CUDAVISscanfileGGMkfactor.txt - GGM scans
+//
+// To run from the ROOT prompt:
+// root [1] .L ra7StatModel.C+
+// root [2] cout << "CLs 95%C.L. UL: " << ra7StatModel::runCLs() << endl;
+//
 #include <vector>
 #include <string>
 
@@ -24,6 +39,8 @@ namespace ra7StatModel {
   typedef std::vector<Signature> Signatures;
 
   double sumYield (const Signatures& fSignatures);
+  int sumObserved (const Signatures& fSignatures);
+  double sumBackgrounds (const Signatures& fSignatures);
 
   void dump (const Signature& fSignature);
   void dump (const Signatures& fSignatures);
