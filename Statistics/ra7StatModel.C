@@ -60,7 +60,7 @@ namespace ra7StatModel {
 	 << " background DD/MC: " << fSignature.backgroundDD << '/' << fSignature.backgroundMC
 	 << " sigma background DD/MC: " << fSignature.sigmaBackgroundDD << '/' << fSignature.sigmaBackgroundMC << endl
 	 << " yield: " << fSignature.yield
-	 << " sigma yield lumi/stat/jes: " << fSignature.sigmaYieldLumi << '/' << fSignature.sigmaYieldStat << '/' << fSignature.sigmaYieldJES
+	 << " sigma yield lumi/stat/jes/pdf/trig: " << fSignature.sigmaYieldLumi << '/' << fSignature.sigmaYieldStat << '/' << fSignature.sigmaJES << '/' << fSignature.sigmaPdf << '/' << fSignature.sigmaTrigger
 	 << " sigma yield eff mu/e/track/tau: " << fSignature.sigmaYieldMuon << '/' << fSignature.sigmaYieldElectron << '/' << fSignature.sigmaYieldTrack << '/' << fSignature.sigmaYieldTau << endl
 	 << " --- " << endl;
   }
@@ -155,7 +155,9 @@ namespace ra7StatModel {
       estimatedYield = sig.yield;
       if (estimatedYield > 0) {
 	estimatedYield *= (1 + sig.sigmaYieldLumi * fPriorValuesCommon[SystematicSourceShared::lumi]);
-	estimatedYield *= (1 + sig.sigmaYieldJES * fPriorValuesCommon[SystematicSourceShared::jes]);
+	estimatedYield *= (1 + sig.sigmaJES * fPriorValuesCommon[SystematicSourceShared::jes]);
+	estimatedYield *= (1 + sig.sigmaPdf * fPriorValuesCommon[SystematicSourceShared::pdf]);
+	estimatedYield *= (1 + sig.sigmaTrigger * fPriorValuesCommon[SystematicSourceShared::trig]);
 	estimatedYield *= priorsIndividual[SystematicSourceIndividual::yieldMC];
 	estimatedYield *= (1 + sig.sigmaYieldElectron  * fPriorValuesCommon[SystematicSourceShared::eEff]);
 	estimatedYield *= (1 + sig.sigmaYieldMuon  * fPriorValuesCommon[SystematicSourceShared::muEff]);
@@ -166,6 +168,9 @@ namespace ra7StatModel {
       double backgroundDD = sig.backgroundDD * priorsIndividual[SystematicSourceIndividual::backgroundDD];
       double backgroundMC = sig.backgroundMC * priorsIndividual[SystematicSourceIndividual::backgroundMC];
       //double backgroundMC = sig.backgroundMC * (1.+sig.sigmaBackgroundMC/6.9*fPriorValuesCommon[SystematicSourceShared::extra1]);
+      backgroundMC *= (1 + sig.sigmaYieldLumi * fPriorValuesCommon[SystematicSourceShared::lumi]);
+      backgroundMC *= (1 + sig.sigmaJES * fPriorValuesCommon[SystematicSourceShared::jes]);
+      backgroundMC *= (1 + sig.sigmaTrigger * fPriorValuesCommon[SystematicSourceShared::trig]);
       double& estimatedBackground = estimatedBackgrounds[i];
       estimatedBackground = backgroundDD + backgroundMC;
 
@@ -391,15 +396,19 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 	if (!readRichardMCFile (fRichardFile, fM0, fM12, sig)) {
 	  cerr << "readMCFiles-> Worning can not find data for signature " <<  sig->name << " in " << fM0 << ':' << fM12 << endl;
 	  return false;
-	  sig->sigmaYieldElectron = 0;
-	  sig->sigmaYieldMuon = 0;
-	  sig->sigmaYieldTau = 0;
-	  sig->sigmaYieldTrack = 0;
-	  sig->sigmaYieldJES = 0;
-	
-	  sig->yield = 0;
-	  sig->sigmaYieldStat = 0;
-	  
+	}
+      }
+    }
+    return true;
+  }
+
+  bool readRUMCFiles (const string& fFile1, const string& fFile2, int fM0, int fM12, Signatures* fSignatures) {
+    for (size_t i = 0; i < fSignatures->size(); ++i) {
+      Signature* sig = &((*fSignatures)[i]);
+      if (!readRichardMCFile (fFile1, fM0, fM12, sig)) {
+	if (!readRichardMCFile (fFile2, fM0, fM12, sig)) {
+	  cerr << "readRUMCFiles-> Worning can not find data for signature " <<  sig->name << " in " << fM0 << ':' << fM12 << endl;
+	  return false;
 	}
       }
     }
@@ -411,7 +420,9 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
      double muEffSigma = 0.03;
      double eEffSigma = 0.03;
      double tauEffSigma = 0.3;
-     double jesSigma = 0.05;
+     double jesSigma = 0.14;
+     double pdfSigma = 0.17;
+     double trigSigma = 0.05;
 //     double muEffSigma = 1e-6;
 //     double eEffSigma = 1e-6;
 //     double tauEffSigma = 1e-6;
@@ -445,7 +456,9 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 	sig->sigmaYieldMuon = nmu * muEffSigma;
 	sig->sigmaYieldTau = ntau * tauEffSigma;
 	sig->sigmaYieldTrack = 0;
-	sig->sigmaYieldJES = jesSigma;
+	sig->sigmaJES = jesSigma;
+	sig->sigmaPdf = pdfSigma;
+	sig->sigmaTrigger = trigSigma;
 	
 	double allSigma2 = atof (tokens[6].c_str()) / yield; allSigma2 *= allSigma2;
 	allSigma2 -= sig->sigmaYieldElectron*sig->sigmaYieldElectron;
@@ -462,7 +475,9 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 
   bool readRichardMCFile (const string& fName, int fM0, int fM12, Signature* fSignature) {
     // constants
-    double jesSigma = 0.05;
+    double jesSigma = 0.14;
+    double pdfSigma = 0.17;
+    double trigSigma = 0.05;
 
     char buffer[1024];
     Signature* sig = fSignature;
@@ -485,7 +500,9 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 	sig->sigmaYieldMuon = atof (tokens[8].c_str()) / yield;
 	sig->sigmaYieldTau = atof (tokens[11].c_str()) / yield;
 	sig->sigmaYieldTrack = atof (tokens[10].c_str()) / yield;
-	sig->sigmaYieldJES = jesSigma;
+	sig->sigmaJES = jesSigma;
+	sig->sigmaPdf = pdfSigma;
+	sig->sigmaTrigger = trigSigma;
 	return true;
       }
     }
@@ -560,10 +577,17 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       Signature& sig = result[i];
       //      cout << "sampleSignatures->"<<sig.name<<sig.yield<<endl; 
       double backgroundDD = sig.backgroundDD * pvi[i][SystematicSourceIndividual::backgroundDD]; 
+
       double backgroundMC = sig.backgroundMC * pvi[i][SystematicSourceIndividual::backgroundMC];
+      backgroundMC *= (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]);
+      backgroundMC *= (1 + sig.sigmaJES * pv[SystematicSourceShared::jes]);
+      backgroundMC *= (1 + sig.sigmaTrigger * pv[SystematicSourceShared::trig]);
+
       double yield = sig.yield;
       yield *= (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]);
-      yield *= (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]);
+      yield *= (1 + sig.sigmaJES * pv[SystematicSourceShared::jes]);
+      yield *= (1 + sig.sigmaPdf * pv[SystematicSourceShared::pdf]);
+      yield *= (1 + sig.sigmaTrigger * pv[SystematicSourceShared::trig]);
       yield *= pvi[i][SystematicSourceIndividual::yieldMC];
       yield *= (1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff]);
       yield *= (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]);
@@ -572,7 +596,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       if (yield <= 0) yield = 1e-6;
       totalYield += yield;
 //       cout << "lumi " << sig.sigmaYieldLumi << '*' << pv[SystematicSourceShared::lumi] << "->" << (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]) << endl;
-//       cout << "jes " << sig.sigmaYieldJES << '*' <<pv[SystematicSourceShared::jes] << "->" << (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]) << endl;
+//       cout << "jes " << sig.sigmaJES << '*' <<pv[SystematicSourceShared::jes] << "->" << (1 + sig.sigmaJES * pv[SystematicSourceShared::jes]) << endl;
 //       cout << "mc " << pvi[i][SystematicSourceIndividual::yieldMC] << endl;
 //       cout << "e " <<sig.sigmaYieldElectron  << '*' <<pv[SystematicSourceShared::eEff] << "->" <<(1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff])  << endl;
 //       cout << "mu " <<sig.sigmaYieldMuon  << '*' <<pv[SystematicSourceShared::muEff] << "->" << (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]) << endl;
@@ -602,8 +626,12 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       Signature& sig = result[i];
       sig.backgroundDD *= pvi[i][SystematicSourceIndividual::backgroundDD]; 
       sig.backgroundMC *= pvi[i][SystematicSourceIndividual::backgroundMC];
+      sig.backgroundMC *= (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]);
+      sig.backgroundMC *= (1 + sig.sigmaJES * pv[SystematicSourceShared::jes]);
+      sig.backgroundMC *= (1 + sig.sigmaTrigger * pv[SystematicSourceShared::trig]);
+
       sig.yield *= (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]);
-      sig.yield *= (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]);
+      sig.yield *= (1 + sig.sigmaJES * pv[SystematicSourceShared::jes]);
       sig.yield *= pvi[i][SystematicSourceIndividual::yieldMC];
       sig.yield *= (1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff]);
       sig.yield *= (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]);
@@ -612,7 +640,7 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
       if (sig.yield <= 0) sig.yield = 1e-6;
       totalYield += sig.yield;
 //       cout << "lumi " << sig.sigmaYieldLumi << '*' << pv[SystematicSourceShared::lumi] << "->" << (1 + sig.sigmaYieldLumi * pv[SystematicSourceShared::lumi]) << endl;
-//       cout << "jes " << sig.sigmaYieldJES << '*' <<pv[SystematicSourceShared::jes] << "->" << (1 + sig.sigmaYieldJES * pv[SystematicSourceShared::jes]) << endl;
+//       cout << "jes " << sig.sigmaJES << '*' <<pv[SystematicSourceShared::jes] << "->" << (1 + sig.sigmaJES * pv[SystematicSourceShared::jes]) << endl;
 //       cout << "mc " << pvi[i][SystematicSourceIndividual::yieldMC] << endl;
 //       cout << "e " <<sig.sigmaYieldElectron  << '*' <<pv[SystematicSourceShared::eEff] << "->" <<(1 + sig.sigmaYieldElectron  * pv[SystematicSourceShared::eEff])  << endl;
 //       cout << "mu " <<sig.sigmaYieldMuon  << '*' <<pv[SystematicSourceShared::muEff] << "->" << (1 + sig.sigmaYieldMuon  * pv[SystematicSourceShared::muEff]) << endl;
@@ -639,19 +667,27 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
 
   void initSignatures (Signatures* fSignatures, int m1, int m2, bool sugra) {
     fSignatures->clear();
-//     addDataFile ("ToyModel_data.txt", fSignatures);
-//     readMCFiles ("ToyModel_scan.txt", "CONLSP_RUTCOMB_KFactor_V02.txt", 850, 1000, fSignatures);
-//     dump (*fSignatures);
-//     return;
+//      addDataFile ("ToyModel_data.txt", fSignatures);
+//      readMCFiles ("ToyModel_scan.txt", "CONLSP_RUTCOMB_KFactor_V02.txt", 850, 1000, fSignatures);
+//      dump (*fSignatures);
+//      return;
     // addDataFile("t2_data.txt",fSignatures);
     //      readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "testscan.txt", 60, 230, fSignatures);
     addDataFile ("data_outfile_V02.txt", fSignatures);
     addDataFile ("CUDAVISdatafile.txt", fSignatures);
     if (sugra) {
-      readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "mSugra_RUTCOMBO_kFactor_V02.txt", m1, m2, fSignatures);
+      readRUMCFiles (
+		     "msugra_rutgen_highHT_withKFactor_v003.txt",
+		     "msugra_rutgen_lowHT_withKFactor_v003.txt",
+m1, m2, fSignatures);
+      // readMCFiles ("CUDAVISscanfilemSUGRAkfactor.txt", "mSugra_RUTCOMBO_kFactor_V02.txt", m1, m2, fSignatures);
     }
     else {
-      readMCFiles ("CUDAVISscanfileGGMkfactor.txt", "CONLSP_RUTCOMB_KFactor_V02.txt", m1, m2, fSignatures);
+      readRUMCFiles (
+		     "conlsp_rutgen_highHT_withKFactor_v003.txt",
+		     "conlsp_rutgen_lowHT_withKFactor_v003.txt",
+m1, m2, fSignatures);
+      // readMCFiles ("CUDAVISscanfileGGMkfactor.txt", "CONLSP_RUTCOMB_KFactor_V02.txt", m1, m2, fSignatures);
     }
     // dump (*fSignatures);
   }
@@ -661,6 +697,8 @@ vector<double> BayesianIntegral::postorialDelta (const vector<double>& fGrid, si
     fPriors->resize (SystematicSourceShared::size);
     (*fPriors)[SystematicSourceShared::lumi] = Prior (0., 1., -5, 5, Prior::Gauss);
     (*fPriors)[SystematicSourceShared::jes] = Prior (0, 1., -5, 5, Prior::Gauss);
+    (*fPriors)[SystematicSourceShared::pdf] = Prior (0, 1., -5, 5, Prior::Gauss);
+    (*fPriors)[SystematicSourceShared::trig] = Prior (0, 1., -5, 5, Prior::Gauss);
     (*fPriors)[SystematicSourceShared::eEff] = Prior (0, 1., -5, 5, Prior::Gauss);
     (*fPriors)[SystematicSourceShared::muEff] = Prior (0, 1., -5, 5, Prior::Gauss);
     (*fPriors)[SystematicSourceShared::tEff] = Prior (0, 1., -5, 5, Prior::Gauss);

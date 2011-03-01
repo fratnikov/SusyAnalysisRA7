@@ -34,7 +34,9 @@ namespace ra7StatModel {
     double sigmaYieldMuon;
     double sigmaYieldTrack;
     double sigmaYieldTau;
-    double sigmaYieldJES;
+    double sigmaJES;
+    double sigmaPdf;
+    double sigmaTrigger;
   }; 
   typedef std::vector<Signature> Signatures;
 
@@ -70,7 +72,7 @@ namespace ra7StatModel {
 
   namespace SystematicSourceShared {  
     enum Type {
-      lumi, jes, eEff, muEff, tEff, tauEff, extra1, extra2,
+      lumi, jes, pdf, trig, eEff, muEff, tEff, tauEff, extra1, extra2,
       size
     };
   }
