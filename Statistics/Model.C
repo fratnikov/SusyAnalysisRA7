@@ -588,7 +588,7 @@ void Model::create_nuisances(std::vector< vector< vector<double>* >* >* systemat
 	 double lower_limit=-1;
 	  std::string line = title;
 	 std::string::size_type pos=line.find("[LOGNORMAL]");
-	 if(pos != std::string::npos) lower_limit=-0.999;
+	 if(pos != std::string::npos) lower_limit=0.001;
 	 RooRealVar* tmp_nuisance_parameters=new RooRealVar(name,title,0,lower_limit,1.0*nuisance_upper_limit->at(i)*nuisance_widths->at(i)->getVal());
 	 cout<<name<<" has upper limit "<<nuisance_upper_limit->at(i)<<endl;
 

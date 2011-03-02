@@ -61,31 +61,6 @@ void central_interval_Profile_Likelihood(Model* model,double confidence){
 
 }
 
-// void upper_limit_Profile_Likelihood(Model* model,double confidence){
-//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
-//   cout<<"Calculating upper limit with the Profile Likelihood method"<<endl;
-//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
-  
-  
-//   //      //define paramsOfInterest
-//      RooArgSet *paramsOfInterest=new RooArgSet("paramsOfInterest");
-//      paramsOfInterest->addClone(*model->get_POI()); 	//clone because we need s for complete likelihood
-     
-//      //get the calculator
-//      ProfileLikelihoodCalculator plc(*model->get_data(),*model->get_complete_likelihood(), *paramsOfInterest);
-     
-//      //      //get the confidence interval
-//      LikelihoodInterval* lrint = (LikelihoodInterval*) plc.GetInterval();
-//      lrint->SetConfidenceLevel(1-(1-confidence)*2);
-//      double ul=lrint->UpperLimit(*model->get_POI());
-//      cout<<confidence<<"% upper limit is "<<ul<<endl;
-//      TCanvas *c1=new TCanvas;
-//      LikelihoodIntervalPlot* lrplot1 = new LikelihoodIntervalPlot(lrint);
-//      lrplot1->Draw(); 
-//      c1->SaveAs("pll_plot.png");
-     
-
-// }
 
 double upper_limit_Profile_Likelihood(Model* model,double confidence){
   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
@@ -177,35 +152,7 @@ void upper_limit_Bayesian(Model* model,double confidence){
 
 }
 
-// void upper_limit_Bayesian_BAT(Model* model,double confidence,int Niters){
-//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
-//   cout<<"Calculating upper limit with the Bayesian method(BAT)"<<endl;
-//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
-  
-//   RooWorkspace* wspace = new RooWorkspace("wspace");
-//   RooStats::ModelConfig* modelConfig = new ModelConfig("bayes");
-//   modelConfig->SetWorkspace(*wspace);
-//   modelConfig->SetPdf(*model->get_complete_likelihood());
-//   modelConfig->SetPriorPdf(*model->get_POI_prior());
-//   modelConfig->SetParametersOfInterest(*model->get_POI_set());
-//   modelConfig->SetNuisanceParameters(*model->get_nuisance_set());
 
-
-//   cout<<" POI size "<<model->get_POI_set()->getSize()<<endl; 
- 
-
-
-//   //BATCalculator batcalc(model->get_data(), model->get_complete_likelihood(), model->get_POI_set(), model->get_POI_prior());
-//   BATCalculator batcalc(*model->get_data(), *modelConfig);
-//   batcalc.SetConfidenceLevel(1-(2*(1-confidence)));
-//   batcalc.SetnMCMC(Niters);
-//   //batcalc.SetNbins("POI",100);
-//   cout<<confidence<<"% CL upper limit: " <<batcalc.GetInterval()->UpperLimit()<<endl;
-
-//   double prec=batcalc.GetBrfPrecision();
- 
-
-// }
 
 double upper_limit_Bayesian_BAT(Model* model,double confidence,int Niters){
   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
