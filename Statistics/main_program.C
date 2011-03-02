@@ -25,8 +25,9 @@
 #include <fstream>
 #include <sstream>
 
-
-
+// multichannel number counting
+// 12.2010  M.Bonsh,V.Zhukov  
+// 01.2011  V.Zhukov, D.Troendle
 
 using namespace std;
 using namespace RooFit;

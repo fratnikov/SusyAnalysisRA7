@@ -131,9 +131,7 @@ class Model
     
     void create_b_likelihood();   
     
-    void set_random_seed(int i);
-
-    
+    void set_random_seed(int i);  
 
 };
 

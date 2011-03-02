@@ -1139,6 +1139,7 @@ void Model::Print(){
 
 
 
+
 void Model::test(string file){
   ofstream myfile;
   myfile.open (file.c_str(), fstream::app);
