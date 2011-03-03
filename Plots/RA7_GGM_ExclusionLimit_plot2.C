@@ -273,9 +273,10 @@
 
 
 
-   TLegend *leg = new TLegend(0.37,0.6,0.84,0.75,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.37,0.6,0.84,0.75,"95%CL Limits:","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
+   leg->SetTextColor(10);
    leg->SetTextSize(0.04);
    leg->SetLineColor(1);
    leg->SetLineStyle(1);
@@ -335,7 +336,7 @@
   
    pline->Draw("");
 
-   TLegendEntry *entry=leg->AddEntry(pline,"CMS NLO expected 95%CL","l");
+   TLegendEntry *entry=leg->AddEntry(pline,"CMS NLO expected","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(0);
@@ -370,7 +371,7 @@
   pline->Draw("");
 
 
-   TLegendEntry *entry=leg->AddEntry(pline,"CMS NLO  excluded 95%CL","l");
+   TLegendEntry *entry=leg->AddEntry(pline,"CMS NLO  excluded","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(5);
@@ -407,7 +408,7 @@
   pline->Draw("");
 
 
-   TLegendEntry *entry=leg->AddEntry(pline,"CMS LO  excluded 95%CL","l");
+   TLegendEntry *entry=leg->AddEntry(pline,"CMS LO excluded","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(5);
