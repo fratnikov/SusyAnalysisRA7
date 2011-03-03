@@ -212,7 +212,7 @@
 
 
 
-   TLegend *leg = new TLegend(0.46,0.55,0.84,0.85,"95%CL Limits:","brNDC");
+   TLegend *leg = new TLegend(0.46,0.55,0.84,0.85,"95% C.L. Limits:","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
    leg->SetTextSize(0.04);

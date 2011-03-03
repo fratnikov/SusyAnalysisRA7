@@ -450,21 +450,21 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
       }*/
 
   
-  TLegend* myleg = new TLegend(0.24,0.60,0.58,0.85,"95% C.L. Limits:","brNDC");
+  TLegend* myleg = new TLegend(0.24,0.60,0.58,0.90,"    95% C.L. Limits:","brNDC");
   myleg->SetFillColor(0); 
   myleg->SetShadowColor(0);
-  myleg->SetTextSize(0.03);
+  myleg->SetTextSize(0.035);
   myleg->SetBorderSize(0);
   
   // myleg->AddEntry(sSecond,"NLO Expected Limit","L");
   // myleg->AddEntry(sFirst,"NLO Observed Limit","L"); 
   //myleg->AddEntry(sThird,"LO Observed Limit","L");
 
-  myleg->AddEntry(LO_obs,"CMS LO Observed","L"); 
-  myleg->AddEntry(NLO_obs,"CMS NLO Observed","L"); 
+  myleg->AddEntry(LO_obs,"CMS LO observed","L"); 
+  myleg->AddEntry(NLO_obs,"CMS NLO observed","L"); 
   //  myleg->AddEntry(NLO_exp,"CMS NLO Expected","L");    
-  myleg->AddEntry(grshade2,"CMS NLO Expected #pm 1#sigma","fl");
-  myleg->AddEntry(grshade,"CMS NLO Expected #pm 2#sigma","Fl");
+  myleg->AddEntry(grshade2,"CMS NLO expected #pm 1#sigma","fl");
+  myleg->AddEntry(grshade,"CMS NLO expected #pm 2#sigma","Fl");
 
   //constant squark and gluino mass contours
   for (int it=1;it<3;it++) {   
@@ -1071,7 +1071,7 @@ TLegend* makeStauLegend(Double_t txtsz,Int_t tanBeta_){
 
 
 TLegend* makeExpLegend(TGraph& sg_gr, TGraph& sgd_gr,TGraph& ch_gr,TGraph& sl_gr,TGraph& tev_sn,Double_t txtsz,Int_t tanbeta){
-  TLegend* legexp = new TLegend(0.63,0.65,0.91,0.85,NULL,"brNDC");
+  TLegend* legexp = new TLegend(0.63,0.62,0.91,0.83,NULL,"brNDC");
   legexp->SetFillColor(0);
   legexp->SetShadowColor(0);
   legexp->SetTextSize(txtsz);
