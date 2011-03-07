@@ -2135,6 +2135,8 @@
   c1->SetTickx();
    c1->SetTicky();
    c1->SaveAs("RA7_mSUGRA_ExclusionLimit_plot3.pdf");
+   c1->SaveAs("RA7_mSUGRA_ExclusionLimit_plot3.png");
+   c1->SaveAs("RA7_mSUGRA_ExclusionLimit_plot3.eps");
 
 
 

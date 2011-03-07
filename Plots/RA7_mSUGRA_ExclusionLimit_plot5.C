@@ -561,8 +561,8 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   
   
   cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot5.pdf");
-//   cvsSys->SaveAs("RA7_ExclusionLimit_tanb"+tanb+".png");
-//   cvsSys->SaveAs("RA7_ExclusionLimit_tanb"+tanb+".eps");
+  cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot5.png");
+  cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot5.eps");
   
   
   output->Write();

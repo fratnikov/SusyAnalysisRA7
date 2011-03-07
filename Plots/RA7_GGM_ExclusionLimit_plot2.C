@@ -487,6 +487,8 @@
    c1->SetTickx();
    c1->SetTicky();
    c1->SaveAs("RA7_GGM_ExclusionLimit_plot2.pdf");
+   c1->SaveAs("RA7_GGM_ExclusionLimit_plot2.png");
+   c1->SaveAs("RA7_GGM_ExclusionLimit_plot2.eps");
 
 
 
