@@ -376,7 +376,7 @@
    g_122_plus2sigma->SetTitle("Graph");
    g_122_plus2sigma->SetFillColor(3);
    //   g_122_plus2sigma->SetFillStyle(3004);
-   g_122_plus2sigma->SetLineColor(8);
+   g_122_plus2sigma->SetLineColor(kGreen+2);
    g_122_plus2sigma->SetLineStyle(1);
    g_122_plus2sigma->SetLineWidth(-501);
    g_122_plus2sigma->SetMarkerColor(0);
@@ -415,7 +415,7 @@
    g_123_plus2sigma->SetTitle("Graph");
    g_123_plus2sigma->SetFillColor(3);
    // g_123_plus2sigma->SetFillStyle(3005);
-   g_123_plus2sigma->SetLineColor(8);
+   g_123_plus2sigma->SetLineColor(kGreen+2);
    g_123_plus2sigma->SetLineStyle(1);
    g_123_plus2sigma->SetLineWidth(-701);
    g_123_plus2sigma->SetMarkerColor(0);
@@ -455,7 +455,7 @@
    g_122_minus2sigma->SetTitle("G_122_Minus2sigma");
    g_122_minus2sigma->SetFillColor(3);
    // g_122_minus2sigma->SetFillStyle(3004);
-   g_122_minus2sigma->SetLineColor(8);
+   g_122_minus2sigma->SetLineColor(kGreen+2);
    g_122_minus2sigma->SetLineStyle(1);
    g_122_minus2sigma->SetLineWidth(701);
    g_122_minus2sigma->SetMarkerColor(0);
@@ -502,7 +502,7 @@
    g_123_minus2sigma->SetTitle("G_123_Minus2sigma");
    g_123_minus2sigma->SetFillColor(3);
    //g_123_minus2sigma->SetFillStyle(3005);
-   g_123_minus2sigma->SetLineColor(8);
+   g_123_minus2sigma->SetLineColor(kGreen+2);
    g_123_minus2sigma->SetLineStyle(1);
    g_123_minus2sigma->SetLineWidth(1001);
    g_123_minus2sigma->SetMarkerColor(0);
@@ -971,5 +971,5 @@
    c->cd();
    c->SaveAs("RA7_RPV_ExclusionLimit_plot1.pdf");
    c->SaveAs("RA7_RPV_ExclusionLimit_plot1.png");
-   c->SaveAs("RA7_RPV_ExclusionLimit_plot1.epg");
+   c->SaveAs("RA7_RPV_ExclusionLimit_plot1.eps");
 }
