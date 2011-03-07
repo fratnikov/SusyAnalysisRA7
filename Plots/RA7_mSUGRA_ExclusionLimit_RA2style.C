@@ -357,6 +357,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
 
    //grshade->SetFillStyle(3000);
    grshade->SetFillColor(kCyan-10);
+   grshade->SetLineColor(kBlue+3);
    grshade->SetLineStyle(4);
    grshade->SetLineWidth(3);
 
@@ -447,7 +448,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
       cout << " n " << n << endl;
      (*at)->DrawCopy("same");
       //  (*it)->Write();
-      cout << " here " << endl;
++      cout << " here " << endl;
       n++;
       }*/
 

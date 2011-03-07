@@ -493,7 +493,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
     TEV_sn_d0_1->Draw("same");
     TEV_sn_d0_2->SetLineColor(kBlue);
     TEV_sn_d0_2->SetLineWidth(3);  
-    TEV_sn_d0_2->SetLineStyle(6);  
+    TEV_sn_d0_2->SetLineStyle(4);  
     TEV_sn_d0_2->Draw("same");
   }
 
@@ -1050,8 +1050,8 @@ TLatex* constant_gluino_text(Int_t it,TF1& lngl){
 TLegend* makeStauLegend(Double_t txtsz,Int_t tanBeta_){
   Double_t ypos_1 = 0.86;
   Double_t ypos_2 = 0.88;
-  Double_t xpos_1 = 0.16;
-  Double_t xpos_2 = 0.17;
+  Double_t xpos_1 = 0.15;
+  Double_t xpos_2 = 0.16;
   if(tanBeta_ == 50){
     xpos_1 = 0.17;
     xpos_2 = 0.18;
