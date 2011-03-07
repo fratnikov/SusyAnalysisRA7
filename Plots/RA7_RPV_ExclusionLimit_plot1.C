@@ -345,7 +345,7 @@
    h_xsec_mSquark_vs_mGluino__1->SetContourLevel(19,96.30715);
    h_xsec_mSquark_vs_mGluino__1->SetLineStyle(0);
    h_xsec_mSquark_vs_mGluino__1->SetMarkerColor(0);
-   h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitle("m_{#tildeg}  (GeV)");
+   h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitle("m_{#tildeg}  [GeV/c^{2}]");
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetRange(1,20);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetNdivisions(509);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetLabelFont(42);
@@ -353,7 +353,7 @@
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetLabelSize(0.05);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitleSize(0.06);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitleFont(42);
-   h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitle("m_{#tildeq}  (GeV)");
+   h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitle("m_{#tildeq}  [GeV/c^{2}]");
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetRange(1,20);
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetNdivisions(509);
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetLabelFont(42);

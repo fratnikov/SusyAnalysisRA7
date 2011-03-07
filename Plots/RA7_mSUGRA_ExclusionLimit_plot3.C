@@ -2081,7 +2081,7 @@
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-   tex = new TLatex(13.62961,277.0205,"mSUGRA: tan#beta = 3, A_{0} = 0, #mu > 0");
+   tex = new TLatex(50, 280,"tan#beta = 3, A_{0} = 0, #mu > 0");
    tex->SetTextColor(0);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
