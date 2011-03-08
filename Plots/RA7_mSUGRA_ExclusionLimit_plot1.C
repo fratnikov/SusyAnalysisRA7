@@ -2,7 +2,9 @@
 #include <string>
 #include <iomanip>
 #include "ExclusionPlot.hh"
- 
+#include "tdrstyle.C"
+
+
 #include "TH1.h"
 #include "TH2.h"
 #include "TFile.h"
@@ -13,7 +15,11 @@
 #include <vector>
 #include "TMath.h"
 
-void ExclusionPlot(){
+void RA7_mSUGRA_ExclusionLimit_plot1(){
+
+  setTDRStyle();
+  
+
   gStyle->SetPalette(1);
 
   //get yield plot
@@ -158,7 +164,9 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   hist->Draw();  
   hist->GetXaxis()->SetTitle("m_{0} [GeV/c^{2}]");
   hist->GetYaxis()->SetTitle("m_{1/2} [GeV/c^{2}]");
-  hist->GetYaxis()->SetTitleOffset(1.);
+  hist->GetYaxis()->SetTitleOffset(1.1);
+  hist->GetXaxis()->SetTitleOffset(0.95);
+
   hist->GetXaxis()->SetNdivisions(506);
   //  if (tanBeta_ == 50)  hist->GetXaxis()->SetNdivisions(504);
   hist->GetYaxis()->SetNdivisions(506);
@@ -203,20 +211,14 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    NLO_exp->SetPoint(10,118.9717,267.5297);
    NLO_exp->SetPoint(11,122.5434,252.5792);
 
-   NLO_exp->SetPoint(12,116.8434,230.3713);
-   NLO_exp->SetPoint(13,109.8509,220.4703);
-   NLO_exp->SetPoint(14,105.8585,214.5297);
-   NLO_exp->SetPoint(15,103.78679,210.5693);
-   NLO_exp->SetPoint(16,98.72264,201.4109);
-   NLO_exp->SetPoint(17,93.65849,194.4802);
-   NLO_exp->SetPoint(18,83.99057,181.6089);
-   NLO_exp->SetPoint(19,75.70377,170.4703);
-   NLO_exp->SetPoint(20,79.99057,168.4901);
-   
-   NLO_exp->SetPoint(21,106.9226,204.3812);
-   NLO_exp->SetPoint(22,120.7491,225.5396);
-   NLO_exp->SetPoint(23,147.4019,199.9257);
-   NLO_exp->SetPoint(24,181.7,167.5);
+   NLO_exp->SetPoint(12,115.8434,230.3713);
+   NLO_exp->SetPoint(13,110,220);
+   NLO_exp->SetPoint(14,97.72264,201.4109);
+   NLO_exp->SetPoint(15,73.,170);
+   NLO_exp->SetPoint(16,75,170);
+   NLO_exp->SetPoint(17,123.75,222.6);
+   NLO_exp->SetPoint(18,147.4019,199.9257);
+   NLO_exp->SetPoint(19,181.7,167.5);
 
     Double_t *dum = 0;
     TPolyLine *NLO_obs = new TPolyLine(62,dum,dum,"");
@@ -225,34 +227,30 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
     NLO_obs->SetLineStyle(0);
     NLO_obs->SetLineWidth(5);
 
-   NLO_obs->SetPoint(0,-0.1150955,214);
-   NLO_obs->SetPoint(1,-0.1150955,214);
-   NLO_obs->SetPoint(2,4.718867,214);
-   NLO_obs->SetPoint(3,9.783018,214);
-   NLO_obs->SetPoint(4,41.77924,227.4901);
-   NLO_obs->SetPoint(5,71.70377,246.5891);
-   NLO_obs->SetPoint(6,80.68113,251.2921);
-   NLO_obs->SetPoint(7,86.66604,254.0149);
-   NLO_obs->SetPoint(8,91.73019,255.5);
-   NLO_obs->SetPoint(9,102.8585,256.5);
-   NLO_obs->SetPoint(10,116.9717,251.5297);
-   NLO_obs->SetPoint(11,120.5434,242.5792);
 
-   NLO_obs->SetPoint(12,115.8434,230.3713);
-   NLO_obs->SetPoint(13,109.8509,220.4703);
-   NLO_obs->SetPoint(14,105.8585,214.5297);
-   NLO_obs->SetPoint(15,103.78679,210.5693);
-   NLO_obs->SetPoint(16,98.72264,201.4109);
-   NLO_obs->SetPoint(17,93.65849,194.4802);
-   NLO_obs->SetPoint(18,83.99057,181.6089);
-   NLO_obs->SetPoint(19,75.70377,170.4703);
-   NLO_obs->SetPoint(20,79.99057,168.4901);
-   NLO_obs->SetPoint(21,106.9226,204.3812);
-   NLO_obs->SetPoint(22,117.7491,220.5396);
-   NLO_obs->SetPoint(23,137.4019,201.9257);
-   NLO_obs->SetPoint(24,171.7,167.5);
-
-
+  NLO_obs->SetPoint(0,-0.1150955,214);
+    NLO_obs->SetPoint(1,-0.1150955,214);
+    NLO_obs->SetPoint(2,4.718867,214);
+    NLO_obs->SetPoint(3,9.783018,214);
+    NLO_obs->SetPoint(4,41.77924,227.4901);
+    NLO_obs->SetPoint(5,71.70377,246.5891);
+    NLO_obs->SetPoint(6,80.68113,251.2921);
+    NLO_obs->SetPoint(7,86.66604,254.0149);
+    NLO_obs->SetPoint(8,91.73019,255.5);
+    NLO_obs->SetPoint(9,102.8585,256.5);
+    NLO_obs->SetPoint(10,116.9717,251.5297);
+    NLO_obs->SetPoint(11,120.5434,242.5792);
+    
+    NLO_obs->SetPoint(12,115.8434,230.3713);
+    NLO_obs->SetPoint(13,110,220);
+    NLO_obs->SetPoint(14,97.72264,201.4109);
+    NLO_obs->SetPoint(15,73.,170);
+    NLO_obs->SetPoint(16,75,170);
+    NLO_obs->SetPoint(17,106.9226,204.3812);
+    NLO_obs->SetPoint(18,119.9,218.4);
+    NLO_obs->SetPoint(19,137.4019,201.9257);
+    NLO_obs->SetPoint(20,171.7,167.5);
+    
 
 
   Double_t *dum = 0;
@@ -261,7 +259,9 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    LO_obs->SetLineColor(kBlack);
    LO_obs->SetLineStyle(5);
    LO_obs->SetLineWidth(4);
-   LO_obs->SetPoint(0,-0.1150955,209);
+
+
+  LO_obs->SetPoint(0,-0.1150955,209);
    LO_obs->SetPoint(1,-0.1150955,209);
    LO_obs->SetPoint(2,4.718867,209);
    LO_obs->SetPoint(3,9.783018,209);
@@ -275,19 +275,18 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    LO_obs->SetPoint(11,120.5434,242.5792);
 
    LO_obs->SetPoint(12,115.8434,230.3713);
-   LO_obs->SetPoint(13,109.8509,220.4703);
-   LO_obs->SetPoint(14,105.8585,214.5297);
-   LO_obs->SetPoint(15,103.78679,210.5693);
-   LO_obs->SetPoint(16,98.72264,201.4109);
-   LO_obs->SetPoint(17,93.65849,194.4802);
-   LO_obs->SetPoint(18,83.99057,181.6089);
-   LO_obs->SetPoint(19,75.70377,170.4703);
-   LO_obs->SetPoint(20,79.99057,168.4901);
-   LO_obs->SetPoint(21,106.9226,204.3812);
-   
-   LO_obs->SetPoint(22,116.7491,216.5396);
-   LO_obs->SetPoint(23,132.4019,201.9257);
-   LO_obs->SetPoint(24,167.7,167.5);
+   LO_obs->SetPoint(13,110,220);
+   LO_obs->SetPoint(14,97.72264,201.4109);
+   LO_obs->SetPoint(15,73.,170);
+   LO_obs->SetPoint(16,75,170);
+   LO_obs->SetPoint(17,116.7491,216.5396);
+   LO_obs->SetPoint(18,132.4019,201.9257);
+   LO_obs->SetPoint(19,167.7,167.5);
+
+
+    
+
+
 
     
  
@@ -299,7 +298,9 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    int n=47;
    TGraph *grshade = new TGraph;
    //first one
-   grshade->SetPoint(0,0,205);
+
+
+  grshade->SetPoint(0,0,205);
    grshade->SetPoint(1,4.718867,205);
    grshade->SetPoint(2,9.783018,205);
    grshade->SetPoint(3,41.77924,215.4901);
@@ -311,6 +312,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade->SetPoint(9,115.9717,242.5297);
    grshade->SetPoint(10,118.5434,232.5792);
    //here it goes in the gap
+
    grshade->SetPoint(11,116.8434,230.3713);
    grshade->SetPoint(12,109.8509,220.4703);
    grshade->SetPoint(13,105.8585,214.5297);
@@ -320,11 +322,15 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade->SetPoint(17,83.99057,181.6089);
    grshade->SetPoint(18,75.70377,170.4703);
    grshade->SetPoint(19,79.99057,168.4901);
+
    grshade->SetPoint(20,106.9226,204.3812);
+
+
    //second part of the curve
    grshade->SetPoint(21,118.7491,209.5396);
    grshade->SetPoint(22,152.4019,176.9257);
    grshade->SetPoint(23,161.7,167.5);
+
 
    //second one
    grshade->SetPoint(47,0,240);
@@ -338,6 +344,8 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade->SetPoint(39,103.8585,288.5);
    grshade->SetPoint(38,122.9717,282.5297);
    grshade->SetPoint(37,128.5434,272.5792);
+
+
    //here it goes in the gap
    grshade->SetPoint(36,116.8434,230.3713);
    grshade->SetPoint(35,109.8509,220.4703);
@@ -346,13 +354,21 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade->SetPoint(32,98.72264,201.4109);
    grshade->SetPoint(31,93.65849,194.4802);
    grshade->SetPoint(30,83.99057,181.6089);
+
+
    grshade->SetPoint(29,75.70377,170.4703);
    grshade->SetPoint(28,79.99057,168.4901);
    grshade->SetPoint(27,106.9226,204.3812);
    //second part of the curve
-   grshade->SetPoint(26,126.7491,236.5396);
-   grshade->SetPoint(25,145.4019,218.9257);
+//    grshade->SetPoint(26,126.7491,236.5396);
+//    grshade->SetPoint(25,145.4019,218.9257);
+//    grshade->SetPoint(24,197.7,167.5);
+
    grshade->SetPoint(24,197.7,167.5);
+   grshade->SetPoint(25,145.4019,218.9257);
+   grshade->SetPoint(26,131.9633,231.3664);
+
+
 
 
    //grshade->SetFillStyle(3000);
@@ -363,6 +379,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    //1sigma curve.....
    TGraph *grshade2 = new TGraph;
   //first one
+
    grshade2->SetPoint(0,0,215);
    grshade2->SetPoint(1,4.718867,215);
    grshade2->SetPoint(2,9.783018,215);
@@ -386,7 +403,8 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade2->SetPoint(19,79.99057,168.4901);
    grshade2->SetPoint(20,106.9226,204.3812);
    //second part of the curve
-   grshade2->SetPoint(21,118.7491,221.5396);
+   
+   grshade2->SetPoint(21,120.8,219.5);
    grshade2->SetPoint(22,146.4019,194.9257);
    grshade2->SetPoint(23,173.7,167.5);
 
@@ -414,9 +432,18 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade2->SetPoint(28,79.99057,168.4901);
    grshade2->SetPoint(27,106.9226,204.3812);
    //second part of the curve
-   grshade2->SetPoint(26,122.7491,230.5396);
-   grshade2->SetPoint(25,150.4019,203.9257);
-   grshade2->SetPoint(24,187.7,167.5);
+   // grshade2->SetPoint(26,122.7491,230.5396);
+   // grshade2->SetPoint(25,150.4019,203.9257);
+   //  grshade2->SetPoint(24,187.7,167.5);
+   grshade2->SetPoint(24,187.5987,167.5273);
+   grshade2->SetPoint(25,150.3783,203.9886);
+   grshade2->SetPoint(26,127.2091,226.3583);
+
+
+
+
+
+
 
 
    // grshade2->SetFillStyle(3000);

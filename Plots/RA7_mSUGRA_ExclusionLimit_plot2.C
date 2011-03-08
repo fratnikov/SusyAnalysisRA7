@@ -1,6 +1,8 @@
 {
 //=========Macro generated from canvas: c1/c1
 //=========  (Tue Oct 26 19:17:01 2010) by ROOT version5.18/00b
+#include "tdrstyle.C"
+  setTDRStyle();
 
   gStyle->SetPalette(1);
   gStyle->SetOptTitle(kFALSE);
@@ -72,7 +74,8 @@
    hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} x BR(>=3l) [pb]");
    hbranching->GetXaxis()->SetTitle("m_{0} [GeV/c^{2}]");
    hbranching->GetYaxis()->SetTitle("m_{1/2} [GeV/c^{2}]");
-   hbranching->GetYaxis()->SetTitleOffset(1.1);
+   hbranching->GetYaxis()->SetTitleOffset(1.0);
+   hbranching->GetXaxis()->SetTitleOffset(0.95);
 
    hbranching->Draw("colz");
 
@@ -82,7 +85,7 @@
    int n=47;
    TGraph *grshade = new TGraph;
    //first one
-   grshade->SetPoint(0,0,205);
+  grshade->SetPoint(0,0,205);
    grshade->SetPoint(1,4.718867,205);
    grshade->SetPoint(2,9.783018,205);
    grshade->SetPoint(3,41.77924,215.4901);
@@ -94,6 +97,7 @@
    grshade->SetPoint(9,115.9717,242.5297);
    grshade->SetPoint(10,118.5434,232.5792);
    //here it goes in the gap
+
    grshade->SetPoint(11,116.8434,230.3713);
    grshade->SetPoint(12,109.8509,220.4703);
    grshade->SetPoint(13,105.8585,214.5297);
@@ -103,11 +107,15 @@
    grshade->SetPoint(17,83.99057,181.6089);
    grshade->SetPoint(18,75.70377,170.4703);
    grshade->SetPoint(19,79.99057,168.4901);
+
    grshade->SetPoint(20,106.9226,204.3812);
+
+
    //second part of the curve
    grshade->SetPoint(21,118.7491,209.5396);
    grshade->SetPoint(22,152.4019,176.9257);
    grshade->SetPoint(23,161.7,167.5);
+
 
    //second one
    grshade->SetPoint(47,0,240);
@@ -121,6 +129,8 @@
    grshade->SetPoint(39,103.8585,288.5);
    grshade->SetPoint(38,122.9717,282.5297);
    grshade->SetPoint(37,128.5434,272.5792);
+
+
    //here it goes in the gap
    grshade->SetPoint(36,116.8434,230.3713);
    grshade->SetPoint(35,109.8509,220.4703);
@@ -129,13 +139,19 @@
    grshade->SetPoint(32,98.72264,201.4109);
    grshade->SetPoint(31,93.65849,194.4802);
    grshade->SetPoint(30,83.99057,181.6089);
+
+
    grshade->SetPoint(29,75.70377,170.4703);
    grshade->SetPoint(28,79.99057,168.4901);
    grshade->SetPoint(27,106.9226,204.3812);
    //second part of the curve
-   grshade->SetPoint(26,126.7491,236.5396);
-   grshade->SetPoint(25,145.4019,218.9257);
+//    grshade->SetPoint(26,126.7491,236.5396);
+//    grshade->SetPoint(25,145.4019,218.9257);
+//    grshade->SetPoint(24,197.7,167.5);
+
    grshade->SetPoint(24,197.7,167.5);
+   grshade->SetPoint(25,145.4019,218.9257);
+   grshade->SetPoint(26,131.9633,231.3664);
 
 
    //grshade->SetFillStyle(3000);
@@ -148,7 +164,7 @@
    //1sigma curve.....
    TGraph *grshade2 = new TGraph;
    //first one
-   grshade2->SetPoint(0,0,215);
+  grshade2->SetPoint(0,0,215);
    grshade2->SetPoint(1,4.718867,215);
    grshade2->SetPoint(2,9.783018,215);
    grshade2->SetPoint(3,41.77924,228.4901);
@@ -171,7 +187,8 @@
    grshade2->SetPoint(19,79.99057,168.4901);
    grshade2->SetPoint(20,106.9226,204.3812);
    //second part of the curve
-   grshade2->SetPoint(21,118.7491,221.5396);
+   
+   grshade2->SetPoint(21,120.8,219.5);
    grshade2->SetPoint(22,146.4019,194.9257);
    grshade2->SetPoint(23,173.7,167.5);
 
@@ -199,10 +216,12 @@
    grshade2->SetPoint(28,79.99057,168.4901);
    grshade2->SetPoint(27,106.9226,204.3812);
    //second part of the curve
-   grshade2->SetPoint(26,122.7491,230.5396);
-   grshade2->SetPoint(25,150.4019,203.9257);
-   grshade2->SetPoint(24,187.7,167.5);
-
+   // grshade2->SetPoint(26,122.7491,230.5396);
+   // grshade2->SetPoint(25,150.4019,203.9257);
+   //  grshade2->SetPoint(24,187.7,167.5);
+   grshade2->SetPoint(24,187.5987,167.5273);
+   grshade2->SetPoint(25,150.3783,203.9886);
+   grshade2->SetPoint(26,127.2091,226.3583);
 
    //grshade2->SetFillStyle(3000);
    grshade2->SetFillColor(kYellow);
@@ -225,11 +244,12 @@
    TH1 *dR = new TH2F("dR","dR",300,0,300,140,160,300);
    dR->SetStats(0);
    dR->GetXaxis()->SetTitle("m_{0} [GeV]");
-   dR->GetXaxis()->SetRange(1,244);
-   dR->GetXaxis()->SetTitleSize(0.05);
+    dR->GetXaxis()->SetRange(1,244);
+    // dR->GetXaxis()->SetTitleSize(0.05);
    dR->GetXaxis()->SetTitleOffset(0.9);
    dR->GetYaxis()->SetTitle("m_{1/2} [GeV]");
-   dR->GetYaxis()->SetTitleSize(0.05);
+   // dR->GetYaxis()->SetTitleSize(0.05);
+   dR->GetYaxis()->SetTitleOffset(0.9);
    dR->Draw("same");
    
 
@@ -256,20 +276,16 @@
    pline->SetPoint(10,118.9717,267.5297);
    pline->SetPoint(11,122.5434,252.5792);
 
-   pline->SetPoint(12,116.8434,230.3713);
-   pline->SetPoint(13,109.8509,220.4703);
-   pline->SetPoint(14,105.8585,214.5297);
-   pline->SetPoint(15,103.78679,210.5693);
-   pline->SetPoint(16,98.72264,201.4109);
-   pline->SetPoint(17,93.65849,194.4802);
-   pline->SetPoint(18,83.99057,181.6089);
-   pline->SetPoint(19,75.70377,170.4703);
-   pline->SetPoint(20,79.99057,168.4901);
-   
-   pline->SetPoint(21,106.9226,204.3812);
-   pline->SetPoint(22,120.7491,225.5396);
-   pline->SetPoint(23,147.4019,199.9257);
-   pline->SetPoint(24,181.7,167.5);
+   pline->SetPoint(12,115.8434,230.3713);
+   pline->SetPoint(13,110,220);
+   pline->SetPoint(14,97.72264,201.4109);
+   pline->SetPoint(15,73.,170);
+   pline->SetPoint(16,75,170);
+   pline->SetPoint(17,123.75,222.6);
+   pline->SetPoint(18,147.4019,199.9257);
+   pline->SetPoint(19,181.7,167.5);
+
+
 
 
   
@@ -295,19 +311,16 @@
    pline->SetPoint(11,120.5434,242.5792);
 
    pline->SetPoint(12,115.8434,230.3713);
-   pline->SetPoint(13,109.8509,220.4703);
-   pline->SetPoint(14,105.8585,214.5297);
-   pline->SetPoint(15,103.78679,210.5693);
-   pline->SetPoint(16,98.72264,201.4109);
-   pline->SetPoint(17,93.65849,194.4802);
-   pline->SetPoint(18,83.99057,181.6089);
-   pline->SetPoint(19,75.70377,170.4703);
-   pline->SetPoint(20,79.99057,168.4901);
-   pline->SetPoint(21,106.9226,204.3812);
-   
-   pline->SetPoint(22,116.7491,216.5396);
-   pline->SetPoint(23,132.4019,201.9257);
-   pline->SetPoint(24,167.7,167.5);
+   pline->SetPoint(13,110,220);
+   pline->SetPoint(14,97.72264,201.4109);
+   pline->SetPoint(15,73.,170);
+   pline->SetPoint(16,75,170);
+   pline->SetPoint(17,116.7491,216.5396);
+   pline->SetPoint(18,132.4019,201.9257);
+   pline->SetPoint(19,167.7,167.5);
+
+
+
 
    pline->Draw("");
 
@@ -348,20 +361,19 @@
    pline->SetPoint(10,116.9717,251.5297);
    pline->SetPoint(11,120.5434,242.5792);
 
+
+
    pline->SetPoint(12,115.8434,230.3713);
-   pline->SetPoint(13,109.8509,220.4703);
-   pline->SetPoint(14,105.8585,214.5297);
-   pline->SetPoint(15,103.78679,210.5693);
-   pline->SetPoint(16,98.72264,201.4109);
-   pline->SetPoint(17,93.65849,194.4802);
-   pline->SetPoint(18,83.99057,181.6089);
-   pline->SetPoint(19,75.70377,170.4703);
-   pline->SetPoint(20,79.99057,168.4901);
-   pline->SetPoint(21,106.9226,204.3812);
-  
-   pline->SetPoint(22,117.7491,220.5396);
-   pline->SetPoint(23,137.4019,201.9257);
-   pline->SetPoint(24,171.7,167.5);
+   pline->SetPoint(13,110,220);
+   pline->SetPoint(14,97.72264,201.4109);
+   pline->SetPoint(15,73.,170);
+   pline->SetPoint(16,75,170);
+   pline->SetPoint(17,106.9226,204.3812);
+   pline->SetPoint(18,119.9,218.4);
+   pline->SetPoint(19,137.4019,201.9257);
+   pline->SetPoint(20,171.7,167.5);
+
+
    pline->Draw("");
    
     
@@ -425,30 +437,41 @@
    pline->SetLineColor(kRed);
    pline->SetLineStyle(7);
    pline->SetLineWidth(5);
-   pline->SetPoint(0,0,200);
-   pline->SetPoint(1,41.77924,218.4901);
-   pline->SetPoint(2,71.70377,236.5891);
-   pline->SetPoint(3,80.68113,241.2921);
-   pline->SetPoint(4,86.66604,244.0149);
-   pline->SetPoint(5,91.73019,245.5);
-   pline->SetPoint(6,101.8585,245.5);
-   pline->SetPoint(7,105.7717,239.5297);
-   pline->SetPoint(8,107.8434,234.5792);
-   pline->SetPoint(9,107.8434,230.3713);
-   pline->SetPoint(10,104.8509,220.4703);
-   pline->SetPoint(11,101.8585,214.5297);
-   pline->SetPoint(12,99.78679,210.5693);
-   pline->SetPoint(13,94.72264,201.4109);
-   pline->SetPoint(14,89.65849,194.4802);
-   pline->SetPoint(15,79.99057,181.6089);
-   pline->SetPoint(16,71.70377,170.4703);
-   pline->SetPoint(17,79.99057,168.4901);
-   pline->SetPoint(18,106.9226,204.3812);
-   pline->SetPoint(19,114.7491,213.5396);
-   pline->SetPoint(20,130.4019,199.9257);
-   pline->SetPoint(21,164.7,167.5);
-   pline->SetPoint(22,244.8057,165.5198);
+
+
+
+
+   pline->SetPoint(0,0,172);
+   pline->SetPoint(1,0,172);
+   //  pline->SetPoint(2,0,170);
+    pline->SetPoint(2,48,210);
+   pline->SetPoint(3,55,220);
+   pline->SetPoint(4,80,237);
+   pline->SetPoint(5,90,241);
+   pline->SetPoint(6,100,242);
+   pline->SetPoint(7,105,241);
+   pline->SetPoint(8,109,230);
+   pline->SetPoint(9,105,220);
+   pline->SetPoint(10,100,210);
+   pline->SetPoint(11,72,170);
+   pline->SetPoint(12,75,170);
+   pline->SetPoint(13,115,213);
+   pline->SetPoint(14,130,202);
+   pline->SetPoint(15,150,183);
+   pline->SetPoint(16,163,168);
+   pline->SetPoint(17,244.8057,165.5198);
+
+  
    pline->Draw("");
+
+
+
+
+
+
+
+
+
 
    entry=leg->AddEntry(pline,"Tevatron excluded","l");
    entry->SetLineColor(2);
@@ -560,10 +583,10 @@
    TH1 *dR = new TH2F("dR","dR",300,0,300,140,160,300);
    dR->GetXaxis()->SetTitle("m_{0} [GeV]");
    dR->GetXaxis()->SetRange(1,244);
-   dR->GetXaxis()->SetTitleSize(0.05);
+   //  dR->GetXaxis()->SetTitleSize(0.05);
    dR->GetXaxis()->SetTitleOffset(0.9);
    dR->GetYaxis()->SetTitle("m_{1/2} [GeV]");
-   dR->GetYaxis()->SetTitleSize(0.05);
+   //  dR->GetYaxis()->SetTitleSize(0.05);
    dR->Draw("sameaxis");
    c1->Modified();
    c1->cd();

@@ -1,6 +1,8 @@
 {
 //=========Macro generated from canvas: c1/c1
 //=========  (Tue Oct 26 19:17:01 2010) by ROOT version5.18/00b
+#include "tdrstyle.C"
+  setTDRStyle();
 
   gStyle->SetPalette(1);
   gStyle->SetOptTitle(kFALSE);
@@ -1751,8 +1753,9 @@
    hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} x BR( #geq 3l) [pb]");
    hbranching->GetXaxis()->SetTitle("m_{0} [GeV/c^{2}]");
    hbranching->GetYaxis()->SetTitle("m_{1/2} [GeV/c^{2}]");
-   hbranching->GetYaxis()->SetTitleOffset(1.1);
-
+   hbranching->GetYaxis()->SetTitleOffset(1.0);
+   hbranching->GetXaxis()->SetTitleOffset(0.95);
+   hbranching->GetZaxis()->SetTitleOffset(0.9);
    hbranching->Draw("colz");
 
 
@@ -1786,33 +1789,31 @@
    pline->SetLineColor(kBlack);
    pline->SetLineStyle(5);
    pline->SetLineWidth(5);
-   pline->SetPoint(0,-0.1150955,209);
-   pline->SetPoint(1,-0.1150955,209);
-   pline->SetPoint(2,4.718867,209);
-   pline->SetPoint(3,9.783018,209);
-   pline->SetPoint(4,41.77924,222.4901);
-   pline->SetPoint(5,71.70377,241.5891);
-   pline->SetPoint(6,80.68113,246.2921);
-   pline->SetPoint(7,86.66604,249.0149);
-   pline->SetPoint(8,91.73019,250.5);
-   pline->SetPoint(9,102.8585,251.5);
-   pline->SetPoint(10,116.9717,246.5297);
-   pline->SetPoint(11,120.5434,242.5792);
+
+
+   pline->SetPoint(0,-0.1150955,225);
+   pline->SetPoint(1,-0.1150955,225);
+   pline->SetPoint(2,4.718867,225);
+   pline->SetPoint(3,9.783018,225);
+   pline->SetPoint(4,41.77924,240.4901);
+   pline->SetPoint(5,71.70377,259.5891);
+   pline->SetPoint(6,80.68113,264.2921);
+   pline->SetPoint(7,86.66604,267.0149);
+   pline->SetPoint(8,91.73019,268.5);
+   pline->SetPoint(9,103.8585,270.5);
+   pline->SetPoint(10,118.9717,267.5297);
+   pline->SetPoint(11,122.5434,252.5792);
 
    pline->SetPoint(12,115.8434,230.3713);
-   pline->SetPoint(13,109.8509,220.4703);
-   pline->SetPoint(14,105.8585,214.5297);
-   pline->SetPoint(15,103.78679,210.5693);
-   pline->SetPoint(16,98.72264,201.4109);
-   pline->SetPoint(17,93.65849,194.4802);
-   pline->SetPoint(18,83.99057,181.6089);
-   pline->SetPoint(19,75.70377,170.4703);
-   pline->SetPoint(20,79.99057,168.4901);
-   pline->SetPoint(21,106.9226,204.3812);
-   
-   pline->SetPoint(22,116.7491,216.5396);
-   pline->SetPoint(23,132.4019,201.9257);
-   pline->SetPoint(24,167.7,167.5);
+   pline->SetPoint(13,110,220);
+   pline->SetPoint(14,97.72264,201.4109);
+   pline->SetPoint(15,73.,170);
+   pline->SetPoint(16,75,170);
+   pline->SetPoint(17,123.75,222.6);
+   pline->SetPoint(18,147.4019,199.9257);
+   pline->SetPoint(19,181.7,167.5);
+
+
 
    pline->Draw("");
 
@@ -1837,33 +1838,30 @@
    pline->SetLineColor(kBlack);
    pline->SetLineStyle(0);
    pline->SetLineWidth(5);
-   pline->SetPoint(0,-0.1150955,214);
-   pline->SetPoint(1,-0.1150955,214);
-   pline->SetPoint(2,4.718867,214);
-   pline->SetPoint(3,9.783018,214);
-   pline->SetPoint(4,41.77924,227.4901);
-   pline->SetPoint(5,71.70377,246.5891);
-   pline->SetPoint(6,80.68113,251.2921);
-   pline->SetPoint(7,86.66604,254.0149);
-   pline->SetPoint(8,91.73019,255.5);
-   pline->SetPoint(9,102.8585,256.5);
-   pline->SetPoint(10,116.9717,251.5297);
+
+   pline->SetPoint(0,-0.1150955,209);
+   pline->SetPoint(1,-0.1150955,209);
+   pline->SetPoint(2,4.718867,209);
+   pline->SetPoint(3,9.783018,209);
+   pline->SetPoint(4,41.77924,222.4901);
+   pline->SetPoint(5,71.70377,241.5891);
+   pline->SetPoint(6,80.68113,246.2921);
+   pline->SetPoint(7,86.66604,249.0149);
+   pline->SetPoint(8,91.73019,250.5);
+   pline->SetPoint(9,102.8585,251.5);
+   pline->SetPoint(10,116.9717,246.5297);
    pline->SetPoint(11,120.5434,242.5792);
 
    pline->SetPoint(12,115.8434,230.3713);
-   pline->SetPoint(13,109.8509,220.4703);
-   pline->SetPoint(14,105.8585,214.5297);
-   pline->SetPoint(15,103.78679,210.5693);
-   pline->SetPoint(16,98.72264,201.4109);
-   pline->SetPoint(17,93.65849,194.4802);
-   pline->SetPoint(18,83.99057,181.6089);
-   pline->SetPoint(19,75.70377,170.4703);
-   pline->SetPoint(20,79.99057,168.4901);
-   pline->SetPoint(21,106.9226,204.3812);
-  
-   pline->SetPoint(22,117.7491,220.5396);
-   pline->SetPoint(23,137.4019,201.9257);
-   pline->SetPoint(24,171.7,167.5);
+   pline->SetPoint(13,110,220);
+   pline->SetPoint(14,97.72264,201.4109);
+   pline->SetPoint(15,73.,170);
+   pline->SetPoint(16,75,170);
+   pline->SetPoint(17,116.7491,216.5396);
+   pline->SetPoint(18,132.4019,201.9257);
+   pline->SetPoint(19,167.7,167.5);
+
+
    pline->Draw("");
 
 
@@ -1889,33 +1887,32 @@
    pline->SetLineStyle(2);
    pline->SetLineWidth(5);
 
-  pline->SetPoint(0,-0.1150955,225);
-   pline->SetPoint(1,-0.1150955,225);
-   pline->SetPoint(2,4.718867,225);
-   pline->SetPoint(3,9.783018,225);
-   pline->SetPoint(4,41.77924,240.4901);
-   pline->SetPoint(5,71.70377,259.5891);
-   pline->SetPoint(6,80.68113,264.2921);
-   pline->SetPoint(7,86.66604,267.0149);
-   pline->SetPoint(8,91.73019,268.5);
-   pline->SetPoint(9,103.8585,270.5);
-   pline->SetPoint(10,118.9717,267.5297);
-   pline->SetPoint(11,122.5434,252.5792);
 
-   pline->SetPoint(12,116.8434,230.3713);
-   pline->SetPoint(13,109.8509,220.4703);
-   pline->SetPoint(14,105.8585,214.5297);
-   pline->SetPoint(15,103.78679,210.5693);
-   pline->SetPoint(16,98.72264,201.4109);
-   pline->SetPoint(17,93.65849,194.4802);
-   pline->SetPoint(18,83.99057,181.6089);
-   pline->SetPoint(19,75.70377,170.4703);
-   pline->SetPoint(20,79.99057,168.4901);
-   
-   pline->SetPoint(21,106.9226,204.3812);
-   pline->SetPoint(22,120.7491,225.5396);
-   pline->SetPoint(23,147.4019,199.9257);
-   pline->SetPoint(24,181.7,167.5);
+  pline->SetPoint(0,-0.1150955,214);
+   pline->SetPoint(1,-0.1150955,214);
+   pline->SetPoint(2,4.718867,214);
+   pline->SetPoint(3,9.783018,214);
+   pline->SetPoint(4,41.77924,227.4901);
+   pline->SetPoint(5,71.70377,246.5891);
+   pline->SetPoint(6,80.68113,251.2921);
+   pline->SetPoint(7,86.66604,254.0149);
+   pline->SetPoint(8,91.73019,255.5);
+   pline->SetPoint(9,102.8585,256.5);
+   pline->SetPoint(10,116.9717,251.5297);
+   pline->SetPoint(11,120.5434,242.5792);
+
+
+
+   pline->SetPoint(12,115.8434,230.3713);
+   pline->SetPoint(13,110,220);
+   pline->SetPoint(14,97.72264,201.4109);
+   pline->SetPoint(15,73.,170);
+   pline->SetPoint(16,75,170);
+   pline->SetPoint(17,106.9226,204.3812);
+   pline->SetPoint(18,119.9,218.4);
+   pline->SetPoint(19,137.4019,201.9257);
+   pline->SetPoint(20,171.7,167.5);
+
 
   
    pline->Draw("");
@@ -1990,29 +1987,31 @@
    pline->SetLineColor(kWhite);
    pline->SetLineStyle(7);
    pline->SetLineWidth(5);
-   pline->SetPoint(0,0,200);
-   pline->SetPoint(1,41.77924,218.4901);
-   pline->SetPoint(2,71.70377,236.5891);
-   pline->SetPoint(3,80.68113,241.2921);
-   pline->SetPoint(4,86.66604,244.0149);
-   pline->SetPoint(5,91.73019,245.5);
-   pline->SetPoint(6,101.8585,245.5);
-   pline->SetPoint(7,105.7717,239.5297);
-   pline->SetPoint(8,107.8434,234.5792);
-   pline->SetPoint(9,107.8434,230.3713);
-   pline->SetPoint(10,104.8509,220.4703);
-   pline->SetPoint(11,101.8585,214.5297);
-   pline->SetPoint(12,99.78679,210.5693);
-   pline->SetPoint(13,94.72264,201.4109);
-   pline->SetPoint(14,89.65849,194.4802);
-   pline->SetPoint(15,79.99057,181.6089);
-   pline->SetPoint(16,71.70377,170.4703);
-   pline->SetPoint(17,79.99057,168.4901);
-   pline->SetPoint(18,106.9226,204.3812);
-   pline->SetPoint(19,114.7491,213.5396);
-   pline->SetPoint(20,130.4019,199.9257);
-   pline->SetPoint(21,164.7,167.5);
-   pline->SetPoint(22,244.8057,165.5198);
+
+
+   pline->SetPoint(0,0,172);
+   pline->SetPoint(1,0,172);
+   //  pline->SetPoint(2,0,170);
+    pline->SetPoint(2,48,210);
+   pline->SetPoint(3,55,220);
+   pline->SetPoint(4,80,237);
+   pline->SetPoint(5,90,241);
+   pline->SetPoint(6,100,242);
+   pline->SetPoint(7,105,241);
+   pline->SetPoint(8,109,230);
+   pline->SetPoint(9,105,220);
+   pline->SetPoint(10,100,210);
+   pline->SetPoint(11,72,170);
+   pline->SetPoint(12,75,170);
+   pline->SetPoint(13,115,213);
+   pline->SetPoint(14,130,202);
+   pline->SetPoint(15,150,183);
+   pline->SetPoint(16,163,168);
+   pline->SetPoint(17,244.8057,165.5198);
+
+
+
+  
    pline->Draw("");
 
    entry=leg->AddEntry(pline,"Tevatron Excluded","l");
@@ -2123,16 +2122,16 @@
    TH1 *dR = new TH2F("dR","dR",300,0,300,140,160,300);
    dR->GetXaxis()->SetTitle("m_{0} [GeV]");
    dR->GetXaxis()->SetRange(1,244);
-   dR->GetXaxis()->SetTitleSize(0.05);
+   // dR->GetXaxis()->SetTitleSize(0.05);
    dR->GetXaxis()->SetTitleOffset(0.9);
    dR->GetYaxis()->SetTitle("m_{1/2} [GeV]");
-   dR->GetYaxis()->SetTitleSize(0.05);
+   // dR->GetYaxis()->SetTitleSize(0.05);
    dR->Draw("sameaxis");
    c1->Modified();
    c1->cd();
    c1->SetSelected(c1);
    //c1->SetLogz();
-  c1->SetTickx();
+   c1->SetTickx();
    c1->SetTicky();
    c1->SaveAs("RA7_mSUGRA_ExclusionLimit_plot3.pdf");
    c1->SaveAs("RA7_mSUGRA_ExclusionLimit_plot3.png");
