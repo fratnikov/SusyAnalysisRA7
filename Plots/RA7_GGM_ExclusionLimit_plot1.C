@@ -2,6 +2,11 @@
 //=========Macro generated from canvas: c1/c1
 //=========  (Tue Oct 26 19:17:01 2010) by ROOT version5.18/00b
 
+
+#include "tdrstyle.C"
+  setTDRStyle();
+
+
   gStyle->SetPalette(1);
   gStyle->SetOptTitle(kFALSE);
   gStyle->SetPadRightMargin(0.16);  
@@ -47,8 +52,8 @@
    hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} [pb]");
    hbranching->GetXaxis()->SetTitle("Chargino Mass [GeV/c^{2}]");
    hbranching->GetYaxis()->SetTitle("Gluino Mass [GeV/c^{2}]");
-   hbranching->GetYaxis()->SetTitleOffset(1.5);
-
+    hbranching->GetYaxis()->SetTitleOffset(1.1);
+    hbranching->GetXaxis()->SetTitleOffset(0.9);
 
    hbranching->Draw("colz");
 
