@@ -535,7 +535,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
-  TLatex* cmslabel = new TLatex(10.,405.,"CMS preliminary");
+  TLatex* cmslabel = new TLatex(10.,405., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
   cmslabel->SetTextSize(0.05);
   cmslabel->Draw("same");
 
@@ -600,8 +600,10 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   
   
   cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.pdf");
-  cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.png");
-  cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.eps");
+  if (!getenv ("NOPRELIMINARY")) {
+    cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.png");
+    cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.eps");
+  }
  
   output->Write();
   output->Close();

@@ -6,6 +6,8 @@
 #include "tdrstyle.C"
   setTDRStyle();
 
+  bool preliminary = !getenv ("NOPRELIMINARY");
+
 
   gStyle->SetPalette(1);
   gStyle->SetOptTitle(kFALSE);
@@ -318,7 +320,7 @@ Double_t *dum = 0;
    tex->SetLineWidth(2);
    tex->Draw();
    // tex = new TLatex(coord,1450,"CMS preliminary");
-   tex = new TLatex(340,1600,"CMS preliminary");
+   tex = new TLatex(340,1600,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
@@ -360,12 +362,8 @@ Double_t *dum = 0;
    c1->SetTickx();
    c1->SetTicky();
    c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.pdf");
-   c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.png");
-   c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.eps");
-
-
-   
-
-
-
+   if (!preliminary) {
+     c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.png");
+     c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.eps");
+   }
 }

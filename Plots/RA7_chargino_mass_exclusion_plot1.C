@@ -2,7 +2,12 @@
 //=========Macro generated from canvas: c1/c1
 //=========  (Thu Mar  3 14:17:04 2011) by ROOT version5.27/06a
 
-gStyle->SetMarkerSize(0);
+#include "tdrstyle.C"
+  setTDRStyle();
+
+  bool preliminary = !getenv ("NOPRELIMINARY");
+
+  gStyle->SetMarkerSize(0);
 
    TCanvas *c1 = new TCanvas("c1", "c1",14,48,1200,900);
    gStyle->SetOptStat(0);
@@ -467,7 +472,7 @@ gStyle->SetMarkerSize(0);
 
    leg->Draw();
 
-   TLatex *   tex = new TLatex(105,10,"CMS preliminary");
+   TLatex *   tex = new TLatex(105,10,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
@@ -511,13 +516,13 @@ gStyle->SetMarkerSize(0);
    tex->SetLineWidth(2);
    tex->SetTextFont(42);
    tex->Draw();
-      tex = new TLatex(160,8,"mSUGRA: m_{0}=60 GeV/c^{2},");
+   tex = new TLatex(160,8,"tan#beta=3, A_{0}=0, #mu>0,");
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->SetTextFont(42);
    tex->Draw();
-   tex = new TLatex(160,7.3,"tan#beta=3, A_{0}=0, #mu>0");
+      tex = new TLatex(160,7.3,"m_{0}=60 GeV/c^{2}");
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
@@ -527,6 +532,8 @@ gStyle->SetMarkerSize(0);
    c1->cd();
    c1->SetSelected(c1);
    c1->SaveAs("RA7_chargino_mass_exclusion_plot1.pdf");
-   c1->SaveAs("RA7_chargino_mass_exclusion_plot1.png");
-   c1->SaveAs("RA7_chargino_mass_exclusion_plot1.eps");
+   if (preliminary) {
+     c1->SaveAs("RA7_chargino_mass_exclusion_plot1.png");
+     c1->SaveAs("RA7_chargino_mass_exclusion_plot1.eps");
+   }
 }
