@@ -216,9 +216,9 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    NLO_exp->SetPoint(16,75,170);
    NLO_exp->SetPoint(17,123.75,222.6);
    NLO_exp->SetPoint(18,147.4019,199.9257);
-   NLO_exp->SetPoint(19,181.7,167.5);
-
-
+   //NLO_exp->SetPoint(19,181.7,167.5);
+   // NLO_exp->SetPoint(19,183.4054,165.9157);
+   NLO_exp->SetPoint(19,183.6767,165.6425);
 
 
 
@@ -251,9 +251,9 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    NLO_obs->SetPoint(17,106.9226,204.3812);
    NLO_obs->SetPoint(18,119.9,218.4);
    NLO_obs->SetPoint(19,137.4019,201.9257);
-   NLO_obs->SetPoint(20,171.7,167.5);
-
-
+   //NLO_obs->SetPoint(20,171.7,167.5);
+   // NLO_obs->SetPoint(20,173.0135,166.3221);
+   NLO_obs->SetPoint(20,173.2085,166.0671);
 
 
 //    double sn_m0[14]= {0,  0, 48, 55, 80, 90,100,105,109,105,100,  72 , 55,0};
@@ -295,9 +295,9 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    LO_obs->SetPoint(16,75,170);
    LO_obs->SetPoint(17,116.7491,216.5396);
    LO_obs->SetPoint(18,132.4019,201.9257);
-   LO_obs->SetPoint(19,167.7,167.5);
-
-
+   //LO_obs->SetPoint(19,167.7,167.5);
+   // LO_obs->SetPoint(19,168.9139,166.5254);
+   LO_obs->SetPoint(19,169.1471,166.2413);
     
  
 
@@ -308,78 +308,56 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    int n=47;
    TGraph *grshade = new TGraph;
    //first one
-   grshade->SetPoint(0,0,205);
-   grshade->SetPoint(1,4.718867,205);
-   grshade->SetPoint(2,9.783018,205);
-   grshade->SetPoint(3,41.77924,215.4901);
-   grshade->SetPoint(4,71.70377,234.5891);
-   grshade->SetPoint(5,80.68113,239.2921);
-   grshade->SetPoint(6,86.66604,242.0149);
-   grshade->SetPoint(7,91.73019,244.5);
-   grshade->SetPoint(8,103.8585,247.5);
-   grshade->SetPoint(9,115.9717,242.5297);
-   grshade->SetPoint(10,118.5434,232.5792);
-   //here it goes in the gap
 
-   grshade->SetPoint(11,116.8434,230.3713);
-   grshade->SetPoint(12,109.8509,220.4703);
-   grshade->SetPoint(13,105.8585,214.5297);
-   grshade->SetPoint(14,103.78679,210.5693);
-   grshade->SetPoint(15,98.72264,201.4109);
-   grshade->SetPoint(16,93.65849,194.4802);
-   grshade->SetPoint(17,83.99057,181.6089);
-   grshade->SetPoint(18,75.70377,170.4703);
-   grshade->SetPoint(19,79.99057,168.4901);
+  grshade->SetPoint(0,-0.0007023795,205.0267);
+   grshade->SetPoint(1,4.699516,205.0267);
+   grshade->SetPoint(2,9.76838,205.0267);
+   grshade->SetPoint(3,41.56398,215.5438);
+   grshade->SetPoint(4,71.42419,234.7489);
+   grshade->SetPoint(5,80.64031,239.4739);
+   grshade->SetPoint(6,86.3543,242.0143);
+   grshade->SetPoint(7,91.51532,244.5546);
+   grshade->SetPoint(8,103.8649,247.8063);
+   grshade->SetPoint(9,115.938,242.7256);
+   grshade->SetPoint(10,118.4264,232.5642);
+   grshade->SetPoint(11,116.491,230.4303);
+   grshade->SetPoint(12,109.5789,220.6245);
+   grshade->SetPoint(13,105.8003,214.7817);
+   grshade->SetPoint(14,103.5884,210.8187);
+   grshade->SetPoint(15,98.51957,201.7242);
+   grshade->SetPoint(16,93.35854,194.8653);
+   grshade->SetPoint(17,83.86595,182.2143);
+   grshade->SetPoint(18,75.57144,170.9351);
+   grshade->SetPoint(19,79.71869,169.1061);
+   grshade->SetPoint(20,106.7219,204.6203);
+   grshade->SetPoint(21,118.4264,209.701);
+   grshade->SetPoint(22,151.7887,177.4893);
+   grshade->SetPoint(23,162.8547,166.4699);
+   grshade->SetPoint(24,200.2658,164.9566);
+   grshade->SetPoint(25,144.7845,219.1511);
+   grshade->SetPoint(26,131.4211,231.4972);
+   grshade->SetPoint(27,106.7219,204.6203);
+   grshade->SetPoint(28,79.71869,169.1061);
+   grshade->SetPoint(29,75.57144,170.9351);
+   grshade->SetPoint(30,83.86595,182.2143);
+   grshade->SetPoint(31,93.35854,194.8653);
+   grshade->SetPoint(32,98.51957,201.7242);
+   grshade->SetPoint(33,103.5884,210.8187);
+   grshade->SetPoint(34,105.8003,214.7817);
+   grshade->SetPoint(35,109.5789,220.6245);
+   grshade->SetPoint(36,116.491,230.4303);
+   grshade->SetPoint(37,127.919,272.8542);
+   grshade->SetPoint(38,122.5736,282.66);
+   grshade->SetPoint(39,103.8649,288.452);
+   grshade->SetPoint(40,91.51532,287.7407);
+   grshade->SetPoint(41,86.3543,285.2003);
+   grshade->SetPoint(42,80.64031,282.3043);
+   grshade->SetPoint(43,71.42419,275.7502);
+   grshade->SetPoint(44,41.56398,255.8338);
+   grshade->SetPoint(45,9.76838,240.1852);
+   grshade->SetPoint(46,4.699516,240.1852);
+   grshade->SetPoint(47,-0.0007023795,240.1852);
 
-
-
-
-
-
-   grshade->SetPoint(20,106.9226,204.3812);
-
-
-   //second part of the curve
-   grshade->SetPoint(21,118.7491,209.5396);
-   grshade->SetPoint(22,152.4019,176.9257);
-   grshade->SetPoint(23,161.7,167.5);
-
-
-   //second one
-   grshade->SetPoint(47,0,240);
-   grshade->SetPoint(46,4.718867,240);
-   grshade->SetPoint(45,9.783018,240);
-   grshade->SetPoint(44,41.77924,255.4901);
-   grshade->SetPoint(43,71.70377,275.5891);
-   grshade->SetPoint(42,80.68113,282.2921);
-   grshade->SetPoint(41,86.66604,285.0149);
-   grshade->SetPoint(40,91.73019,287.5);
-   grshade->SetPoint(39,103.8585,288.5);
-   grshade->SetPoint(38,122.9717,282.5297);
-   grshade->SetPoint(37,128.5434,272.5792);
-
-
-   //here it goes in the gap
-   grshade->SetPoint(36,116.8434,230.3713);
-   grshade->SetPoint(35,109.8509,220.4703);
-   grshade->SetPoint(34,105.8585,214.5297);
-   grshade->SetPoint(33,103.78679,210.5693);
-   grshade->SetPoint(32,98.72264,201.4109);
-   grshade->SetPoint(31,93.65849,194.4802);
-   grshade->SetPoint(30,83.99057,181.6089);
-
-
-   grshade->SetPoint(29,75.70377,170.4703);
-   grshade->SetPoint(28,79.99057,168.4901);
-   grshade->SetPoint(27,106.9226,204.3812);
-   //second part of the curve
-//    grshade->SetPoint(26,126.7491,236.5396);
-//    grshade->SetPoint(25,145.4019,218.9257);
-//    grshade->SetPoint(24,197.7,167.5);
-
-   grshade->SetPoint(24,197.7,167.5);
-   grshade->SetPoint(25,145.4019,218.9257);
-   grshade->SetPoint(26,131.9633,231.3664);
 
 
 
@@ -391,7 +369,12 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
 
    //1sigma curve.....
    TGraph *grshade2 = new TGraph;
-  //first one
+ 
+
+
+
+
+   //first one
    grshade2->SetPoint(0,0,215);
    grshade2->SetPoint(1,4.718867,215);
    grshade2->SetPoint(2,9.783018,215);
@@ -403,11 +386,12 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade2->SetPoint(8,103.8585,257.5);
    grshade2->SetPoint(9,115.9717,253.5297);
    grshade2->SetPoint(10,118.5434,245.5792);
+
    //here it goes in the gap
    grshade2->SetPoint(11,116.8434,230.3713);
    grshade2->SetPoint(12,109.8509,220.4703);
    grshade2->SetPoint(13,105.8585,214.5297);
-   grshade2->SetPoint(14,103.78679,210.5693);
+   grshade2->SetPoint(14,103.7868,210.5693);
    grshade2->SetPoint(15,98.72264,201.4109);
    grshade2->SetPoint(16,93.65849,194.4802);
    grshade2->SetPoint(17,83.99057,181.6089);
@@ -415,41 +399,38 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
    grshade2->SetPoint(19,79.99057,168.4901);
    grshade2->SetPoint(20,106.9226,204.3812);
    //second part of the curve
-   
    grshade2->SetPoint(21,120.8,219.5);
    grshade2->SetPoint(22,146.4019,194.9257);
-   grshade2->SetPoint(23,173.7,167.5);
-
-   //second one
-   grshade2->SetPoint(47,0,232);
-   grshade2->SetPoint(46,4.718867,232);
-   grshade2->SetPoint(45,9.783018,232);
-   grshade2->SetPoint(44,41.77924,248.4901);
-   grshade2->SetPoint(43,71.70377,267.5891);
-   grshade2->SetPoint(42,80.68113,274.2921);
-   grshade2->SetPoint(41,86.66604,277.0149);
-   grshade2->SetPoint(40,91.73019,278.5);
-   grshade2->SetPoint(39,103.8585,280.5);
-   grshade2->SetPoint(38,120.9717,274.5297);
-   grshade2->SetPoint(37,125.5434,262.5792);
-   //here it goes in the gap
-   grshade2->SetPoint(36,116.8434,230.3713);
-   grshade2->SetPoint(35,109.8509,220.4703);
-   grshade2->SetPoint(34,105.8585,214.5297);
-   grshade2->SetPoint(33,103.78679,210.5693);
-   grshade2->SetPoint(32,98.72264,201.4109);
-   grshade2->SetPoint(31,93.65849,194.4802);
-   grshade2->SetPoint(30,83.99057,181.6089);
-   grshade2->SetPoint(29,75.70377,170.4703);
-   grshade2->SetPoint(28,79.99057,168.4901);
-   grshade2->SetPoint(27,106.9226,204.3812);
+   grshade2->SetPoint(23,175.2678,165.9909);
    //second part of the curve
-   // grshade2->SetPoint(26,122.7491,230.5396);
-   // grshade2->SetPoint(25,150.4019,203.9257);
-   //  grshade2->SetPoint(24,187.7,167.5);
-   grshade2->SetPoint(24,187.5987,167.5273);
+   grshade2->SetPoint(24,189.6831,165.4139);
    grshade2->SetPoint(25,150.3783,203.9886);
    grshade2->SetPoint(26,127.2091,226.3583);
+   //here it goes in the gap
+   grshade2->SetPoint(27,106.9226,204.3812);
+   grshade2->SetPoint(28,79.99057,168.4901);
+   grshade2->SetPoint(29,75.70377,170.4703);
+   grshade2->SetPoint(30,83.99057,181.6089);
+   grshade2->SetPoint(31,93.65849,194.4802);
+   grshade2->SetPoint(32,98.72264,201.4109);
+   grshade2->SetPoint(33,103.7868,210.5693);
+   grshade2->SetPoint(34,105.8585,214.5297);
+   grshade2->SetPoint(35,109.8509,220.4703);
+   grshade2->SetPoint(36,116.8434,230.3713);
+   //second one
+   grshade2->SetPoint(37,125.5434,262.5792);
+   grshade2->SetPoint(38,120.9717,274.5297);
+   grshade2->SetPoint(39,103.8585,280.5);
+   grshade2->SetPoint(40,91.73019,278.5);
+   grshade2->SetPoint(41,86.66604,277.0149);
+   grshade2->SetPoint(42,80.68113,274.2921);
+   grshade2->SetPoint(43,71.70377,267.5891);
+   grshade2->SetPoint(44,41.77924,248.4901);
+   grshade2->SetPoint(45,9.783018,232);
+   grshade2->SetPoint(46,4.718867,232);
+   grshade2->SetPoint(47,0,232);
+   
+
 
    // grshade2->SetFillStyle(3000);
    
@@ -484,7 +465,8 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
       }*/
 
   
-  TLegend* myleg = new TLegend(0.24,0.60,0.58,0.90,"    95% C.L. Limits:","brNDC");
+   // TLegend* myleg = new TLegend(0.24,0.60,0.58,0.90,"    95% C.L. Limits:","brNDC");
+  TLegend* myleg = new TLegend(0.239967,0.618119,0.579431,0.885321,"    95% C.L. Limits:","brNDC");
   myleg->SetFillColor(0); 
   myleg->SetShadowColor(0);
   myleg->SetTextSize(0.035);
@@ -1106,7 +1088,8 @@ TLegend* makeStauLegend(Double_t txtsz,Int_t tanBeta_){
 
 
 TLegend* makeExpLegend(TGraph& sg_gr, TGraph& sgd_gr,TGraph& ch_gr,TGraph& sl_gr,TGraph& tev_sn,Double_t txtsz,Int_t tanbeta){
-  TLegend* legexp = new TLegend(0.63,0.62,0.91,0.83,NULL,"brNDC");
+  //  TLegend* legexp = new TLegend(0.63,0.62,0.91,0.83,NULL,"brNDC");
+  TLegend* legexp = new TLegend(0.605351,0.625,0.885452,0.876147,NULL,"brNDC");
   legexp->SetFillColor(0);
   legexp->SetShadowColor(0);
   legexp->SetTextSize(txtsz);
