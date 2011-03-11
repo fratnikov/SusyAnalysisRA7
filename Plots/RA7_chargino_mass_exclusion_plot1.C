@@ -4,6 +4,10 @@
 
 #include "tdrstyle.C"
   setTDRStyle();
+  tdrStyle->SetPadTopMargin(0.08);
+  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadLeftMargin(0.12);
+  tdrStyle->SetPadRightMargin(0.05);
 
   bool preliminary = !getenv ("NOPRELIMINARY");
 
@@ -64,11 +68,12 @@
    Graph1->SetMaximum(10);
    Graph1->SetDirectory(0);
    Graph1->SetStats(0);
-   Graph1->GetXaxis()->SetTitle("Chargino Mass [GeV/c^{2}]");
+   Graph1->GetXaxis()->SetTitle("Chargino Mass  (GeV/c^{2})  ");
    Graph1->GetXaxis()->SetRange(10,90);
-   Graph1->GetXaxis()->CenterTitle(true);
-   Graph1->GetYaxis()->SetTitle("#sigma x BR( #geq3l) [pb]");
-   Graph1->GetYaxis()->CenterTitle(true);
+   //   Graph1->GetXaxis()->CenterTitle(true);
+   Graph1->GetYaxis()->SetTitle("#sigma #times BR( #geq3l)  (pb)  ");
+   Graph1->GetYaxis()->SetTitleOffset (0.8);
+   //   Graph1->GetYaxis()->CenterTitle(true);
    graph->SetHistogram(Graph1);
    
    graph->Draw("ac");
@@ -352,10 +357,10 @@
    Graph167->SetMaximum(10);
    Graph167->SetDirectory(0);
    Graph167->SetStats(0);
-   Graph167->GetXaxis()->SetTitle("Chargino Mass [GeV/c^{2}]");
+   Graph167->GetXaxis()->SetTitle("Chargino Mass (GeV/c^{2})");
    Graph167->GetXaxis()->SetRange(10,90);
    Graph167->GetXaxis()->CenterTitle(true);
-   Graph167->GetYaxis()->SetTitle("#sigma x BR( #geq3l) [pb]");
+   Graph167->GetYaxis()->SetTitle("#sigma x BR( #geq3l) (pb)");
    Graph167->GetYaxis()->CenterTitle(true);
    graph->SetHistogram(Graph167);
    
@@ -422,7 +427,7 @@
    
    graph->Draw("cp");
    
-   TLegend *leg = new TLegend(0.62,0.40,0.95,0.65,"95% C.L. Limits:","brNDC");
+   TLegend *leg = new TLegend(0.55,0.40,0.9,0.65,"95% C.L. Limits:","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
    leg->SetTextSize(0.04);
@@ -475,14 +480,14 @@
    TLatex *   tex = new TLatex(105,10,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(160,10,"#sqrt{s}=7 TeV, L=35pb^{-1}");
+   tex = new TLatex(150,10,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
 

@@ -162,8 +162,8 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   if (tanBeta_ == 50) m0min=200;
   TH2D* hist = new TH2D("h","h",100,0,300,100,150,400);
   hist->Draw();  
-  hist->GetXaxis()->SetTitle("m_{0} [GeV/c^{2}]");
-  hist->GetYaxis()->SetTitle("m_{1/2} [GeV/c^{2}]");
+  hist->GetXaxis()->SetTitle("m_{0}  (GeV/c^{2})   ");
+  hist->GetYaxis()->SetTitle("m_{1/2}  (GeV/c^{2})   ");
   hist->GetYaxis()->SetTitleOffset(1.1);
   hist->GetXaxis()->SetTitleOffset(0.95);
 

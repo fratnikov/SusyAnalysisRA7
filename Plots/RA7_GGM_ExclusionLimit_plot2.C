@@ -3,12 +3,14 @@
 //=========  (Tue Oct 26 19:17:01 2010) by ROOT version5.18/00b
 #include "tdrstyle.C"
   setTDRStyle();
+  tdrStyle->SetPadTopMargin(0.08);
+  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadRightMargin(0.18);
 
 
   gStyle->SetPalette(1);
   gStyle->SetOptTitle(kFALSE);
-  gStyle->SetPadRightMargin(0.16);  
-  gStyle->SetPadLeftMargin(0.13); 
 
   // const Int_t NRGBs = 5;
   // const Int_t NCont = 255;
@@ -239,35 +241,10 @@
    hbranching->SetEntries(219);
  
 
-
- //   hbranching->GetZaxis()->SetRangeUser(0,35);
-//    hbranching->SetEntries(420);
-//    hbranching->SetStats(0) ;
-//    hbranching->SetContour(20);
-//    hbranching->SetContourLevel(0,0);
-//    hbranching->SetContourLevel(1,2.6507);
-//    hbranching->SetContourLevel(2,5.3014);
-//    hbranching->SetContourLevel(3,7.952099);
-//    hbranching->SetContourLevel(4,10.6028);
-//    hbranching->SetContourLevel(5,13.2535);
-//    hbranching->SetContourLevel(6,15.9042);
-//    hbranching->SetContourLevel(7,18.5549);
-//    hbranching->SetContourLevel(8,21.2056);
-//    hbranching->SetContourLevel(9,23.8563);
-//    hbranching->SetContourLevel(10,26.507);
-//    hbranching->SetContourLevel(11,29.1577);
-//    hbranching->SetContourLevel(12,31.8084);
-//    hbranching->SetContourLevel(13,34.4591);
-//    hbranching->SetContourLevel(14,37.1098);
-//    hbranching->SetContourLevel(15,39.7605);
-//    hbranching->SetContourLevel(16,42.4112);
-//    hbranching->SetContourLevel(17,45.0619);
-//    hbranching->SetContourLevel(18,47.7126);
-//    hbranching->SetContourLevel(19,50.3633);
    hbranching->GetZaxis()->SetRangeUser(0,0.6);
-   hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} [pb]");
-   hbranching->GetXaxis()->SetTitle("Chargino Mass [GeV/c^{2}]");
-   hbranching->GetYaxis()->SetTitle("Gluino Mass [GeV/c^{2}]");
+   hbranching->GetZaxis()->SetTitle(" #sigma_{NLO}  (pb)   ");
+   hbranching->GetXaxis()->SetTitle("Chargino Mass  (GeV/c^{2})   ");
+   hbranching->GetYaxis()->SetTitle("Gluino Mass  (GeV/c^{2})   ");
     hbranching->GetYaxis()->SetTitleOffset(1.1);
     hbranching->GetXaxis()->SetTitleOffset(0.9);
 
@@ -433,10 +410,10 @@
 
   int coord=520;
   //   TLatex *   tex = new TLatex(coord,1400,"#sqrt{s}=7TeV, L=35pb^{-1}");
-   TLatex *   tex = new TLatex(600,1600,"#sqrt{s}=7TeV, L=35pb^{-1}");
+   TLatex *   tex = new TLatex(600,1600,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
@@ -444,7 +421,7 @@
    tex = new TLatex(340,1600,"CMS preliminary");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();

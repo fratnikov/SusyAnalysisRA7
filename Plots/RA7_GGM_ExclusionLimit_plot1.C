@@ -5,41 +5,17 @@
 
 #include "tdrstyle.C"
   setTDRStyle();
+  tdrStyle->SetPadTopMargin(0.08);
+  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadRightMargin(0.05);
 
   bool preliminary = !getenv ("NOPRELIMINARY");
 
 
-  gStyle->SetPalette(1);
-  gStyle->SetOptTitle(kFALSE);
-  gStyle->SetPadRightMargin(0.16);  
-  gStyle->SetPadLeftMargin(0.13); 
-
-  // const Int_t NRGBs = 5;
-  // const Int_t NCont = 255;
-  
-  // Double_t stops[NRGBs] = { 0.00, 0.2, 0.4, 0.7, 1.00 };
-  // Double_t red[NRGBs]   = { 0.00, 0.00, 0.87, 1.00, 0.61 };
-  // Double_t green[NRGBs] = { 0.00, 0.81, 1.00, 0.20, 0.00 };
-  // Double_t blue[NRGBs]  = { 0.61, 1.00, 0.12, 0.00, 0.00 };
-  // TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
-  // gStyle->SetNumberContours(NCont);
-
-
-//   const Int_t NRGBs = 2;
-//   const Int_t NCont = 255;
-  
-//   Double_t stops[NRGBs] = { 0.00,  1.00 };
-//   Double_t red[NRGBs]   = { 0.00, 0.71 };
-//   Double_t green[NRGBs] = { 0.00, 0.00 };
-//   Double_t blue[NRGBs]  = { 0.71, 0.00 };
-//   TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
-//   gStyle->SetNumberContours(NCont);
-
-
-
    TCanvas *c1 = new TCanvas("c1", "c1",29,28,1100,800);
    gStyle->SetOptStat(0);
-   c1->Range(-30.5,142.5,274.5,317.5);
+   //   c1->Range(-30.5,142.5,274.5,317.5);
    c1->SetFillColor(0);
    c1->SetBorderMode(0);
    c1->SetBorderSize(2);
@@ -51,13 +27,12 @@
    hbranching->SetEntries(0);
  
    hbranching->GetZaxis()->SetRangeUser(0,3.5);
-   hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} [pb]");
-   hbranching->GetXaxis()->SetTitle("Chargino Mass [GeV/c^{2}]");
-   hbranching->GetYaxis()->SetTitle("Gluino Mass [GeV/c^{2}]");
+   hbranching->GetXaxis()->SetTitle("Chargino Mass  (GeV/c^{2})   ");
+   hbranching->GetYaxis()->SetTitle("Gluino Mass  (GeV/c^{2})   ");
     hbranching->GetYaxis()->SetTitleOffset(1.1);
     hbranching->GetXaxis()->SetTitleOffset(0.9);
 
-   hbranching->Draw("colz");
+   hbranching->Draw("");
 
 
 
@@ -311,11 +286,10 @@ Double_t *dum = 0;
 
 
    int coord=525;
-   //   TLatex *   tex = new TLatex(coord,1400,"#sqrt{s}=7TeV, L=35pb^{-1}");
-   TLatex *   tex = new TLatex(600,1600,"#sqrt{s}=7TeV, L=35pb^{-1}");
+   TLatex *   tex = new TLatex(600,1600,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
@@ -323,7 +297,7 @@ Double_t *dum = 0;
    tex = new TLatex(340,1600,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
@@ -347,7 +321,7 @@ Double_t *dum = 0;
 //Primitive: xaxis/m_{0} [GeV]. You must implement TAxis::SavePrimitive
    
    TH1 *dR = new TH2F("dR","dR",300,0,300,140,160,300);
-   dR->GetXaxis()->SetTitle("m_{chargino} [GeV]");
+   dR->GetXaxis()->SetTitle("m_{#tilde{#chi^{#pm}_{1}}} [GeV]");
    dR->GetXaxis()->SetRange(1,244);
    dR->GetXaxis()->SetTitleSize(0.05);
    dR->GetXaxis()->SetTitleOffset(0.9);

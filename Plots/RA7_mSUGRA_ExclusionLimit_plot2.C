@@ -3,11 +3,16 @@
 //=========  (Tue Oct 26 19:17:01 2010) by ROOT version5.18/00b
 #include "tdrstyle.C"
   setTDRStyle();
+  setTDRStyle();
+  tdrStyle->SetPadTopMargin(0.08);
+  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadRightMargin(0.05);
 
   gStyle->SetPalette(1);
-  gStyle->SetOptTitle(kFALSE);
-  gStyle->SetPadRightMargin(0.16);  
-  gStyle->SetPadLeftMargin(0.13); 
+//   gStyle->SetOptTitle(kFALSE);
+//   gStyle->SetPadRightMargin(0.16);  
+//   gStyle->SetPadLeftMargin(0.13); 
 
   const Int_t NRGBs = 5;
   const Int_t NCont = 255;
@@ -71,13 +76,13 @@
 //    hbranching->SetContourLevel(18,47.7126);
 //    hbranching->SetContourLevel(19,50.3633);
    hbranching->GetZaxis()->SetRangeUser(0,3.5);
-   hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} x BR(>=3l) [pb]");
-   hbranching->GetXaxis()->SetTitle("m_{0} [GeV/c^{2}]");
-   hbranching->GetYaxis()->SetTitle("m_{1/2} [GeV/c^{2}]");
+   hbranching->GetZaxis()->SetTitle(" #sigma_{NLO} #times BR(>=3l)  (pb)   ");
+   hbranching->GetXaxis()->SetTitle("m_{0}  (GeV/c^{2})   ");
+   hbranching->GetYaxis()->SetTitle("m_{1/2}  (GeV/c^{2})   ");
    hbranching->GetYaxis()->SetTitleOffset(1.0);
    hbranching->GetXaxis()->SetTitleOffset(0.95);
 
-   hbranching->Draw("colz");
+   hbranching->Draw();
 
 
    
@@ -231,7 +236,7 @@
 
 
 
-   TLegend *leg = new TLegend(0.46,0.55,0.84,0.85,"95% C.L. Limits:","brNDC");
+   TLegend *leg = new TLegend(0.6,0.5,0.9,0.82,"95% C.L. Limits:","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
    leg->SetTextSize(0.04);
@@ -241,16 +246,16 @@
    leg->SetFillColor(0);
    leg->SetFillStyle(0);
    
-   TH1 *dR = new TH2F("dR","dR",300,0,300,140,160,300);
-   dR->SetStats(0);
-   dR->GetXaxis()->SetTitle("m_{0} [GeV]");
-    dR->GetXaxis()->SetRange(1,244);
-    // dR->GetXaxis()->SetTitleSize(0.05);
-   dR->GetXaxis()->SetTitleOffset(0.9);
-   dR->GetYaxis()->SetTitle("m_{1/2} [GeV]");
-   // dR->GetYaxis()->SetTitleSize(0.05);
-   dR->GetYaxis()->SetTitleOffset(0.9);
-   dR->Draw("same");
+//    TH1 *dR = new TH2F("dR","dR",300,0,300,140,160,300);
+//    dR->SetStats(0);
+//    dR->GetXaxis()->SetTitle("m_{0} [GeV]");
+//     dR->GetXaxis()->SetRange(1,244);
+//     // dR->GetXaxis()->SetTitleSize(0.05);
+//    dR->GetXaxis()->SetTitleOffset(0.9);
+//    dR->GetYaxis()->SetTitle("m_{1/2} [GeV]");
+//    // dR->GetYaxis()->SetTitleSize(0.05);
+//    dR->GetYaxis()->SetTitleOffset(0.9);
+//    dR->Draw("same");
    
 
  
@@ -526,10 +531,10 @@
 
    int coord=130;
    //   TLatex *   tex = new TLatex(coord,282.115,"#sqrt{s}=7TeV, L=35pb^{-1}");
-   TLatex *   tex = new TLatex(150,300,"#sqrt{s}=7TeV, L=35pb^{-1}");
+   TLatex *   tex = new TLatex(150,300,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
@@ -537,7 +542,7 @@
    tex = new TLatex(10,300,"CMS preliminary");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
     tex->SetTextFont(42);
   tex->SetLineWidth(2);
    tex->Draw();
