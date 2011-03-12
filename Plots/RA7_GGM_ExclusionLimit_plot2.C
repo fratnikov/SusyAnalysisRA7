@@ -355,7 +355,7 @@
   pline->Draw("");
 
 
-   TLegendEntry *entry=leg->AddEntry(pline,"CMS NLO  excluded","l");
+   TLegendEntry *entry=leg->AddEntry(pline,"CMS NLO observed","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(5);
@@ -392,7 +392,7 @@
   pline->Draw("");
 
 
-   TLegendEntry *entry=leg->AddEntry(pline,"CMS LO excluded","l");
+   TLegendEntry *entry=leg->AddEntry(pline,"CMS LO observed","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(5);

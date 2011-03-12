@@ -213,7 +213,7 @@ Double_t *dum = 0;
 
   LO_excl->Draw("");
 
-  TLegendEntry *entry=leg->AddEntry(LO_excl,"LO excluded","l");
+  TLegendEntry *entry=leg->AddEntry(LO_excl,"LO observed","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(5);
@@ -227,7 +227,7 @@ Double_t *dum = 0;
    leg->Draw();
 
 
-   TLegendEntry *entry=leg->AddEntry(NLO_excl,"NLO excluded","l");
+   TLegendEntry *entry=leg->AddEntry(NLO_excl,"NLO observed","l");
    entry->SetFillColor(0);
    entry->SetFillStyle(1001);
    entry->SetLineColor(5);
@@ -336,7 +336,7 @@ Double_t *dum = 0;
    c1->SetTickx();
    c1->SetTicky();
    c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.pdf");
-   if (!preliminary) {
+   if (preliminary) {
      c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.png");
      c1->SaveAs("RA7_GGM_ExclusionLimit_plot1.eps");
    }

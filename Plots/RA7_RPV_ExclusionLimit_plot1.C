@@ -608,7 +608,7 @@
    hdummy1->SetLineStyle(1);
    hdummy1->SetLineWidth(5);
    hdummy1->SetFillColor(0);
-   leg->AddEntry(hdummy1,"CMS excluded","l");
+   leg->AddEntry(hdummy1,"CMS observed","l");
 
    TH1F* hdummy2 = new TH1F(*hdummy1);
    hdummy2->SetLineColor(1);

@@ -427,7 +427,7 @@
    
    graph->Draw("cp");
    
-   TLegend *leg = new TLegend(0.55,0.40,0.9,0.65,"95% C.L. Limits:","brNDC");
+   TLegend *leg = new TLegend(0.57,0.40,0.9,0.65,"95% C.L. Limits:","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
    leg->SetTextSize(0.04);
@@ -473,7 +473,7 @@
    hdummy5->SetLineStyle(1);
    hdummy5->SetLineWidth(2);
    hdummy5->SetFillColor(0);
-   leg->AddEntry(hdummy5,"Theory #sigma_{NLO}xBR(#geq3l)","l");
+   leg->AddEntry(hdummy5,"Theory #sigma_{NLO} #times BR(#geq3l)","l");
 
    leg->Draw();
 
