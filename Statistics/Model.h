@@ -57,8 +57,8 @@ class Model
     void set_dataset(RooDataSet* d);
     void set_nuisance_const();
     void set_nuisance_var();
-    void set_poi_const(double p = 0);
-    void set_poi_var(double p = 0);
+    void set_poi_const(double p);
+    void set_poi_var(double p);
     std::vector< RooConstVar*>* signal;
     std::vector< RooRealVar*>* observables;
 
@@ -131,7 +131,9 @@ class Model
     
     void create_b_likelihood();   
     
-    void set_random_seed(int i);  
+    void set_random_seed(int i);
+
+    
 
 };
 

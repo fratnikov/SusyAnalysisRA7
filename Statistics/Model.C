@@ -468,14 +468,14 @@ void Model::set_nuisance_var(){
 
 }
 
-void Model::set_poi_const(double p){
+void Model::set_poi_const(double p=0){
   RooRealVar* ss=get_POI();
   ss->setVal(p);
   ss->setConstant(kTRUE);
 
 
 }
-void Model::set_poi_var(double p){
+void Model::set_poi_var(double p=0){
   RooRealVar* ss=get_POI();  
   ss->setVal(p);
   ss->setConstant(kFALSE);
@@ -588,7 +588,7 @@ void Model::create_nuisances(std::vector< vector< vector<double>* >* >* systemat
 	 double lower_limit=-1;
 	  std::string line = title;
 	 std::string::size_type pos=line.find("[LOGNORMAL]");
-	 if(pos != std::string::npos) lower_limit=0.001;
+	 if(pos != std::string::npos) lower_limit=-0.9999;
 	 RooRealVar* tmp_nuisance_parameters=new RooRealVar(name,title,0,lower_limit,1.0*nuisance_upper_limit->at(i)*nuisance_widths->at(i)->getVal());
 	 cout<<name<<" has upper limit "<<nuisance_upper_limit->at(i)<<endl;
 
@@ -696,7 +696,12 @@ void Model::create_nuisance_priors(){
 	RooFormulaVar* tmp_nuisance_means=new RooFormulaVar(name,name2,RooArgSet(*nuisance_parameters->at(i)));
 	nuisance_means->push_back(tmp_nuisance_means);
 	sprintf (name, "nuisance_prior_%d", i);
-	RooLognormal* tmp_nuisance_priors=new RooLognormal(name, name,*nuisance_means->at(i), RooFit::RooConst(1), RooFit::RooConst(TMath::Exp(nuisance_widths->at(i)->getVal())));
+ 	//RooLognormal* tmp_nuisance_priors=new RooLognormal(name, name,*nuisance_means->at(i), RooFit::RooConst(1), RooFit::RooConst(TMath::Exp(nuisance_widths->at(i)->getVal())));
+	//ok i have to adjust my mean parameter or each nusiance....
+	///by my handmade calculations this is mu=sigma^2
+	double new_mean=nuisance_widths->at(i)->getVal()*nuisance_widths->at(i)->getVal();
+	//and put it into the function as exponential...
+	RooLognormal* tmp_nuisance_priors=new RooLognormal(name, name,*nuisance_means->at(i), RooFit::RooConst(TMath::Exp(new_mean)), RooFit::RooConst(TMath::Exp(nuisance_widths->at(i)->getVal())));
 	//cout<<"----------------------------"<<name<<" "<<nuisance_widths->at(i)->getVal()<<" "<<TMath::Exp(nuisance_widths->at(i)->getVal())<<endl;
 	nuisance_priors->push_back(tmp_nuisance_priors);
 	nuisance_prior_list->add(*nuisance_priors->at(i));
@@ -1136,7 +1141,6 @@ void Model::Print(){
     }
   }
 }
-
 
 
 

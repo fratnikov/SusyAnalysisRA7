@@ -6,6 +6,7 @@
 #include "RooStats/ProfileLikelihoodCalculator.h"
 #include "RooStats/LikelihoodIntervalPlot.h"
 #include "Model.h"
+#include "Hybrid_method.h"
 #include "RooStats/HybridCalculatorOriginal.h"
 #include "RooStats/HybridResult.h"
 #include "RooStats/HybridPlot.h"
@@ -21,13 +22,13 @@
 #include "RooStats/MCMCIntervalPlot.h"
 
 
+
 #include "BAT/BATCalculator.h"
 #include <fstream>
 #include <sstream>
 
-// multichannel number counting
-// 12.2010  M.Bonsh,V.Zhukov  
-// 01.2011  V.Zhukov, D.Troendle
+
+
 
 using namespace std;
 using namespace RooFit;
@@ -62,6 +63,31 @@ void central_interval_Profile_Likelihood(Model* model,double confidence){
 
 }
 
+// void upper_limit_Profile_Likelihood(Model* model,double confidence){
+//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+//   cout<<"Calculating upper limit with the Profile Likelihood method"<<endl;
+//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+  
+  
+//   //      //define paramsOfInterest
+//      RooArgSet *paramsOfInterest=new RooArgSet("paramsOfInterest");
+//      paramsOfInterest->addClone(*model->get_POI()); 	//clone because we need s for complete likelihood
+     
+//      //get the calculator
+//      ProfileLikelihoodCalculator plc(*model->get_data(),*model->get_complete_likelihood(), *paramsOfInterest);
+     
+//      //      //get the confidence interval
+//      LikelihoodInterval* lrint = (LikelihoodInterval*) plc.GetInterval();
+//      lrint->SetConfidenceLevel(1-(1-confidence)*2);
+//      double ul=lrint->UpperLimit(*model->get_POI());
+//      cout<<confidence<<"% upper limit is "<<ul<<endl;
+//      TCanvas *c1=new TCanvas;
+//      LikelihoodIntervalPlot* lrplot1 = new LikelihoodIntervalPlot(lrint);
+//      lrplot1->Draw(); 
+//      c1->SaveAs("pll_plot.png");
+     
+
+// }
 
 double upper_limit_Profile_Likelihood(Model* model,double confidence){
   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
@@ -81,6 +107,10 @@ double upper_limit_Profile_Likelihood(Model* model,double confidence){
      lrint->SetConfidenceLevel(1-(1-confidence)*2);
      double ul=lrint->UpperLimit(*model->get_POI());
      cout<<confidence<<"% upper limit is "<<ul<<endl;
+  //    TCanvas *c1=new TCanvas;
+//      LikelihoodIntervalPlot* lrplot1 = new LikelihoodIntervalPlot(lrint);
+//      lrplot1->Draw(); 
+//      c1->SaveAs("pll_plot6.png");
      
      
      return ul;
@@ -153,7 +183,35 @@ void upper_limit_Bayesian(Model* model,double confidence){
 
 }
 
+// void upper_limit_Bayesian_BAT(Model* model,double confidence,int Niters){
+//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+//   cout<<"Calculating upper limit with the Bayesian method(BAT)"<<endl;
+//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+  
+//   RooWorkspace* wspace = new RooWorkspace("wspace");
+//   RooStats::ModelConfig* modelConfig = new ModelConfig("bayes");
+//   modelConfig->SetWorkspace(*wspace);
+//   modelConfig->SetPdf(*model->get_complete_likelihood());
+//   modelConfig->SetPriorPdf(*model->get_POI_prior());
+//   modelConfig->SetParametersOfInterest(*model->get_POI_set());
+//   modelConfig->SetNuisanceParameters(*model->get_nuisance_set());
 
+
+//   cout<<" POI size "<<model->get_POI_set()->getSize()<<endl; 
+ 
+
+
+//   //BATCalculator batcalc(model->get_data(), model->get_complete_likelihood(), model->get_POI_set(), model->get_POI_prior());
+//   BATCalculator batcalc(*model->get_data(), *modelConfig);
+//   batcalc.SetConfidenceLevel(1-(2*(1-confidence)));
+//   batcalc.SetnMCMC(Niters);
+//   //batcalc.SetNbins("POI",100);
+//   cout<<confidence<<"% CL upper limit: " <<batcalc.GetInterval()->UpperLimit()<<endl;
+
+//   double prec=batcalc.GetBrfPrecision();
+ 
+
+// }
 
 double upper_limit_Bayesian_BAT(Model* model,double confidence,int Niters){
   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
@@ -230,7 +288,54 @@ void upper_limit_Bayesian_MCMC(Model* model,double confidence,int Niters){
 
 
 
-void upper_limit_FC(Model* model,double confidence){
+// void upper_limit_FC(Model* model,double confidence){
+//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+//   cout<<"Calculating upper limit with the FC method"<<endl;
+//   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+  
+//   RooWorkspace* wspace = new RooWorkspace("wspace");
+
+//   ModelConfig* modelConfig = new ModelConfig("FC");
+//   modelConfig->SetWorkspace(*wspace);
+//   modelConfig->SetPdf(*model->get_complete_likelihood());
+//   modelConfig->SetPriorPdf(*model->get_POI_prior());
+//   modelConfig->SetParametersOfInterest(*model->get_POI_set());
+//   //modelConfig->SetParametersOfInterest(*wspace->set("poi"));
+//   //modelConfig->SetNuisanceParameters(*wspace->set("nuis"));
+//   // modelConfig->SetNuisanceParameters();
+//   modelConfig->SetNuisanceParameters(*model->get_nuisance_set());
+
+//   RooDataSet* data = model->get_data();
+//   RooArgSet* poi= model->get_POI_set();
+//   //configure the calculator
+//   //model->Print();
+
+
+
+//   cout<<" POI size "<<model->get_POI_set()->getSize()<<endl; 
+
+//   // use FeldmaCousins (takes ~20 min)  
+//   FeldmanCousins fc(*data, *modelConfig);
+//   fc.SetConfidenceLevel(0.95); //0.9 central limit=0.95 upper limit
+//   //number counting: dataset always has 1 entry with N events observed
+//   fc.FluctuateNumDataEntries(false); 
+//   fc.UseAdaptiveSampling(true);
+//   fc.SetNBins(80);
+//   PointSetInterval* fcInt = NULL;
+//   RooRealVar* firstPOI = (RooRealVar*) modelConfig->GetParametersOfInterest()->first();
+
+//   //  if(doFeldmanCousins){ // takes 7 minutes
+//     fcInt = (PointSetInterval*) fc.GetInterval(); // fix cast
+//     //xs}
+
+//     cout<<" ["<<fcInt->LowerLimit( *firstPOI ) << ", " <<
+//     fcInt->UpperLimit( *firstPOI ) << "]" << endl;
+
+ 
+// }
+
+
+double upper_limit_FC(Model* model,double confidence){
   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
   cout<<"Calculating upper limit with the FC method"<<endl;
   cout<<"///////////////////////////////////////////////////////////////////////////////////////////"<<endl;
@@ -259,35 +364,32 @@ void upper_limit_FC(Model* model,double confidence){
   // use FeldmaCousins (takes ~20 min)  
   FeldmanCousins fc(*data, *modelConfig);
   fc.SetConfidenceLevel(0.95); //0.9 central limit=0.95 upper limit
+  //fc.SetTestSize(.1); // set size of test
   //number counting: dataset always has 1 entry with N events observed
   fc.FluctuateNumDataEntries(false); 
   fc.UseAdaptiveSampling(true);
-  fc.SetNBins(80);
+
+  fc.SetNBins(200);
   PointSetInterval* fcInt = NULL;
+  //ConfInterval* interval = 0;
+
+
   RooRealVar* firstPOI = (RooRealVar*) modelConfig->GetParametersOfInterest()->first();
 
   //  if(doFeldmanCousins){ // takes 7 minutes
-    fcInt = (PointSetInterval*) fc.GetInterval(); // fix cast
-    //xs}
+  fcInt = (PointSetInterval*) fc.GetInterval(); // fix cast
+  //xs}
+  //interval = (PointSetInterval*) fc.GetInterval();
 
-    cout<<" ["<<fcInt->LowerLimit( *firstPOI ) << ", " <<
-    fcInt->UpperLimit( *firstPOI ) << "]" << endl;
-
-    //BayesianCalculator bcalc(*model->get_data(), *modelConfig);
-  //  BayesianCalculator bcalc(*model->get_data(),*model->get_complete_likelihood(),*model->get_POI_set(),*model->get_POI_prior(),model->get_nuisance_set());
-  //BayesianCalculator bcalc(*model->get_data(),*model->get_complete_likelihood(),*model->get_POI_set(),*model->get_POI_prior(),0);
- 
-
-  // bcalc.SetLeftSideTailFraction(0); //for upper limit
-
-  //get the interval
-  // bcalc.SetConfidenceLevel(confidence);
-//   cout<<"Calculatingggg ..."<<endl;
-//   SimpleInterval* interval = bcalc.GetInterval();
-//   double ul=interval->UpperLimit();
-//   std::cout <<confidence <<"% CL upper limit: "<< ul<<endl;
+  cout<<" ["<<fcInt->LowerLimit( *firstPOI ) << ", " <<
+  fcInt->UpperLimit( *firstPOI ) << "]" << endl;
+  cout<<" ["<<fcInt->LowerLimit( *firstPOI ) << ", " <<
+  fcInt->UpperLimit( *firstPOI ) << "]" << endl;
+    
+  double ul=fcInt->UpperLimit( *firstPOI );
+  //double ul=interval->UpperLimit( *firstPOI );
+  return ul;
 }
-
 
 
 
@@ -394,6 +496,7 @@ void UL_significance_Hybrid(Model* model,int n_toys,int random_seed=0,double sig
   HybridResult* hcResult = myhc.GetHypoTest();
   double significance = hcResult->Significance();
   double CLS= hcResult->CLs();
+  double CLB= hcResult->CLb();
   double CLsplusb= hcResult->CLsplusb();
   double CLSerror= hcResult->CLsError(); 
   
@@ -403,6 +506,7 @@ void UL_significance_Hybrid(Model* model,int n_toys,int random_seed=0,double sig
   cout<<"POI: "<<sig<<endl;
   cout <<"significance:" << significance<<endl;
   cout<<"CLs: "<<CLS<<endl;
+  cout<<"CLb: "<<CLB<<endl;
   cout<<"CLsplusb: "<<CLsplusb<<endl;
   cout<<"CLserror: "<<CLSerror<<endl;
 
@@ -660,7 +764,16 @@ void upper_limit_Hybrid_one_point(Model* model,double value_to_run_for,int n_toy
  
 
   
-void runMain (const string& file) {
+
+
+int main(int argc, char* argv[]){
+// int main(){
+  if(argc==0){
+    cout<<""<<endl;
+    return 0;
+  }
+  string file=argv[1];
+ 
 
 
   Model* test=new Model(file.c_str());
@@ -733,7 +846,7 @@ void runMain (const string& file) {
 
 //   significance_Hybrid(test,1000,321);
 
-  //UL_significance_Hybrid(test,1000,321,0.6);
+  //UL_significance_Hybrid(test,10000,321,0.);
   //upper_limit_Hybrid_auto_scan(test,0.95,50,0.005,0.015,random_integer);
 
   //  upper_limit_Hybrid_fixed_scan(test,0.95,1000,0.4,0.6,10,random_integer);
@@ -748,9 +861,9 @@ void runMain (const string& file) {
 
 
 
-
-  ofstream outfile("out.text");
-  outfile<<"##outputfile created by main_program.C"<<endl;
+  string out="out_"+file;
+  ofstream outfile(out.c_str());
+  outfile<<"##outputfile created by main_program.C for "<<file<<endl;
 
 //   RooArgSet* data= test->get_observable_set();
 //   char* name=new char[1000];
@@ -785,6 +898,7 @@ void runMain (const string& file) {
   outfile<<"NSig: "<<ntot_sig_exp<<endl;
   bool use_bayes=true;
   bool use_PLL=false;
+  bool use_FC=false;
   
   if(use_bayes){
     double UpperLimit_Bayesian = upper_limit_Bayesian_BAT(test,0.95,100000);
@@ -797,6 +911,14 @@ void runMain (const string& file) {
     double UpperLimit_PLL = upper_limit_Profile_Likelihood(test,0.95); 
     outfile<<"UpperLimit_PLL(x): "<<UpperLimit_PLL<<endl;
     outfile<<"UpperLimit_PLL(Nsig): "<<UpperLimit_PLL*ntot_sig_exp<<endl;
+
+
+  }
+
+ if(use_FC){
+    double UpperLimit_FC = upper_limit_FC(test,0.95); 
+    outfile<<"UpperLimit_FC(x): "<<UpperLimit_FC<<endl;
+    outfile<<"UpperLimit_FC(Nsig): "<<UpperLimit_FC*ntot_sig_exp<<endl;
 
 
   }
