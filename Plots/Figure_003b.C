@@ -333,4 +333,10 @@
    myCanvas->Modified();
    myCanvas->cd();
    myCanvas->SetSelected(myCanvas);
+   myCanvas->SaveAs("Figure_003b.pdf");
+   if (preliminary) {
+     myCanvas->SaveAs("Figure_003b.png");
+     myCanvas->SaveAs("Figure_003b.eps");
+   }
+}
 }
