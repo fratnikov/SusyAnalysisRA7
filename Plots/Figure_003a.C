@@ -1,7 +1,8 @@
 {
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Tue Mar  8 09:45:49 2011) by ROOT version5.22/00d
-   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1600,1200);
+   bool preliminary = !getenv ("NOPRELIMINARY");
+   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
    myCanvas->SetHighLightColor(2);
@@ -138,7 +139,7 @@
    final_data->SetEntries(21908);
    final_data->SetLineStyle(0);
    final_data->SetMarkerStyle(20);
-   final_data->GetXaxis()->SetTitle("M(#mu^{+}#mu^{-}) (GeV/c^{2})");
+   final_data->GetXaxis()->SetTitle("m_{#mu^{+}#mu^{-}} (GeV/c^{2})");
    final_data->GetXaxis()->SetRange(13,28);
    final_data->GetXaxis()->SetNdivisions(-505);
    final_data->GetXaxis()->SetLabelFont(42);
@@ -407,10 +408,10 @@
    final_data->GetZaxis()->SetTitleFont(42);
    final_data->Draw("same");
    
-   TLegend *leg = new TLegend(0,0,0,0,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.65,0.6,0.95,0.7,NULL,"brNDC");
    leg->SetBorderSize(0);
-   leg->SetTextFont(62);
-   leg->SetTextSize(0.03);
+   leg->SetTextFont(42);
+   leg->SetTextSize(0.04);
    leg->SetLineColor(1);
    leg->SetLineStyle(1);
    leg->SetLineWidth(1);
@@ -431,13 +432,15 @@
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    leg->Draw();
-   TLatex *   tex = new TLatex(108,2000,"CMS preliminary");
+   TLatex *   tex = new TLatex(108,10000,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextAlign(13);
+   tex->SetTextFont(42);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(108,1400,"#sqrt{s} = 7 TeV, 35pb^{-1}");
+   tex = new TLatex(108,6000,"#sqrt{s} = 7 TeV,  35pb^{-1}");
    tex->SetTextAlign(13);
+   tex->SetTextFont(42);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();

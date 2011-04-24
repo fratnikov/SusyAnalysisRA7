@@ -3,8 +3,7 @@
 //=========  (Thu Mar  3 10:28:53 2011) by ROOT version5.26/00
 	//Swapping axes: Gluino now Vertical axis and Squark now Horizontal axis, to conform with RA2 analysis
 #include "tdrstyle.C"
-  //setTDRStyle();
-	tdrstyle();
+  setTDRStyle();
   tdrStyle->SetPadTopMargin(0.08);
   tdrStyle->SetPadBottomMargin(0.13);
   tdrStyle->SetPadLeftMargin(0.15);
@@ -635,7 +634,7 @@
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(900,1430,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
+   tex = new TLatex(900,1430,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);

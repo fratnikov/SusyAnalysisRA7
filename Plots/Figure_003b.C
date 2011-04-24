@@ -1,7 +1,8 @@
 {
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Tue Mar  8 09:51:55 2011) by ROOT version5.22/00d
-   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1600,1200);
+   bool preliminary = !getenv ("NOPRELIMINARY");
+   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
    myCanvas->SetHighLightColor(2);
@@ -219,10 +220,10 @@
    final_data_e->GetZaxis()->SetTitleFont(42);
    final_data_e->Draw("same");
    
-   TLegend *leg = new TLegend(0,0,0,0,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.5,0.6,0.8,0.7,NULL,"brNDC");
    leg->SetBorderSize(0);
-   leg->SetTextFont(62);
-   leg->SetTextSize(0.03);
+   leg->SetTextFont(42);
+   leg->SetTextSize(0.04);
    leg->SetLineColor(1);
    leg->SetLineStyle(1);
    leg->SetLineWidth(1);
@@ -243,18 +244,21 @@
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    leg->Draw();
-   TLatex *   tex = new TLatex(300,1000,"CMS preliminary");
+   TLatex *   tex = new TLatex(300,10000,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextAlign(13);
+   tex->SetTextFont(42);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(300,600,"#sqrt{s} = 7 TeV, 35pb^{-1}");
+      tex = new TLatex(300,6000,"#sqrt{s} = 7 TeV,  35pb^{-1}");
    tex->SetTextAlign(13);
+   tex->SetTextFont(42);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(300,300,"75 < M(ee) < 105 GeV/c^{2}");
+      tex = new TLatex(300,3000,"75 < m_{e^{+}e^{-}} < 105 GeV/c^{2}");
    tex->SetTextAlign(13);
+   tex->SetTextFont(42);
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();

@@ -6,7 +6,7 @@
 #include "tdrstyle.C"
   setTDRStyle();
   tdrStyle->SetPadTopMargin(0.08);
-  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadBottomMargin(0.14);
   tdrStyle->SetPadLeftMargin(0.15);
   tdrStyle->SetPadRightMargin(0.05);
 
@@ -27,8 +27,8 @@
    hbranching->SetEntries(0);
  
    hbranching->GetZaxis()->SetRangeUser(0,3.5);
-   hbranching->GetXaxis()->SetTitle("Chargino Mass  (GeV/c^{2})   ");
-   hbranching->GetYaxis()->SetTitle("Gluino Mass  (GeV/c^{2})   ");
+   hbranching->GetXaxis()->SetTitle("m_{#tilde{#chi}^{#pm}_{1}} (GeV/c^{2})   ");
+   hbranching->GetYaxis()->SetTitle("m_{#tilde{g}}  (GeV/c^{2})   ");
     hbranching->GetYaxis()->SetTitleOffset(1.1);
     hbranching->GetXaxis()->SetTitleOffset(0.9);
 
@@ -286,7 +286,7 @@ Double_t *dum = 0;
 
 
    int coord=525;
-   TLatex *   tex = new TLatex(600,1600,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
+   TLatex *   tex = new TLatex(600,1600,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);

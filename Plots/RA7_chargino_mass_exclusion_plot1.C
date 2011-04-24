@@ -5,7 +5,7 @@
 #include "tdrstyle.C"
   setTDRStyle();
   tdrStyle->SetPadTopMargin(0.08);
-  tdrStyle->SetPadBottomMargin(0.13);
+  tdrStyle->SetPadBottomMargin(0.14);
   tdrStyle->SetPadLeftMargin(0.12);
   tdrStyle->SetPadRightMargin(0.05);
 
@@ -68,7 +68,7 @@
    Graph1->SetMaximum(10);
    Graph1->SetDirectory(0);
    Graph1->SetStats(0);
-   Graph1->GetXaxis()->SetTitle("Chargino Mass  (GeV/c^{2})  ");
+   Graph1->GetXaxis()->SetTitle("m_{#tilde{#chi}^{#pm}_{1}}  (GeV/c^{2})  ");
    Graph1->GetXaxis()->SetRange(10,90);
    //   Graph1->GetXaxis()->CenterTitle(true);
    Graph1->GetYaxis()->SetTitle("#sigma #times BR( #geq3l)  (pb)  ");
@@ -484,7 +484,7 @@
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(150,10,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
+   tex = new TLatex(150,10,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);

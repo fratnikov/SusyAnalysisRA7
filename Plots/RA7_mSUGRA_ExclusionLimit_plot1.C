@@ -531,7 +531,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   if(tanBeta_ == 50) xpos = 200;
   if(tanBeta_ == 50) ypos = -10;
   
-  TLatex* lumilabel = new TLatex(150.,405.,"L_{int} = 35 pb^{-1}, #sqrt{s} = 7 TeV");
+  TLatex* lumilabel = new TLatex(150.,405.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
@@ -540,7 +540,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   cmslabel->Draw("same");
 
   TString text_tanBeta;
-  text_tanBeta =  "tan#beta = "+tanb+", A_{0} = 0, #mu > 0";
+  text_tanBeta =  "tan#beta = "+tanb+",  A_{0} = 0,  #mu > 0";
   TLatex* cmssmpars = new TLatex(170.,250,text_tanBeta);
   cmssmpars->SetTextSize(0.04);
 
@@ -1026,8 +1026,8 @@ TF1* constant_gluino(int tanBeta,int i){
 TLatex* constant_squark_text(Int_t it,TF1& lnsq,Int_t tanBeta_){
   char legnm[200];
 
-  sprintf(legnm,"#font[92]{#tilde{q}(%i)GeV}",500+150*(it-1));
-  Double_t place_x = 170;
+  sprintf(legnm,"#font[92]{#tilde{q}(%i)GeV/c^{2}}",500+150*(it-1));
+  Double_t place_x = 160;
   if(tanBeta_ == 50)place_x = 290;
   TLatex* t3 = new TLatex(place_x+10*(it-1),lnsq.Eval(place_x+10*(it-1))+5,legnm);
   t3->SetTextSize(0.03);
@@ -1042,8 +1042,8 @@ TLatex* constant_squark_text(Int_t it,TF1& lnsq,Int_t tanBeta_){
 TLatex* constant_gluino_text(Int_t it,TF1& lngl){
   char legnm[200];
 
-  sprintf(legnm,"#font[12]{#tilde{g}}#font[92]{(%i)GeV}",500+150*(it-1));
-  TLatex* t4 = new TLatex(250,18+lngl.Eval(480),legnm);
+  sprintf(legnm,"#font[12]{#tilde{g}}#font[92]{(%i)GeV/c^{2}}",500+150*(it-1));
+  TLatex* t4 = new TLatex(230,18+lngl.Eval(480),legnm);
   t4->SetTextSize(0.03);
   t4->SetTextAlign(13);
   t4->SetTextColor(kGray+2);
@@ -1084,18 +1084,18 @@ TLegend* makeExpLegend(TGraph& sg_gr, TGraph& sgd_gr,TGraph& ch_gr,TGraph& sl_gr
   legexp->SetBorderSize(0);
 
   sg_gr.SetLineColor(1);
-  legexp->AddEntry(&sg_gr,"CDF  #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=5, #mu < 0}","l"); 
+  legexp->AddEntry(&sg_gr,"CDF  #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=5,   #mu < 0}","l"); 
   //  sgd_gr.SetLineColor(1);
   //  sgd_gr.SetLineWidth(1);
 
-  legexp->AddEntry(&sgd_gr,"D0   #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=3, #mu < 0}","l");  
+  legexp->AddEntry(&sgd_gr,"D0   #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=3,   #mu < 0}","l");  
 
   ch_gr.SetLineColor(1);
   legexp->AddEntry(&ch_gr,"LEP2   #tilde{#chi}_{1}^{#pm}","l");  
   
   sl_gr.SetLineColor(1);
   if(tanbeta != 50) legexp->AddEntry(&sl_gr,"LEP2   #tilde{#font[12]{l}}^{#pm}","l"); 
-  if(tanbeta == 3) legexp->AddEntry(&tev_sn,"D0  #chi^{#pm}_{1}, #chi^{0}_{2}","l");  
+  if(tanbeta == 3) legexp->AddEntry(&tev_sn,"D0  #tilde{#chi}^{#pm}_{1}, #tilde{#chi}^{0}_{2}","l");  
 
   return legexp;
 
