@@ -514,7 +514,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   TEV_sg_cdf->SetLineColor(kRed);
   TEV_sg_cdf->SetLineWidth(3);  
   TEV_sg_cdf->SetLineStyle(5);  
-  TEV_sg_cdf->Draw("lsame");
+  // no tanb=5  TEV_sg_cdf->Draw("lsame");
   TEV_sg_d0->SetLineColor(kBlue);
   TEV_sg_d0->SetLineWidth(3);  
   TEV_sg_d0->SetLineStyle(6);  
@@ -1084,11 +1084,11 @@ TLegend* makeExpLegend(TGraph& sg_gr, TGraph& sgd_gr,TGraph& ch_gr,TGraph& sl_gr
   legexp->SetBorderSize(0);
 
   sg_gr.SetLineColor(1);
-  legexp->AddEntry(&sg_gr,"CDF  #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=5,   #mu < 0}","l"); 
+  // no tanb=5  legexp->AddEntry(&sg_gr,"CDF  #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=5,   #mu < 0}","l"); 
   //  sgd_gr.SetLineColor(1);
   //  sgd_gr.SetLineWidth(1);
 
-  legexp->AddEntry(&sgd_gr,"D0   #tilde{#font[12]{g}}, #tilde{#font[12]{q}}, #scale[0.8]{tan#beta=3,   #mu < 0}","l");  
+  legexp->AddEntry(&sgd_gr,"D0   #tilde{#font[12]{g}}, #tilde{#font[12]{q}},  #scale[0.8]{#mu < 0}","l");  
 
   ch_gr.SetLineColor(1);
   legexp->AddEntry(&ch_gr,"LEP2   #tilde{#chi}_{1}^{#pm}","l");  
