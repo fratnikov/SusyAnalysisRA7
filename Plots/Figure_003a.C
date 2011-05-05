@@ -2,6 +2,7 @@
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Tue Mar  8 09:45:49 2011) by ROOT version5.22/00d
    bool preliminary = !getenv ("NOPRELIMINARY");
+   preliminary = false;
    TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -434,7 +435,7 @@
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    leg->Draw();
-   TLatex *   tex = new TLatex(108,10000,preliminary ? "CMS preliminary" : "CMS");
+   TLatex *   tex = new TLatex(108,9000,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextAlign(13);
    tex->SetTextFont(42);
    tex->SetTextSize(0.04);
@@ -568,9 +569,9 @@
    final_data->SetDirectory(0);
    final_data->SetLineStyle(0);
    final_data->SetMarkerStyle(20);
-   final_data->GetXaxis()->SetTitle("M(#mu^{+}#mu^{-}) (GeV/c^{2})");
+   final_data->GetXaxis()->SetTitle("m(#mu^{+}#mu^{-}) (GeV/c^{2})");
    final_data->GetXaxis()->SetRange(13,28);
-   final_data->GetXaxis()->SetNdivisions(-505);
+   final_data->GetXaxis()->SetNdivisions(404);
    final_data->GetXaxis()->SetLabelFont(42);
    final_data->GetXaxis()->SetLabelOffset(0.007);
    final_data->GetXaxis()->SetLabelSize(0.05);

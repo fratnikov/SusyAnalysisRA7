@@ -2,6 +2,7 @@
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Tue Mar  8 09:51:55 2011) by ROOT version5.22/00d
    bool preliminary = !getenv ("NOPRELIMINARY");
+   preliminary = false;
    TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -221,7 +222,7 @@
 //    final_data_e->GetZaxis()->SetTitleFont(42);
    final_data_e->Draw("same");
    
-   TLegend *leg = new TLegend(0.5,0.6,0.8,0.7,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.65,0.6,0.95,0.7,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
    leg->SetTextSize(0.04);
