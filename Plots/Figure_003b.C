@@ -132,7 +132,7 @@
    zjetstmp->SetBinContent(47,0.04193731);
    zjetstmp->SetBinContent(51,0.04193731);
    zjetstmp->SetEntries(203344);
-   zjetstmp->SetFillColor(5);
+   //zjetstmp->SetFillColor(5);
    zjetstmp->SetLineStyle(0);
    zjetstmp->SetMarkerStyle(20);
    zjetstmp->GetXaxis()->SetRange(1,25);
@@ -238,7 +238,7 @@
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("zjetstmp","Drell Yan MC","f");
+   entry=leg->AddEntry("zjetstmp","Drell Yan MC","l");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(1);

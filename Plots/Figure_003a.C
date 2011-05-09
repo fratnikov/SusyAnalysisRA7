@@ -262,7 +262,7 @@
    DY50_hist->SetBinContent(99,0.04193731);
    DY50_hist->SetBinContent(101,0.545185);
    DY50_hist->SetEntries(320461);
-   DY50_hist->SetFillColor(5);
+   //DY50_hist->SetFillColor(5);
    DY50_hist->GetXaxis()->SetRange(13,28);
    DY50_hist->Draw("hist same");
    
@@ -427,7 +427,7 @@
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("DY50_hist","Drell Yan MC","f");
+   entry=leg->AddEntry("DY50_hist","Drell Yan MC","l");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(1);
