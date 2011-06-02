@@ -113,16 +113,16 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   TCanvas* cvsSys = new TCanvas("cvsnm","cvsnm",0,0,1200,900);
   gStyle->SetOptTitle(0);
   cvsSys->SetFillColor(0);
-  cvsSys->GetPad(0)->SetRightMargin(0.07);
   cvsSys->Range(0,150,300, 320);
   //  cvsSys->Range(-120.5298,26.16437,736.0927,500);
   //  cvsSys->Range(-50.5298,26.16437,736.0927,500);
   cvsSys->SetFillColor(0);
   cvsSys->SetBorderMode(0);
   cvsSys->GetPad(0)->SetBorderSize(2);
-  cvsSys->GetPad(0)->SetLeftMargin(0.1407035);
   cvsSys->GetPad(0)->SetTopMargin(0.08);
-  cvsSys->GetPad(0)->SetBottomMargin(0.13);
+  cvsSys->GetPad(0)->SetBottomMargin(0.17);
+  cvsSys->GetPad(0)->SetLeftMargin(0.15);
+  cvsSys->GetPad(0)->SetRightMargin(0.05);
 
   cvsSys->SetTitle("tan#beta="+tanb);
  
@@ -531,12 +531,12 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   if(tanBeta_ == 50) xpos = 200;
   if(tanBeta_ == 50) ypos = -10;
   
-  TLatex* lumilabel = new TLatex(150.,410.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+  TLatex* lumilabel = new TLatex(150.,415.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
   lumilabel->SetTextAlign(12);
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
-  TLatex* cmslabel = new TLatex(10.,410., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
+  TLatex* cmslabel = new TLatex(10.,415., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
   cmslabel->SetTextAlign(12);
   cmslabel->SetTextSize(0.05);
   cmslabel->Draw("same");
