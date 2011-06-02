@@ -5,13 +5,13 @@
 #include "tdrstyle.C"
   setTDRStyle();
   tdrStyle->SetPadTopMargin(0.08);
-  tdrStyle->SetPadBottomMargin(0.16);
-  tdrStyle->SetPadLeftMargin(0.16);
+  tdrStyle->SetPadBottomMargin(0.17);
+  tdrStyle->SetPadLeftMargin(0.15);
   tdrStyle->SetPadRightMargin(0.05);
 
   bool preliminary = !getenv ("NOPRELIMINARY");
   
-   TCanvas *c = new TCanvas("c", "c",135,78,1200,900);
+  TCanvas *c = new TCanvas("c", "c",0,0,1200,900);
    gStyle->SetOptFit(1);
    c->ToggleEventStatus();
    c->Range(246.9895,263.2979,1499.346,1500.177);
@@ -627,16 +627,16 @@
 
    leg->Draw();
 
-   TLatex *   tex = new TLatex(500,1450, preliminary?"CMS preliminary":"CMS");
+   TLatex *   tex = new TLatex(500,1470, preliminary?"CMS preliminary":"CMS");
    tex->SetTextColor(1);
-   tex->SetTextAlign(10);
+   tex->SetTextAlign(12);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(900,1450,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+   tex = new TLatex(900,1470,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
-   tex->SetTextAlign(10);
+   tex->SetTextAlign(12);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();

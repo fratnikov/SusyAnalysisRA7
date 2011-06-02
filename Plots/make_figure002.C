@@ -3,9 +3,10 @@
   setTDRStyle();
 tdrStyle->SetPadTopMargin(0.08);
 tdrStyle->SetPadBottomMargin(0.17);
+  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadRightMargin(0.05);
    bool preliminary = false;
 
-  //   TCanvas *c1 = new TCanvas("c1", "c1",14,48,1200,900);
    TCanvas *c1 = new TCanvas("c1", "c1",0,0,1200,900);
 
 
@@ -45,7 +46,7 @@ tdrStyle->SetPadBottomMargin(0.17);
    TLegend *leg = new TLegend(0.55,0.25,0.95,0.45,"","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
-   leg->SetTextSize(0.04);
+   leg->SetTextSize(0.045);
    leg->SetLineColor(1);
    leg->SetLineStyle(1);
    leg->SetLineWidth(1);
@@ -59,14 +60,14 @@ tdrStyle->SetPadBottomMargin(0.17);
    TLatex *   tex = new TLatex(20,0.255,"CMS simulation");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(200,0.255,"#sqrt{s}=7 TeV");
+   tex = new TLatex(200,0.255,"#sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
   

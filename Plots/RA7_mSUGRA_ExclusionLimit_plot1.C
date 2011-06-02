@@ -106,7 +106,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   
   //Legends
   TLegend* legst = makeStauLegend(0.05,tanBeta_);
-  TLegend* legexp = makeExpLegend( *TEV_sg_cdf,*TEV_sg_d0,*LEP_ch,*LEP_sl,*TEV_sn_d0_1,0.035,tanBeta_);
+  TLegend* legexp = makeExpLegend( *TEV_sg_cdf,*TEV_sg_d0,*LEP_ch,*LEP_sl,*TEV_sn_d0_1,0.04,tanBeta_);
   
  
   //make Canvas
@@ -454,7 +454,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
 
   
    // TLegend* myleg = new TLegend(0.24,0.60,0.58,0.90,"    95% C.L. Limits:","brNDC");
-  TLegend* myleg = new TLegend(0.239967,0.618119,0.579431,0.885321,"    95% C.L. Limits:","brNDC");
+  TLegend* myleg = new TLegend(0.25,0.62,0.5,0.85,"    95% C.L. Limits:","brNDC");
   myleg->SetFillColor(0); 
   myleg->SetShadowColor(0);
   myleg->SetTextSize(0.035);
@@ -531,17 +531,20 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   if(tanBeta_ == 50) xpos = 200;
   if(tanBeta_ == 50) ypos = -10;
   
-  TLatex* lumilabel = new TLatex(150.,407.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+  TLatex* lumilabel = new TLatex(150.,410.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+  lumilabel->SetTextAlign(12);
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
-  TLatex* cmslabel = new TLatex(10.,407., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
+  TLatex* cmslabel = new TLatex(10.,410., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
+  cmslabel->SetTextAlign(12);
   cmslabel->SetTextSize(0.05);
   cmslabel->Draw("same");
 
   TString text_tanBeta;
   text_tanBeta =  "tan#beta = "+tanb+",  A_{0} = 0,  #mu > 0";
   TLatex* cmssmpars = new TLatex(160.,250,text_tanBeta);
+  cmssmpars->SetTextAlign(12);
   cmssmpars->SetTextSize(0.05);
 
   cmssmpars->Draw("same");
@@ -1077,7 +1080,7 @@ TLegend* makeStauLegend(Double_t txtsz,Int_t tanBeta_){
 
 TLegend* makeExpLegend(TGraph& sg_gr, TGraph& sgd_gr,TGraph& ch_gr,TGraph& sl_gr,TGraph& tev_sn,Double_t txtsz,Int_t tanbeta){
   //  TLegend* legexp = new TLegend(0.63,0.62,0.91,0.83,NULL,"brNDC");
-  TLegend* legexp = new TLegend(0.605351,0.625,0.885452,0.876147,NULL,"brNDC");
+  TLegend* legexp = new TLegend(0.65,0.65,0.85,0.9,NULL,"brNDC");
   legexp->SetFillColor(0);
   legexp->SetShadowColor(0);
   legexp->SetTextSize(txtsz);
@@ -1091,7 +1094,7 @@ TLegend* makeExpLegend(TGraph& sg_gr, TGraph& sgd_gr,TGraph& ch_gr,TGraph& sl_gr
   legexp->AddEntry(&sgd_gr,"D0   #tilde{#font[12]{g}}, #tilde{#font[12]{q}},  #scale[0.8]{#mu < 0}","l");  
 
   ch_gr.SetLineColor(1);
-  legexp->AddEntry(&ch_gr,"LEP2   #tilde{#chi}_{1}^{#pm}","l");  
+  legexp->AddEntry(&ch_gr,"LEP2   #font[122]{#tilde{#chi}_{1}^{#pm}}","l");  
   
   sl_gr.SetLineColor(1);
   if(tanbeta != 50) legexp->AddEntry(&sl_gr,"LEP2   #tilde{#font[12]{l}}^{#pm}","l"); 

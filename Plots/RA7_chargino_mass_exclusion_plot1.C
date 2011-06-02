@@ -13,7 +13,7 @@
 
   gStyle->SetMarkerSize(0);
 
-   TCanvas *c1 = new TCanvas("c1", "c1",14,48,1200,900);
+  TCanvas *c1 = new TCanvas("c1", "c1",0,0,1200,900);
 
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -480,16 +480,16 @@
 
    leg->Draw();
 
-   TLatex *   tex = new TLatex(105,10.2,preliminary ? "CMS preliminary" : "CMS");
+   TLatex *   tex = new TLatex(100,10.6,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
-   tex->SetTextAlign(10);
+   tex->SetTextAlign(12);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(150,10.2,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+   tex = new TLatex(150,10.6,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
-   tex->SetTextAlign(10);
+   tex->SetTextAlign(12);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();

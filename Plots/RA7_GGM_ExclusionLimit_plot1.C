@@ -13,7 +13,7 @@
   bool preliminary = !getenv ("NOPRELIMINARY");
 
 
-   TCanvas *c1 = new TCanvas("c1", "c1",29,28,1100,800);
+  TCanvas *c1 = new TCanvas("c1", "c1",0,0,1200,900);
    gStyle->SetOptStat(0);
    //   c1->Range(-30.5,142.5,274.5,317.5);
    c1->SetFillColor(0);
@@ -286,17 +286,17 @@ Double_t *dum = 0;
 
 
    int coord=525;
-   TLatex *   tex = new TLatex(600,1620,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+   TLatex *   tex = new TLatex(600,1640,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
-   tex->SetTextAlign(10);
+   tex->SetTextAlign(12);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
    // tex = new TLatex(coord,1450,"CMS preliminary");
-   tex = new TLatex(340,1620,preliminary ? "CMS preliminary" : "CMS");
+   tex = new TLatex(340,1640,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
-   tex->SetTextAlign(10);
+   tex->SetTextAlign(12);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->SetLineWidth(2);

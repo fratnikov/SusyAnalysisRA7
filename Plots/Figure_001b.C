@@ -1,7 +1,14 @@
 {
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Fri May 27 02:22:35 2011) by ROOT version5.27/06b
-   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
+#include "tdrstyle.C"
+  setTDRStyle();
+  tdrStyle->SetPadTopMargin(0.08);
+  tdrStyle->SetPadBottomMargin(0.17);
+  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadRightMargin(0.05);
+
+   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,0,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
    myCanvas->SetHighLightColor(2);
@@ -223,9 +230,9 @@
    plineTeV->SetPoint(25,500,0);
    plineTeV->Draw("");
    
-   TLegend *leg = new TLegend(0.6, 0.6, 0.9, 0.9 ,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.6, 0.5, 0.9, 0.8 ,NULL,"brNDC");
    leg->SetBorderSize(0);
-   leg->SetTextFont(62);
+   leg->SetTextFont(42);
    leg->SetTextSize(0.045);
    leg->SetLineColor(1);
    leg->SetLineStyle(1);
@@ -268,14 +275,18 @@
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    leg->Draw();
-   TLatex *   tex = new TLatex(320,3,"CMS simulation");
-   tex->SetTextAlign(13);
-   tex->SetTextSize(0.045);
+   //   TLatex *   tex = new TLatex(320,3,"CMS simulation");
+   TLatex *   tex = new TLatex(15,6.3,"CMS simulation");
+   tex->SetTextAlign(12);
+   tex->SetTextSize(0.05);
+   tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(320,2.6,"#sqrt{s} = 7 TeV, 35pb^{-1}");
-   tex->SetTextAlign(13);
-   tex->SetTextSize(0.045);
+   //      tex = new TLatex(320,2.6,"#sqrt{s} = 7 TeV, 35pb^{-1}");
+      tex = new TLatex(250,6.3,"#sqrt{s} = 7 TeV,   L_{int} = 35 pb^{-1}");
+   tex->SetTextAlign(12);
+   tex->SetTextSize(0.05);
+   tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
    

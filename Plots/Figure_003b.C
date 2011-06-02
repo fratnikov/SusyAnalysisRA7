@@ -1,9 +1,15 @@
 {
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Tue Mar  8 09:51:55 2011) by ROOT version5.22/00d
+#include "tdrstyle.C"
+  setTDRStyle();
+  tdrStyle->SetPadTopMargin(0.08);
+  tdrStyle->SetPadBottomMargin(0.17);
+  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadRightMargin(0.05);
    bool preliminary = !getenv ("NOPRELIMINARY");
    preliminary = false;
-   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
+   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,0,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
    myCanvas->SetHighLightColor(2);
@@ -133,6 +139,7 @@
    zjetstmp->SetBinContent(51,0.04193731);
    zjetstmp->SetEntries(203344);
    //zjetstmp->SetFillColor(5);
+   zjetstmp->SetLineWidth(2);
    zjetstmp->SetLineStyle(0);
    zjetstmp->SetMarkerStyle(20);
    zjetstmp->GetXaxis()->SetRange(1,25);
@@ -222,10 +229,10 @@
 //    final_data_e->GetZaxis()->SetTitleFont(42);
    final_data_e->Draw("same");
    
-   TLegend *leg = new TLegend(0.65,0.6,0.95,0.7,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.6,0.65,0.95,0.85,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
-   leg->SetTextSize(0.04);
+   leg->SetTextSize(0.045);
    leg->SetLineColor(1);
    leg->SetLineStyle(1);
    leg->SetLineWidth(1);
@@ -246,22 +253,22 @@
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    leg->Draw();
-   TLatex *   tex = new TLatex(280,10000,preliminary ? "CMS preliminary" : "CMS");
-   tex->SetTextAlign(13);
+   TLatex *   tex = new TLatex(20,3.5e4,preliminary ? "CMS preliminary" : "CMS");
+   tex->SetTextAlign(12);
    tex->SetTextFont(42);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(280,6000,"#sqrt{s} = 7 TeV,  35pb^{-1}");
-   tex->SetTextAlign(13);
+      tex = new TLatex(240,3.5e4,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+   tex->SetTextAlign(12);
    tex->SetTextFont(42);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetLineWidth(2);
    tex->Draw();
-   tex = new TLatex(280,3000,"75 < m(e^{+}e^{-}) < 105 GeV/c^{2}");
+   tex = new TLatex(250,80,"75 < m(e^{+}e^{-}) < 105 GeV/c^{2}");
    tex->SetTextAlign(13);
    tex->SetTextFont(42);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.045);
    tex->SetLineWidth(2);
    tex->Draw();
    
