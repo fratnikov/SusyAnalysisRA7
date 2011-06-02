@@ -454,7 +454,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
 
   
    // TLegend* myleg = new TLegend(0.24,0.60,0.58,0.90,"    95% C.L. Limits:","brNDC");
-  TLegend* myleg = new TLegend(0.25,0.62,0.5,0.85,"    95% C.L. Limits:","brNDC");
+  TLegend* myleg = new TLegend(0.25,0.63,0.5,0.87,"    95% C.L. Limits:","brNDC");
   myleg->SetFillColor(0); 
   myleg->SetShadowColor(0);
   myleg->SetTextSize(0.035);
