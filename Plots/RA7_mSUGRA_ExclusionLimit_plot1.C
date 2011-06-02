@@ -531,18 +531,18 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   if(tanBeta_ == 50) xpos = 200;
   if(tanBeta_ == 50) ypos = -10;
   
-  TLatex* lumilabel = new TLatex(150.,405.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+  TLatex* lumilabel = new TLatex(150.,407.,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
-  TLatex* cmslabel = new TLatex(10.,405., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
+  TLatex* cmslabel = new TLatex(10.,407., getenv ("NOPRELIMINARY") ? "CMS" : "CMS preliminary");
   cmslabel->SetTextSize(0.05);
   cmslabel->Draw("same");
 
   TString text_tanBeta;
   text_tanBeta =  "tan#beta = "+tanb+",  A_{0} = 0,  #mu > 0";
-  TLatex* cmssmpars = new TLatex(170.,250,text_tanBeta);
-  cmssmpars->SetTextSize(0.04);
+  TLatex* cmssmpars = new TLatex(160.,250,text_tanBeta);
+  cmssmpars->SetTextSize(0.05);
 
   cmssmpars->Draw("same");
  

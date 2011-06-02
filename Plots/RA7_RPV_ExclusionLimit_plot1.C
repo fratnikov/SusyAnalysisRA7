@@ -5,13 +5,13 @@
 #include "tdrstyle.C"
   setTDRStyle();
   tdrStyle->SetPadTopMargin(0.08);
-  tdrStyle->SetPadBottomMargin(0.13);
-  tdrStyle->SetPadLeftMargin(0.15);
+  tdrStyle->SetPadBottomMargin(0.16);
+  tdrStyle->SetPadLeftMargin(0.16);
   tdrStyle->SetPadRightMargin(0.05);
 
   bool preliminary = !getenv ("NOPRELIMINARY");
   
-   TCanvas *c = new TCanvas("c", "c",135,78,1200,1000);
+   TCanvas *c = new TCanvas("c", "c",135,78,1200,900);
    gStyle->SetOptFit(1);
    c->ToggleEventStatus();
    c->Range(246.9895,263.2979,1499.346,1500.177);
@@ -33,7 +33,7 @@
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetLabelFont(42);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetLabelOffset(0.007);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetLabelSize(0.05);
-   h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitleSize(0.06);
+   h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitleSize(0.07);
    h_xsec_mSquark_vs_mGluino__1->GetXaxis()->SetTitleFont(42);
 	//Y axis
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitle("m_{#tildeg}   (GeV/c^{2})   ");
@@ -43,7 +43,7 @@
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetLabelOffset(0.007);
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetLabelSize(0.05);
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitleSize(0.06);
-   h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitleOffset(1.15);
+   h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitleOffset(1.25);
    h_xsec_mSquark_vs_mGluino__1->GetYaxis()->SetTitleFont(42);
 	//Z axis
    h_xsec_mSquark_vs_mGluino__1->GetZaxis()->SetNdivisions(509);
@@ -593,7 +593,7 @@
 
    graph->Draw("cp");
 
-   TLegend *leg = new TLegend(0.55,0.7,0.9,0.9,"95% C.L. Limits:","brNDC");
+   TLegend *leg = new TLegend(0.60,0.7,0.9,0.9,"95% C.L. Limits:","brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(42);
    leg->SetTextSize(0.04);
@@ -627,14 +627,14 @@
 
    leg->Draw();
 
-   TLatex *   tex = new TLatex(500,1430, preliminary?"CMS preliminary":"CMS");
+   TLatex *   tex = new TLatex(500,1450, preliminary?"CMS preliminary":"CMS");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(900,1430,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+   tex = new TLatex(900,1450,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);

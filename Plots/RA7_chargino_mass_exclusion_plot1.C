@@ -5,8 +5,8 @@
 #include "tdrstyle.C"
   setTDRStyle();
   tdrStyle->SetPadTopMargin(0.08);
-  tdrStyle->SetPadBottomMargin(0.14);
-  tdrStyle->SetPadLeftMargin(0.12);
+  tdrStyle->SetPadBottomMargin(0.17);
+  tdrStyle->SetPadLeftMargin(0.15);
   tdrStyle->SetPadRightMargin(0.05);
 
   bool preliminary = !getenv ("NOPRELIMINARY");
@@ -14,6 +14,7 @@
   gStyle->SetMarkerSize(0);
 
    TCanvas *c1 = new TCanvas("c1", "c1",14,48,1200,900);
+
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    c1->Range(82.31192,-1.25,219.4712,11.25);
@@ -70,8 +71,10 @@
    Graph1->SetStats(0);
    Graph1->GetXaxis()->SetTitle("m_{#tilde{#chi}^{#pm}_{1}}  (GeV/c^{2})  ");
    Graph1->GetXaxis()->SetRange(10,90);
+   Graph1->GetXaxis()->SetTitleOffset (1.1);
    //   Graph1->GetXaxis()->CenterTitle(true);
-   Graph1->GetYaxis()->SetTitle("#sigma #times BR( #geq3l)  (pb)  ");
+   Graph1->GetYaxis()->SetTitle("#sigma #times #font[52]{B}( #geq 3#font[12]{l})  (pb)  ");
+   //  Graph1->GetYaxis()->SetTitle("#sigma #times B( #geq 3l)  (pb)  ");
    Graph1->GetYaxis()->SetTitleOffset (0.8);
    //   Graph1->GetYaxis()->CenterTitle(true);
    graph->SetHistogram(Graph1);
@@ -360,7 +363,7 @@
    Graph167->GetXaxis()->SetTitle("Chargino Mass (GeV/c^{2})");
    Graph167->GetXaxis()->SetRange(10,90);
    Graph167->GetXaxis()->CenterTitle(true);
-   Graph167->GetYaxis()->SetTitle("#sigma x BR( #geq3l) (pb)");
+   Graph167->GetYaxis()->SetTitle("#sigma x #font[52]{B}( #geq 3#font[52]{l}) (pb)");
    Graph167->GetYaxis()->CenterTitle(true);
    graph->SetHistogram(Graph167);
    
@@ -473,18 +476,18 @@
    hdummy5->SetLineStyle(1);
    hdummy5->SetLineWidth(2);
    hdummy5->SetFillColor(0);
-   leg->AddEntry(hdummy5,"Theory #sigma_{NLO} #times BR(#geq3l)","l");
+   leg->AddEntry(hdummy5,"Theory #sigma_{NLO} #times #font[52]{B}( #geq 3#font[12]{l})","l");
 
    leg->Draw();
 
-   TLatex *   tex = new TLatex(105,10,preliminary ? "CMS preliminary" : "CMS");
+   TLatex *   tex = new TLatex(105,10.2,preliminary ? "CMS preliminary" : "CMS");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(150,10,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
+   tex = new TLatex(150,10.2,"L_{int} = 35 pb^{-1},   #sqrt{s} = 7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.05);
@@ -521,15 +524,15 @@
    tex->SetLineWidth(2);
    tex->SetTextFont(42);
    tex->Draw();
-   tex = new TLatex(160,8,"tan#beta=3, A_{0}=0, #mu>0,");
+   tex = new TLatex(160,8.5,"tan#beta=3, A_{0}=0, #mu>0,");
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetLineWidth(2);
    tex->SetTextFont(42);
    tex->Draw();
-      tex = new TLatex(160,7.3,"m_{0}=60 GeV/c^{2}");
+      tex = new TLatex(160,7.7,"m_{0}=60 GeV/c^{2}");
    tex->SetTextAlign(10);
-   tex->SetTextSize(0.04);
+   tex->SetTextSize(0.05);
    tex->SetLineWidth(2);
    tex->SetTextFont(42);
    tex->Draw();

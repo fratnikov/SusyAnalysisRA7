@@ -238,7 +238,7 @@
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("zjetstmp","Drell Yan MC","l");
+   entry=leg->AddEntry("zjetstmp","Drell #font[122]{-} Yan MC","l");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(1);

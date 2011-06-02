@@ -1,3 +1,4 @@
+// test commit from F.R.
 {
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Tue Mar  8 09:45:49 2011) by ROOT version5.22/00d
@@ -427,7 +428,7 @@
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("DY50_hist","Drell Yan MC","l");
+   entry=leg->AddEntry("DY50_hist","Drell #font[122]{-} Yan MC","l");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(1);
@@ -571,7 +572,7 @@
    final_data->SetMarkerStyle(20);
    final_data->GetXaxis()->SetTitle("m(#mu^{+}#mu^{-}) (GeV/c^{2})");
    final_data->GetXaxis()->SetRange(13,28);
-   final_data->GetXaxis()->SetNdivisions(404);
+   final_data->GetXaxis()->SetNdivisions(-504);
    final_data->GetXaxis()->SetLabelFont(42);
    final_data->GetXaxis()->SetLabelOffset(0.007);
    final_data->GetXaxis()->SetLabelSize(0.05);

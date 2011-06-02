@@ -1,7 +1,7 @@
 {
 //=========Macro generated from canvas: myCanvas/myCanvas
 //=========  (Fri May 27 02:22:35 2011) by ROOT version5.27/06b
-   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1600,1200);
+   TCanvas *myCanvas = new TCanvas("myCanvas", "myCanvas",0,22,1200,900);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
    myCanvas->SetHighLightColor(2);
@@ -190,40 +190,40 @@
    pline->Draw("");
    
    Double_t *dum = 0;
-   pline = new TPolyLine(60,dum,dum,"");
-   pline->SetFillColor(19);
-   pline->SetLineColor(2);
-   pline->SetLineStyle(7);
-   pline->SetLineWidth(5);
-   pline->SetPoint(0,0,0.08812505);
-   pline->SetPoint(1,20,0.2491659);
-   pline->SetPoint(2,40,0.3774256);
-   pline->SetPoint(3,60,0.3855471);
-   pline->SetPoint(4,80,0.343286);
-   pline->SetPoint(5,100,0.3447331);
-   pline->SetPoint(6,120,0.3300259);
-   pline->SetPoint(7,140,0.2921948);
-   pline->SetPoint(8,160,0.2865245);
-   pline->SetPoint(9,180,0.2968314);
-   pline->SetPoint(10,200,0.226544);
-   pline->SetPoint(11,220,0.184342);
-   pline->SetPoint(12,240,0.1834856);
-   pline->SetPoint(13,260,0.1656479);
-   pline->SetPoint(14,280,0.09414968);
-   pline->SetPoint(15,300,0.06133905);
-   pline->SetPoint(16,320,0.065385);
-   pline->SetPoint(17,340,0.05469423);
-   pline->SetPoint(18,360,0.04078441);
-   pline->SetPoint(19,380,0.03254484);
-   pline->SetPoint(20,400,0.02740618);
-   pline->SetPoint(21,420,0.009302745);
-   pline->SetPoint(22,440,0);
-   pline->SetPoint(23,460,0);
-   pline->SetPoint(24,480,0.0002657927);
-   pline->SetPoint(25,500,0);
-   pline->Draw("");
+   plineTeV = new TPolyLine(60,dum,dum,"");
+   plineTeV->SetFillColor(19);
+   plineTeV->SetLineColor(2);
+   plineTeV->SetLineStyle(7);
+   plineTeV->SetLineWidth(5);
+   plineTeV->SetPoint(0,0,0.08812505);
+   plineTeV->SetPoint(1,20,0.2491659);
+   plineTeV->SetPoint(2,40,0.3774256);
+   plineTeV->SetPoint(3,60,0.3855471);
+   plineTeV->SetPoint(4,80,0.343286);
+   plineTeV->SetPoint(5,100,0.3447331);
+   plineTeV->SetPoint(6,120,0.3300259);
+   plineTeV->SetPoint(7,140,0.2921948);
+   plineTeV->SetPoint(8,160,0.2865245);
+   plineTeV->SetPoint(9,180,0.2968314);
+   plineTeV->SetPoint(10,200,0.226544);
+   plineTeV->SetPoint(11,220,0.184342);
+   plineTeV->SetPoint(12,240,0.1834856);
+   plineTeV->SetPoint(13,260,0.1656479);
+   plineTeV->SetPoint(14,280,0.09414968);
+   plineTeV->SetPoint(15,300,0.06133905);
+   plineTeV->SetPoint(16,320,0.065385);
+   plineTeV->SetPoint(17,340,0.05469423);
+   plineTeV->SetPoint(18,360,0.04078441);
+   plineTeV->SetPoint(19,380,0.03254484);
+   plineTeV->SetPoint(20,400,0.02740618);
+   plineTeV->SetPoint(21,420,0.009302745);
+   plineTeV->SetPoint(22,440,0);
+   plineTeV->SetPoint(23,460,0);
+   plineTeV->SetPoint(24,480,0.0002657927);
+   plineTeV->SetPoint(25,500,0);
+   plineTeV->Draw("");
    
-   TLegend *leg = new TLegend(2,5.263544e-315,5.263544e-315,5.263544e-315,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.6, 0.6, 0.9, 0.9 ,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextFont(62);
    leg->SetTextSize(0.045);
@@ -232,14 +232,14 @@
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(0);
-   TLegendEntry *entry=leg->AddEntry("TPolyLine","ML01#times1/10","l");
+   TLegendEntry *entry=leg->AddEntry(pline,"ML01 #times 0.1","l");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(1);
    entry->SetMarkerColor(1);
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
-   entry=leg->AddEntry("TPolyLine","TeV3","l");
+   entry=leg->AddEntry(plineTeV,"TeV3","l");
    entry->SetLineColor(1);
    entry->SetLineStyle(1);
    entry->SetLineWidth(1);
@@ -337,4 +337,5 @@
    myCanvas->Modified();
    myCanvas->cd();
    myCanvas->SetSelected(myCanvas);
+   myCanvas->SaveAs ("Figure_001b.pdf");
 }

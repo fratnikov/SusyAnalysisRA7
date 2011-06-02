@@ -1,20 +1,21 @@
 {
 #include "tdrstyle.C"
   setTDRStyle();
-tdrStyle->SetPadBottomMargin(0.15);
+tdrStyle->SetPadBottomMargin(0.17);
+   bool preliminary = false;
 
   //   TCanvas *c1 = new TCanvas("c1", "c1",14,48,1200,900);
    TCanvas *c1 = new TCanvas("c1", "c1",0,0,1200,900);
 
 
-  TH2D *h_hold=new TH2D("h_hold","; m_{#tilde{q}} - m_{#tilde{#chi^{0}_{1}}}  [GeV/c^{2}]  ; #sigma #times Br #times #varepsilon  [pb]  ",310,0.0,310,250,0.0,0.250);
+  TH2D *h_hold=new TH2D("h_hold","; m_{#tilde{q}} - m_{#tilde{#chi^{0}_{1}}}  (GeV/c^{2})  ; #sigma #times #font[52]{B} #times #varepsilon  (pb)  ",310,0.0,310,250,0.0,0.250);
 
   h_hold->GetYaxis()->SetTitleOffset(1.0);
   h_hold->GetXaxis()->SetTitleOffset(1.0);
   h_hold->GetYaxis()->SetTitleFont(42);
   h_hold->GetXaxis()->SetTitleFont(42);
   h_hold->GetYaxis()->SetLabelFont(42);
-  h_hold->GetXaxis()->SetLabelFont(42);
+  h_hold->GetXaxis()->SetTitleOffset (1.1);
   h_hold->Draw();
 
   double dmass [] = {5, 35, 65, 95, 125, 155, 185, 215, 245, 275};
@@ -50,18 +51,18 @@ tdrStyle->SetPadBottomMargin(0.15);
    leg->SetFillColor(0);
    leg->SetFillStyle(0);
 
-   leg->AddEntry(gr_met,"MET>50 GeV","p"); 
+   leg->AddEntry(gr_met,"E_{T}^{miss}>50 GeV","p"); 
    leg->AddEntry(gr_jt,"H_{T}>200 GeV","p"); 
    leg->Draw();
 
-   TLatex *   tex = new TLatex(20,0.2505,"CMS simulation");
+   TLatex *   tex = new TLatex(20,0.255,"CMS simulation");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
    tex->SetTextFont(42);
    tex->Draw();
    
-   tex = new TLatex(200,0.2505,"#sqrt{s}=7 TeV");
+   tex = new TLatex(200,0.255,"#sqrt{s}=7 TeV");
    tex->SetTextColor(1);
    tex->SetTextAlign(10);
    tex->SetTextSize(0.04);
@@ -74,9 +75,10 @@ tdrStyle->SetPadBottomMargin(0.15);
   
 
   c1->SaveAs("Figure_002.pdf");
-  c1->SaveAs("Figure_002.eps");
-  c1->SaveAs("Figure_002.png");
-  
+    if (preliminary) {
+      c1->SaveAs("Figure_002.eps");
+      c1->SaveAs("Figure_002.png");
+    }
 
 
 
