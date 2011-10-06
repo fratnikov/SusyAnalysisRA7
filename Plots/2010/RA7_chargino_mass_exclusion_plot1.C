@@ -540,7 +540,7 @@
    c1->cd();
    c1->SetSelected(c1);
    c1->SaveAs("RA7_chargino_mass_exclusion_plot1.pdf");
-   if (preliminary) {
+   if (1 || preliminary) {
      c1->SaveAs("RA7_chargino_mass_exclusion_plot1.png");
      c1->SaveAs("RA7_chargino_mass_exclusion_plot1.eps");
    }

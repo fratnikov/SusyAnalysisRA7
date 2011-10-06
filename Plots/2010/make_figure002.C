@@ -77,7 +77,7 @@ tdrStyle->SetPadBottomMargin(0.17);
   
 
   c1->SaveAs("Figure_002.pdf");
-    if (preliminary) {
+    if (1 || preliminary) {
       c1->SaveAs("Figure_002.eps");
       c1->SaveAs("Figure_002.png");
     }

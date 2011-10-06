@@ -603,7 +603,7 @@ void CommandMSUGRA(TString plotName_,Int_t tanBeta_){
   
   
   cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.pdf");
-  if (!getenv ("NOPRELIMINARY")) {
+  if (1 || !getenv ("NOPRELIMINARY")) {
     cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.png");
     cvsSys->SaveAs("RA7_mSUGRA_ExclusionLimit_plot1.eps");
   }

@@ -343,7 +343,7 @@
    myCanvas->cd();
    myCanvas->SetSelected(myCanvas);
    myCanvas->SaveAs("Figure_003b.pdf");
-   if (preliminary) {
+   if (1 || preliminary) {
      myCanvas->SaveAs("Figure_003b.png");
      myCanvas->SaveAs("Figure_003b.eps");
    }

@@ -651,7 +651,7 @@
    c->Modified();
    c->cd();
    c->SaveAs("RA7_RPV_ExclusionLimit_plot1.pdf");
-   if (preliminary) {
+   if (1 || preliminary) {
      c->SaveAs("RA7_RPV_ExclusionLimit_plot1.png");
      c->SaveAs("RA7_RPV_ExclusionLimit_plot1.eps");
    }
