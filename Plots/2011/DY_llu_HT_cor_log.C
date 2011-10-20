@@ -1,0 +1,448 @@
+{
+//=========Macro generated from canvas: c1/c1
+//=========  (Wed Oct 19 20:49:02 2011) by ROOT version5.28/00e
+   TCanvas *c1 = new TCanvas("c1", "c1",0,0,600,600);
+   gStyle->SetOptFit(1);
+   gStyle->SetOptStat(0);
+   gStyle->SetOptTitle(0);
+
+ gStyle->SetErrorX(0.);
+   
+   gStyle->SetMarkerStyle(20);
+
+   c1->Range(-98.76542,-1.916752,518.5185,4.783204);
+   c1->SetFillColor(0);
+
+
+   c1->SetFillColor(0);
+   c1->SetBorderMode(0);
+   c1->SetBorderSize(2);
+   c1->SetLogy();
+   c1->SetTickx(1);
+   c1->SetTicky(1);
+   c1->SetLeftMargin(0.16);
+   c1->SetRightMargin(0.06);
+   c1->SetTopMargin(0.1);
+   c1->SetBottomMargin(0.13);
+   c1->SetFrameFillStyle(0);
+   c1->SetFrameBorderMode(0);
+   c1->SetFrameFillStyle(0);
+   c1->SetFrameBorderMode(0);
+
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm","",25,0,500);
+   hd_HT_mmm->SetBinContent(3,267);
+   hd_HT_mmm->SetBinContent(4,121);
+   hd_HT_mmm->SetBinContent(5,75);
+   hd_HT_mmm->SetBinContent(6,74);
+   hd_HT_mmm->SetBinContent(7,49);
+   hd_HT_mmm->SetBinContent(8,48);
+   hd_HT_mmm->SetBinContent(9,25);
+   hd_HT_mmm->SetBinContent(10,20);
+   hd_HT_mmm->SetBinContent(11,15);
+   hd_HT_mmm->SetBinContent(12,17);
+   hd_HT_mmm->SetBinContent(13,9);
+   hd_HT_mmm->SetBinContent(14,9);
+   hd_HT_mmm->SetBinContent(15,9);
+   hd_HT_mmm->SetBinContent(16,1);
+   hd_HT_mmm->SetBinContent(17,3);
+   hd_HT_mmm->SetBinContent(18,7);
+   hd_HT_mmm->SetBinContent(19,6);
+   hd_HT_mmm->SetBinContent(20,2);
+   hd_HT_mmm->SetBinContent(21,3);
+   hd_HT_mmm->SetBinContent(22,1);
+   hd_HT_mmm->SetBinContent(23,1);
+   hd_HT_mmm->SetBinContent(24,2);
+   hd_HT_mmm->SetBinContent(25,9);
+   hd_HT_mmm->SetBinContent(26,8);
+   hd_HT_mmm->SetMinimum(0.09);
+   hd_HT_mmm->SetMaximum(28067.67);
+   hd_HT_mmm->SetEntries(773);
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetTitle("H_{T} [GeV]");
+
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.04);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.04);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetTitle("Events/5GeV");
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.04);
+   hd_HT_mmm->GetYaxis()->SetTitleSize(0.04);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.3);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+ 
+   hd_HT_mmm->Draw("E1");
+   
+   THStack *abc = new THStack();
+   abc->SetName("");
+   abc->SetTitle("");
+   
+   TH1F *a1__1 = new TH1F("1__1","",25,0,500);
+   a1__1->SetMinimum(0.1122707);
+   a1__1->SetMaximum(449.0827);
+   a1__1->SetDirectory(0);
+   a1__1->SetStats(0);
+   a1__1->SetLineStyle(0);
+   a1__1->SetMarkerStyle(20);
+   a1__1->GetXaxis()->SetLabelFont(42);
+   a1__1->GetXaxis()->SetLabelOffset(0.007);
+   a1__1->GetXaxis()->SetLabelSize(0.05);
+   a1__1->GetXaxis()->SetTitleSize(0.06);
+   a1__1->GetXaxis()->SetTitleOffset(0.9);
+   a1__1->GetXaxis()->SetTitleFont(42);
+   a1__1->GetYaxis()->SetLabelFont(42);
+   a1__1->GetYaxis()->SetLabelOffset(0.007);
+   a1__1->GetYaxis()->SetLabelSize(0.05);
+   a1__1->GetYaxis()->SetTitleSize(0.06);
+   a1__1->GetYaxis()->SetTitleOffset(1.25);
+   a1__1->GetYaxis()->SetTitleFont(42);
+   a1__1->GetZaxis()->SetLabelFont(42);
+   a1__1->GetZaxis()->SetLabelOffset(0.007);
+   a1__1->GetZaxis()->SetLabelSize(0.05);
+   a1__1->GetZaxis()->SetTitleSize(0.06);
+   a1__1->GetZaxis()->SetTitleFont(42);
+   abc->SetHistogram(a1__1);
+   
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm_VVJets","hd_HT_mmm",25,0,500);
+   hd_HT_mmm->SetBinContent(3,1.629336);
+   hd_HT_mmm->SetBinContent(4,0.807705);
+   hd_HT_mmm->SetBinContent(5,0.835557);
+   hd_HT_mmm->SetBinContent(6,0.6823715);
+   hd_HT_mmm->SetBinContent(7,0.4456304);
+   hd_HT_mmm->SetBinContent(8,0.3063709);
+   hd_HT_mmm->SetBinContent(9,0.278519);
+   hd_HT_mmm->SetBinContent(10,0.2367411);
+   hd_HT_mmm->SetBinContent(11,0.1253335);
+   hd_HT_mmm->SetBinContent(12,0.09748165);
+   hd_HT_mmm->SetBinContent(13,0.1114076);
+   hd_HT_mmm->SetBinContent(14,0.06962974);
+   hd_HT_mmm->SetBinContent(15,0.0835557);
+   hd_HT_mmm->SetBinContent(16,0.0278519);
+   hd_HT_mmm->SetBinContent(17,0.04177785);
+   hd_HT_mmm->SetBinContent(18,0.0557038);
+   hd_HT_mmm->SetBinContent(19,0.0278519);
+   hd_HT_mmm->SetBinContent(20,0.0278519);
+   hd_HT_mmm->SetBinContent(22,0.01392595);
+   hd_HT_mmm->SetBinContent(23,0.0278519);
+   hd_HT_mmm->SetBinContent(25,0.04177785);
+   hd_HT_mmm->SetBinContent(26,0.0278519);
+   hd_HT_mmm->SetEntries(429);
+
+   Int_t ci;   // for color index setting
+   ci = TColor::GetColor("#33ff33");
+   hd_HT_mmm->SetFillColor(ci);
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(0.9);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetYaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+   abc->Add(hd_HT_mmm,"");
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm_ttbar","hd_HT_mmm",25,0,500);
+   hd_HT_mmm->SetBinContent(3,23.90583);
+   hd_HT_mmm->SetBinContent(4,19.44941);
+   hd_HT_mmm->SetBinContent(5,21.51509);
+   hd_HT_mmm->SetBinContent(6,21.14407);
+   hd_HT_mmm->SetBinContent(7,25.2038);
+   hd_HT_mmm->SetBinContent(8,19.19635);
+   hd_HT_mmm->SetBinContent(9,15.38239);
+   hd_HT_mmm->SetBinContent(10,11.51092);
+   hd_HT_mmm->SetBinContent(11,7.008115);
+   hd_HT_mmm->SetBinContent(12,7.856426);
+   hd_HT_mmm->SetBinContent(13,7.122957);
+   hd_HT_mmm->SetBinContent(14,5.410972);
+   hd_HT_mmm->SetBinContent(15,4.528044);
+   hd_HT_mmm->SetBinContent(16,5.276545);
+   hd_HT_mmm->SetBinContent(17,3.625342);
+   hd_HT_mmm->SetBinContent(18,1.180578);
+   hd_HT_mmm->SetBinContent(19,2.26527);
+   hd_HT_mmm->SetBinContent(20,1.566771);
+   hd_HT_mmm->SetBinContent(21,2.090279);
+   hd_HT_mmm->SetBinContent(22,0.5195194);
+   hd_HT_mmm->SetBinContent(23,0.728909);
+   hd_HT_mmm->SetBinContent(24,1.315869);
+   hd_HT_mmm->SetBinContent(25,3.478708);
+   hd_HT_mmm->SetBinContent(26,2.778239);
+   hd_HT_mmm->SetEntries(1642);
+
+   ci = TColor::GetColor("#ff3333");
+   // hd_HT_mmm->SetFillColor(ci);
+  hd_HT_mmm->SetFillColor(kMagenta);
+
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(0.9);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetYaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+   abc->Add(hd_HT_mmm,"");
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm","hd_HT_mmm",25,0,500);
+
+   ci = TColor::GetColor("#3333ff");
+   hd_HT_mmm->SetFillColor(ci);
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(0.9);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetYaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+   abc->Add(hd_HT_mmm,"");
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm","hd_HT_mmm",25,0,500);
+   hd_HT_mmm->SetBinContent(3,4.634492);
+   hd_HT_mmm->SetBinContent(4,4.634492);
+   hd_HT_mmm->SetBinContent(7,4.634492);
+   hd_HT_mmm->SetEntries(3);
+
+   ci = TColor::GetColor("#ffff33");
+   hd_HT_mmm->SetFillColor(ci);
+
+   ci = TColor::GetColor("#ffff33");
+   hd_HT_mmm->SetLineColor(ci);
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(0.9);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetYaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+   abc->Add(hd_HT_mmm,"");
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm_DYJets","hd_HT_mmm",25,0,500);
+   hd_HT_mmm->SetBinContent(3,250.507);
+   hd_HT_mmm->SetBinContent(4,95.12217);
+   hd_HT_mmm->SetBinContent(5,56.19335);
+   hd_HT_mmm->SetBinContent(6,41.6641);
+   hd_HT_mmm->SetBinContent(7,30.93299);
+   hd_HT_mmm->SetBinContent(8,23.97755);
+   hd_HT_mmm->SetBinContent(9,18.14969);
+   hd_HT_mmm->SetBinContent(10,10.84551);
+   hd_HT_mmm->SetBinContent(11,12.20158);
+   hd_HT_mmm->SetBinContent(12,6.04396);
+   hd_HT_mmm->SetBinContent(13,6.104613);
+   hd_HT_mmm->SetBinContent(14,3.414939);
+   hd_HT_mmm->SetBinContent(15,4.054728);
+   hd_HT_mmm->SetBinContent(16,5.38913);
+   hd_HT_mmm->SetBinContent(17,1.983531);
+   hd_HT_mmm->SetBinContent(18,1.688955);
+   hd_HT_mmm->SetBinContent(19,0.6036437);
+   hd_HT_mmm->SetBinContent(20,1.680995);
+   hd_HT_mmm->SetBinContent(21,1.53237);
+   hd_HT_mmm->SetBinContent(22,0.9340762);
+   hd_HT_mmm->SetBinContent(23,0.7240999);
+   hd_HT_mmm->SetBinContent(24,0.1461094);
+   hd_HT_mmm->SetBinContent(25,4.374942);
+   hd_HT_mmm->SetBinContent(26,3.342598);
+   hd_HT_mmm->SetEntries(2840);
+
+   ci = TColor::GetColor("#ffff33");
+   hd_HT_mmm->SetFillColor(ci);
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(0.9);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetYaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+   abc->Add(hd_HT_mmm,"");
+   abc->Draw("same");
+   
+   TH1F *hd_HT_mmm = new TH1F("hd_HT_mmm","",25,0,500);
+   hd_HT_mmm->SetBinContent(3,267);
+   hd_HT_mmm->SetBinContent(4,121);
+   hd_HT_mmm->SetBinContent(5,75);
+   hd_HT_mmm->SetBinContent(6,74);
+   hd_HT_mmm->SetBinContent(7,49);
+   hd_HT_mmm->SetBinContent(8,48);
+   hd_HT_mmm->SetBinContent(9,25);
+   hd_HT_mmm->SetBinContent(10,20);
+   hd_HT_mmm->SetBinContent(11,15);
+   hd_HT_mmm->SetBinContent(12,17);
+   hd_HT_mmm->SetBinContent(13,9);
+   hd_HT_mmm->SetBinContent(14,9);
+   hd_HT_mmm->SetBinContent(15,9);
+   hd_HT_mmm->SetBinContent(16,1);
+   hd_HT_mmm->SetBinContent(17,3);
+   hd_HT_mmm->SetBinContent(18,7);
+   hd_HT_mmm->SetBinContent(19,6);
+   hd_HT_mmm->SetBinContent(20,2);
+   hd_HT_mmm->SetBinContent(21,3);
+   hd_HT_mmm->SetBinContent(22,1);
+   hd_HT_mmm->SetBinContent(23,1);
+   hd_HT_mmm->SetBinContent(24,2);
+   hd_HT_mmm->SetBinContent(25,9);
+   hd_HT_mmm->SetBinContent(26,8);
+   hd_HT_mmm->SetMinimum(0.09);
+   hd_HT_mmm->SetMaximum(28067.67);
+   hd_HT_mmm->SetEntries(773);
+   hd_HT_mmm->SetLineStyle(0);
+   hd_HT_mmm->SetMarkerStyle(20);
+   hd_HT_mmm->GetXaxis()->SetTitle("H_{T} [GeV]");
+   hd_HT_mmm->GetXaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetXaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetXaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetXaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetXaxis()->SetTitleOffset(0.9);
+   hd_HT_mmm->GetXaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetYaxis()->SetTitle("Events/20GeV");
+   hd_HT_mmm->GetYaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetYaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetYaxis()->SetLabelSize(0.03);
+   hd_HT_mmm->GetYaxis()->SetTitleOffset(1.25);
+   hd_HT_mmm->GetYaxis()->SetTitleFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelFont(42);
+   hd_HT_mmm->GetZaxis()->SetLabelOffset(0.007);
+   hd_HT_mmm->GetZaxis()->SetLabelSize(0.05);
+   hd_HT_mmm->GetZaxis()->SetTitleSize(0.06);
+   hd_HT_mmm->GetZaxis()->SetTitleFont(42);
+   hd_HT_mmm->Draw("E1 same");
+  
+   TLegend *leg = new TLegend(0.6,0.5,0.91,0.85,NULL,"brNDC");
+   leg->SetBorderSize(0);
+   leg->SetTextFont(42);
+   leg->SetTextSize(0.04);
+   leg->SetLineColor(0);
+   leg->SetLineStyle(1);
+   leg->SetLineWidth(1);
+   leg->SetFillColor(0);
+   leg->SetFillStyle(4000);
+
+ 
+ 
+   TLegendEntry *entry=leg->AddEntry("hd_HT_mmm","DATA","pl");
+   entry->SetLineColor(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(20);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("hd_HT_mmm_VVJets","VV+Jets","f");
+
+   ci = TColor::GetColor("#33ff33");
+   entry->SetFillColor(ci);
+   entry->SetFillStyle(1001);
+   entry->SetLineColor(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("hd_HT_mmm_ttbar","t#bar{t}+Jets","f");
+
+   ci = TColor::GetColor("#ff3333");
+   //  entry->SetFillColor(ci);
+   entry->SetFillColor(kMagenta);
+
+   entry->SetFillStyle(1001);
+   entry->SetLineColor(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   entry=leg->AddEntry("hd_HT_mmm_DYJets","DY+Jets","f");
+
+   ci = TColor::GetColor("#ffff33");
+   entry->SetFillColor(ci);
+   entry->SetFillStyle(1001);
+   entry->SetLineColor(1);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(1);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
+   leg->Draw();
+ 
+
+   TLatex *   tex = new TLatex(0,30000,"CMS preliminary");
+   tex->SetTextAlign(10);
+   tex->SetLineWidth(2);
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.04);
+   tex->Draw();
+   TLatex *   tex = new TLatex(300,30000,"#sqrt{s}=7TeV,  L_{int}=2.1fb^{-1}");
+   tex->SetTextAlign(10);
+   tex->SetLineWidth(2);
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.04);
+   tex->Draw();
+
+
+   c1->Modified();
+   c1->cd();
+   c1->SetSelected(c1);
+
+   gPad->RedrawAxis();
+}
