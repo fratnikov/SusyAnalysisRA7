@@ -5,6 +5,7 @@
 
 #include <dirent.h>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -12,6 +13,7 @@
 #include <stdio.h>
 
 #include <set>
+#include <algorithm>
 
 using namespace std;
 
@@ -141,7 +143,7 @@ namespace ra7StatConverter {
 	 << " sigObserved: " << fSignature.sigObserved() << endl
 	 << " --- " << endl;
   }
-  
+
   void dump (const Signatures& fSignatures) {
     Signatures sigs (fSignatures);
     // sort (sigs.begin(), sigs.end(), lessByYield);
