@@ -1,0 +1,19 @@
+Statistical processing of CMS SUSY multi-lepton results, RA7
+
+cvs co  -d Statistics UserCode/SusyAnalysis/RA7/Statistics/2011
+cd Statistics
+cvs co -r t3-04-13 -d LandS UserCode/mschen/LandS
+cd LandS
+make
+cd ..
+./makeBins
+cd data_2011_coNLSP_4.7fb
+./runLimitLands.sh SUSY_scan_coNLSP.txt
+
+
+Comments:
+- Use ROOT 5.32.00
+- runRa7LimitLands.cc drives the CLs engine LandS
+- results are written into combinedModel.out file in corresponding directory
+- makeExclusions.C converts numbers of combinedModel.out into histograms
+  for following processing
