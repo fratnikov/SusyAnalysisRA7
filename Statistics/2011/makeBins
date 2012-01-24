@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rooflags="`root-config --cflags --libs` -lRooFit -lRooFitCore -lRooStats -lMathMore -lMinuit  -lFoam"
+echo g++ -o extractLimitLands $rooflags extractLimitLands.cc
+g++ -o extractLimitLands $rooflags extractLimitLands.cc
+g++ -o runRa7LimitLands $rooflags runRa7LimitLands.cc
+#g++ -o fillYieldHists $rooflags fillYieldHists.cc
+g++ -o makeExclusions $rooflags makeExclusions.C
+#g++ -o runCountingLimit $rooflags runCountingLimit.cc
