@@ -52,7 +52,7 @@ int main (int argc, char* argv[]) {
     system (command.c_str());
      cout << "clean up: " << cardFile << " " << statFile << "" << endl;
      //     remove (cardFile.c_str());
-     remove (statFile.c_str());
+     // remove (statFile.c_str());
   }
   
   return 0;
