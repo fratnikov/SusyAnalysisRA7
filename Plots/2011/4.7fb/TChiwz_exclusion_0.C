@@ -1,9 +1,9 @@
 {
 //=========Macro generated from canvas: c1/c1
-//=========  (Thu Feb 16 01:59:26 2012) by ROOT version5.32/00
+//=========  (Thu Feb 16 23:29:40 2012) by ROOT version5.32/00
    TCanvas *c1 = new TCanvas("c1", "c1",5,50,600,600);
    gStyle->SetOptFit(1);
-   c1->Range(-12.49999,0.4370589,612.5,1.851157);
+   c1->Range(-12.49999,2.807566,612.5,4.154145);
    c1->SetFillColor(0);
    c1->SetBorderMode(0);
    c1->SetBorderSize(2);
@@ -20,23 +20,23 @@
    c1->SetFrameBorderMode(0);
    
    TH1D *xSecObserved3 = new TH1D("xSecObserved3","",17,87.5,512.5);
-   xSecObserved3->SetBinContent(1,28.87224);
-   xSecObserved3->SetBinContent(2,22.82263);
-   xSecObserved3->SetBinContent(3,13.90527);
-   xSecObserved3->SetBinContent(4,12.05519);
-   xSecObserved3->SetBinContent(5,10.71137);
-   xSecObserved3->SetBinContent(6,11.0975);
-   xSecObserved3->SetBinContent(7,9.849916);
-   xSecObserved3->SetBinContent(8,11.2602);
-   xSecObserved3->SetBinContent(9,9.463246);
-   xSecObserved3->SetBinContent(10,9.641065);
-   xSecObserved3->SetBinContent(11,8.687997);
-   xSecObserved3->SetBinContent(12,9.223909);
-   xSecObserved3->SetBinContent(13,8.40413);
-   xSecObserved3->SetBinContent(14,8.354524);
-   xSecObserved3->SetBinContent(15,9.01129);
-   xSecObserved3->SetBinContent(16,8.449915);
-   xSecObserved3->SetBinContent(17,8.936121);
+   xSecObserved3->SetBinContent(1,5873.136);
+   xSecObserved3->SetBinContent(2,4175.134);
+   xSecObserved3->SetBinContent(3,2610.815);
+   xSecObserved3->SetBinContent(4,2543.724);
+   xSecObserved3->SetBinContent(5,2198.577);
+   xSecObserved3->SetBinContent(6,1934.406);
+   xSecObserved3->SetBinContent(7,2130.353);
+   xSecObserved3->SetBinContent(8,2314.598);
+   xSecObserved3->SetBinContent(9,2233.257);
+   xSecObserved3->SetBinContent(10,2212.088);
+   xSecObserved3->SetBinContent(11,1921.549);
+   xSecObserved3->SetBinContent(12,2037.179);
+   xSecObserved3->SetBinContent(13,1961.74);
+   xSecObserved3->SetBinContent(14,1963.729);
+   xSecObserved3->SetBinContent(15,2109.639);
+   xSecObserved3->SetBinContent(16,1958.91);
+   xSecObserved3->SetBinContent(17,1945.81);
    xSecObserved3->SetEntries(17);
    xSecObserved3->SetStats(0);
    xSecObserved3->SetLineWidth(3);
