@@ -1,9 +1,9 @@
 {
 //=========Macro generated from canvas: c1/c1
-//=========  (Wed Feb 15 16:37:59 2012) by ROOT version5.32/00
-   TCanvas *c1 = new TCanvas("c1", "c1",4,49,600,600);
+//=========  (Thu Feb 16 02:06:40 2012) by ROOT version5.32/00
+   TCanvas *c1 = new TCanvas("c1", "c1",5,50,600,600);
    gStyle->SetOptFit(1);
-   c1->Range(-12.49999,-1.625502,612.5,1.467422);
+   c1->Range(-12.49999,0.6532511,612.5,3.746176);
    c1->SetFillColor(0);
    c1->SetBorderMode(0);
    c1->SetBorderSize(2);
@@ -21,23 +21,23 @@
    c1->SetFrameBorderMode(0);
    
    TH1D *xSecObserved3 = new TH1D("xSecObserved3","",17,87.5,512.5);
-   xSecObserved3->SetBinContent(1,8.758691);
-   xSecObserved3->SetBinContent(2,1.123292);
-   xSecObserved3->SetBinContent(3,0.2252906);
-   xSecObserved3->SetBinContent(4,0.1793617);
-   xSecObserved3->SetBinContent(5,0.1727249);
-   xSecObserved3->SetBinContent(6,0.1507919);
-   xSecObserved3->SetBinContent(7,0.1777465);
-   xSecObserved3->SetBinContent(8,0.1400092);
-   xSecObserved3->SetBinContent(9,0.1591179);
-   xSecObserved3->SetBinContent(10,0.1450408);
-   xSecObserved3->SetBinContent(11,0.119566);
-   xSecObserved3->SetBinContent(12,0.1449216);
-   xSecObserved3->SetBinContent(13,0.129141);
-   xSecObserved3->SetBinContent(14,0.1260732);
-   xSecObserved3->SetBinContent(15,0.1354239);
-   xSecObserved3->SetBinContent(16,0.1268335);
-   xSecObserved3->SetBinContent(17,0.1200662);
+   xSecObserved3->SetBinContent(1,1664.151);
+   xSecObserved3->SetBinContent(2,213.4255);
+   xSecObserved3->SetBinContent(3,42.80522);
+   xSecObserved3->SetBinContent(4,34.07872);
+   xSecObserved3->SetBinContent(5,32.81774);
+   xSecObserved3->SetBinContent(6,28.65046);
+   xSecObserved3->SetBinContent(7,33.77184);
+   xSecObserved3->SetBinContent(8,26.60174);
+   xSecObserved3->SetBinContent(9,30.23239);
+   xSecObserved3->SetBinContent(10,27.55774);
+   xSecObserved3->SetBinContent(11,22.71754);
+   xSecObserved3->SetBinContent(12,27.5351);
+   xSecObserved3->SetBinContent(13,24.53679);
+   xSecObserved3->SetBinContent(14,23.95391);
+   xSecObserved3->SetBinContent(15,25.73053);
+   xSecObserved3->SetBinContent(16,24.09836);
+   xSecObserved3->SetBinContent(17,22.81257);
    xSecObserved3->SetEntries(17);
    xSecObserved3->SetStats(0);
    xSecObserved3->SetLineWidth(3);
@@ -50,7 +50,7 @@
    xSecObserved3->GetXaxis()->SetTitleSize(0.05);
    xSecObserved3->GetXaxis()->SetTitleOffset(1.25);
    xSecObserved3->GetXaxis()->SetTitleFont(42);
-   xSecObserved3->GetYaxis()->SetTitle("95% CL upper limit on #sigma [pb]");
+   xSecObserved3->GetYaxis()->SetTitle("95% CL upper limit on #sigma [fb]");
    xSecObserved3->GetYaxis()->SetNdivisions(508);
    xSecObserved3->GetYaxis()->SetLabelFont(42);
    xSecObserved3->GetYaxis()->SetLabelOffset(0.007);
