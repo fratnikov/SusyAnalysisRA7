@@ -1503,6 +1503,21 @@ palette->SetTitleSize(0.035);
    xSecObserved->GetZaxis()->SetTitleOffset(1.5);
    xSecObserved->GetZaxis()->SetTitleFont(42);
    xSecObserved->Draw("colz");
+
+   // exclusion curve
+   TGraph* exclu = new TGraph;
+   int ipoint = 0;
+   exclu->SetPoint (ipoint++, 390, 0);
+   exclu->SetPoint (ipoint++, 390, 130);
+   exclu->SetPoint (ipoint++, 375, 215);
+   exclu->SetPoint (ipoint++, 350, 220);
+   exclu->SetPoint (ipoint++, 325, 250);
+   exclu->SetPoint (ipoint++, 300, 245);
+   exclu->SetPoint (ipoint++, 275, 235);
+   exclu->SetPoint (ipoint++, 250, 215);
+   exclu->SetLineWidth(3);
+   exclu->Draw("l");
+
    c1->Modified();
    c1->cd();
    c1->SetSelected(c1);

@@ -1,4 +1,5 @@
 {
+gROOT->ProcessLine(".x ra7PlotStyle.C");
 //=========Macro generated from canvas: c/interpret
 //=========  (Fri Aug 26 19:52:37 2011) by ROOT version5.30/01
   char* gopt = "c";
@@ -85,10 +86,10 @@
    //exp2m->Draw(gopt);
 
    TGraph* exp2pm = new TGraph (exp2p->GetN()+exp2m->GetN());
-   exp2pm->SetFillColor (kCyan-10);
-   exp2pm->SetLineColor (kBlue);
-   exp2pm->SetLineWidth (1);
-   exp2pm->SetLineStyle (3);
+   exp2pm->SetFillColor (exp2Fill);
+   exp2pm->SetLineColor (exp2Color);
+   exp2pm->SetLineWidth (exp2Width);
+   exp2pm->SetLineStyle (exp2Style);
 
    int ipoint = 0;
    for (int i = 0; i < exp2p->GetN(); ++i) {
@@ -141,10 +142,10 @@
    //exp1m->Draw(gopt);
 
    TGraph* exp1pm = new TGraph (exp1p->GetN()+exp1m->GetN());
-   exp1pm->SetFillColor (kCyan-4);
-   exp1pm->SetLineColor (kBlue);
-   exp1pm->SetLineWidth (1);
-   exp1pm->SetLineStyle (3);
+   exp1pm->SetFillColor (exp1Fill);
+   exp1pm->SetLineColor (exp1Color);
+   exp1pm->SetLineWidth (exp1Width);
+   exp1pm->SetLineStyle (exp1Style);
    int ipoint = 0;
    for (int i = 0; i < exp1p->GetN(); ++i) {
      double x = 0;
@@ -172,9 +173,9 @@
    expected->SetTitle("Expected");
    expected->SetFillColor(1);
 
-   expected->SetLineColor(kBlue);
-   expected->SetLineStyle(1);
-   expected->SetLineWidth(3);
+   expected->SetLineColor(expectedColor);
+   expected->SetLineStyle(expectedStyle);
+   expected->SetLineWidth(expectedWidth);
    expected->SetMarkerStyle(8);
 
    expected->Draw(gopt);
@@ -193,8 +194,9 @@
    observed->SetName("Observed");
    observed->SetTitle("Observed");
    observed->SetFillColor(1);
-   observed->SetLineWidth(5);
-   observed->SetLineColor(kRed);
+   observed->SetLineStyle(observedStyle);
+   observed->SetLineWidth(observedWidth);
+   observed->SetLineColor(observedColor);
    observed->SetMarkerStyle(8);
    
    observed->Draw(gopt);
@@ -216,7 +218,9 @@
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
-  TLatex* cmslabel = new TLatex(515.,2015,"CMS");
+  TLatex* cmslabel = preliminary ? 
+    new TLatex(500.,2015, "CMS Preliminary") :
+    new TLatex(515.,2015, "CMS");
   cmslabel->SetTextSize(0.05);
   cmslabel->Draw("same");
 
