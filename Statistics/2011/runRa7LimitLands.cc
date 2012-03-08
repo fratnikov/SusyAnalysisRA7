@@ -3,6 +3,7 @@
 #include "ra7StatConverter.C"
 
 int main (int argc, char* argv[]) {
+  cout << "main..." << endl;
   if (argc < 3) {
     cout << argv[0] << "<data_points> <maxSignal>" << endl;
     return 0;
@@ -19,6 +20,7 @@ int main (int argc, char* argv[]) {
 
     string dataDir (".");
     
+    cout << "runStatConverter..." << endl;
     string cardFile = runStatConverter (dataDir, m0, m12);
     cout << "combination cards file: " <<  cardFile << endl;
     if (cardFile.empty()) {
@@ -51,8 +53,8 @@ int main (int argc, char* argv[]) {
     cout << "Executing: " << command << endl;
     system (command.c_str());
      cout << "clean up: " << cardFile << " " << statFile << "" << endl;
-     //     remove (cardFile.c_str());
-     // remove (statFile.c_str());
+          remove (cardFile.c_str());
+      remove (statFile.c_str());
   }
   
   return 0;

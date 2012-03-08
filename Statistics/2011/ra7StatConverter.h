@@ -38,9 +38,12 @@ namespace ra7StatConverter {
     double sigmaYieldJes;
     double sigmaYieldPdf;
     double sigmaTrigger;
+    double quickLimit;
     double sigObserved () const;
     double sigSig () const;
     double sigBkgDD () const;
+    double getQuickLimit () const;
+    double getExpectedLimit () const;
   }; 
   typedef std::vector<Signature> Signatures;
 
@@ -77,6 +80,7 @@ namespace ra7StatConverter {
   void addDataFile (const std::string& fName, Signatures* fSignatures);
   bool readMCFiles (const std::string& fRichardFile, int fM0, int fM12, Signatures* fSignatures);
   bool readRichardMCFile (const std::string& fName, int fM0, int fM12, Signature* fSignature);
+  double totalXSection (const std::string& fName, int fM0, int fM12);
   std::vector<std::pair<int, int> > allMCPoints (const std::string& fName);
 
 } // namespace ra7StatConverter

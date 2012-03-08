@@ -15,9 +15,43 @@
 #include <set>
 #include <algorithm>
 
+#include "Math/ProbFuncMathCore.h"
+
+
 using namespace std;
 
 namespace {
+
+  string ruChannel (const string& kitCh) {
+    const char* ruChannels [] = {
+      /*1*/ "L4T0METVHTVZV", "L4T0METVHTV", "L4T0METVZV", "L4T0METV", "L4T0HTVZV",
+      /*6*/ "L4T0HTV", "L4T0ZV", "L4T0", "L3DY0T0METVHTV", "L3DY0T0METV",
+      /*11*/ "L3DY0T0HTV", "L3DY0T0", "L3DY1T0METVHTVZV", "L3DY1T0METVHTV", "L3DY1T0METVZV",
+      /*16*/ "L3DY1T0METV", "L3DY1T0HTVZV", "L3DY1T0HTV", "L3DY1T0ZV", "L3DY1T0",
+      /*21*/ "L4T1METVHTVZV", "L4T1METVHTV", "L4T1METVZV", "L4T1METV", "L4T1HTVZV",
+      /*26*/ "L4T1HTV", "L4T1ZV", "L4T1", "L3DY0T1METVHTV", "L3DY0T1METV",
+      /*31*/ "L3DY0T1HTV", "L3DY0T1", "L3DY1T1METVHTVZV", "L3DY1T1METVHTV", "L3DY1T1METVZV",
+      /*36*/ "L3DY1T1METV", "L3DY1T1HTVZV", "L3DY1T1HTV", "L3DY1T1ZV", "L3DY1T1",
+      /*41*/ "L4T2METVHTVZV", "L4T2METVHTV", "L4T2METVZV", "L4T2METV", "L4T2HTVZV",
+      /*46*/ "L4T2HTV", "L4T2ZV", "L4T2", "L3DY0T2METVHTV", "L3DY0T2METV",
+      /*51*/ "L3DY0T2HTV", "L3DY0T2"
+    };
+    if (kitCh.find ("ch") == 0) {
+      int ichannel = atoi (kitCh.c_str()+2);
+      if (ichannel >= 1 && ichannel <= 52) return string(ruChannels[ichannel-1]);
+    }
+    return "undefined";
+  }
+
+  string kitChannel (const string& ruCh) {
+    char kit[] = "chxx";
+    for (int i = 1; i <= 52; ++i) {
+      sprintf (kit, "%2d", i);
+      if (ruChannel (string(kit)) == ruCh) return string(kit);
+    }
+    return "undefined";
+  }
+  
   vector<string> tokenize (const string& fInput) {
     vector<string> result;
     string buf; 
@@ -84,6 +118,59 @@ namespace {
   bool lessObservedSignificance (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
     return fabs(a.sigObserved()) > fabs(b.sigObserved());
   }
+
+  bool lessPull (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
+    double pullA = fabs(a.observed - a.backgroundDD - a.backgroundMC) /
+      sqrt (a.observed*a.observed + 
+	    a.sigmaBackgroundDD*a.sigmaBackgroundDD + 
+	    a.sigmaBackgroundMC*a.sigmaBackgroundMC);
+    double pullB = fabs(b.observed - b.backgroundDD - b.backgroundMC) /
+      sqrt (b.observed*b.observed + 
+	    b.sigmaBackgroundDD*b.sigmaBackgroundDD + 
+	    b.sigmaBackgroundMC*b.sigmaBackgroundMC);
+    return pullA > pullB;
+  }
+
+  bool lessQuickLimit (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
+    return a.quickLimit < b.quickLimit;
+  }
+  bool lessExpectedLimit (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
+    return a.getExpectedLimit() < b.getExpectedLimit();
+  }
+
+  double quickCLsCalculator (double signal, double bkg, int observed) {
+    double clsb = ROOT::Math::poisson_cdf (observed, signal+bkg);
+    double clb = ROOT::Math::poisson_cdf (observed, bkg);
+    double result = 1.;
+    if (clb > 0) result = clsb / clb;
+    return result;
+  }
+  
+  double quickLimitCalculator (int observed, double bkg, double dbkg = 0, double dscale = 0) {
+    double CL = 0.05;
+    // limit without uncertainties
+    double limit = 2.5;
+    double limitprev = limit;
+    double cls = quickCLsCalculator (limit, bkg, observed);
+    double clsprev = cls;
+    while (cls > CL) {
+      limitprev = limit;
+      clsprev = cls;
+      limit *= 2.;
+      cls = quickCLsCalculator (limit, bkg, observed);
+    }
+    while (fabs (cls - CL) > CL*0.01) {
+      double newlimit = cls > CL ? limit + 0.5*fabs(limitprev-limit) :
+	limit - 0.5*fabs(limitprev-limit);
+      limitprev = limit;
+      limit = newlimit;
+      clsprev = cls;
+      cls = quickCLsCalculator (limit, bkg, observed);
+    }
+    // bkg & scale uncertainty
+    limit = sqrt (limit*limit + bkg*bkg) * sqrt (1.+dscale*dscale);
+    return limit;
+  }
 }
 
 namespace ra7StatConverter {
@@ -108,6 +195,37 @@ namespace ra7StatConverter {
     sig += sigmaBackgroundDD*sigmaBackgroundDD;
     sig += backgroundMC*backgroundMC/backgroundDD/backgroundDD;
     return sqrt(sig);
+  }
+
+  double Signature::getQuickLimit () const {
+    
+    double bkg = backgroundDD + backgroundMC;
+    double dbkg = sqrt (sigmaBackgroundDD*sigmaBackgroundDD + 
+			sigmaBackgroundMC*sigmaBackgroundMC);
+    double dscale = sqrt(sigmaLumi*sigmaLumi +
+			 sigmaYieldStat*sigmaYieldStat +
+			 sigmaYieldJes*sigmaYieldJes +
+			 sigmaYieldPdf*sigmaYieldPdf +
+			 sigmaTrigger*sigmaTrigger +
+			 sigmaYieldMuon*sigmaYieldMuon +
+			 sigmaYieldElectron*sigmaYieldElectron +
+			 sigmaYieldTau*sigmaYieldTau);
+    return quickLimitCalculator (observed, bkg, dbkg, dscale)/yield; 
+  }
+
+  double Signature::getExpectedLimit () const {
+    double bkg = backgroundDD + backgroundMC;
+    double dbkg = sqrt (sigmaBackgroundDD*sigmaBackgroundDD + 
+			sigmaBackgroundMC*sigmaBackgroundMC);
+    double dscale = sqrt(sigmaLumi*sigmaLumi +
+			 sigmaYieldStat*sigmaYieldStat +
+			 sigmaYieldJes*sigmaYieldJes +
+			 sigmaYieldPdf*sigmaYieldPdf +
+			 sigmaTrigger*sigmaTrigger +
+			 sigmaYieldMuon*sigmaYieldMuon +
+			 sigmaYieldElectron*sigmaYieldElectron +
+			 sigmaYieldTau*sigmaYieldTau);
+    return quickLimitCalculator (int(floor(bkg+0.5)), bkg, dbkg, dscale)/yield; 
   }
 
 
@@ -141,16 +259,21 @@ namespace ra7StatConverter {
 	 << " sigma yield eff mu/e/tau: " << fSignature.sigmaYieldMuon << '/' << fSignature.sigmaYieldElectron << '/' << fSignature.sigmaYieldTau << endl
 	 << " sisSig: " << 1./fSignature.sigSig() << ", sigBkgDD: " << 1./fSignature.sigBkgDD() 
 	 << " sigObserved: " << fSignature.sigObserved() << endl
+	 << " total limit: " << fSignature.quickLimit << endl
 	 << " --- " << endl;
   }
 
   void dump (const Signatures& fSignatures) {
     Signatures sigs (fSignatures);
     // sort (sigs.begin(), sigs.end(), lessByYield);
-    sort (sigs.begin(), sigs.end(), lessObservedSignificance);
-    cout << "dump Signatures-> Total yield: " << sumYield (fSignatures) << endl;
+        sort (sigs.begin(), sigs.end(), lessQuickLimit);
+    //sort (sigs.begin(), sigs.end(), lessPull);
+    double totYield = sumYield (fSignatures);
+    cout << "dump Signatures-> Total yield: " << totYield << endl;
     for (size_t i = 0; i < sigs.size() && i < 10; ++i) {
       dump (sigs[i]);
+      cout << "Total yield Limit: " << sigs[i].quickLimit*totYield << endl;
+      cout << "Total expec Limit: " << sigs[i].getExpectedLimit()*totYield << endl;
     }
     cout << "dump Signatures-> End" << endl;
   }
@@ -207,11 +330,19 @@ namespace ra7StatConverter {
   }
 
   bool readMCFiles (const string& fFile, int fM0, int fM12, Signatures* fSignatures) {
+    vector<size_t> cleanup;
     for (size_t i = 0; i < fSignatures->size(); ++i) {
       Signature* sig = &((*fSignatures)[i]);
       if (!readRichardMCFile (fFile, fM0, fM12, sig)) {
 	cerr << "readRUMCFiles-> Worning can not find data for signature " <<  sig->name << " in " << fM0 << ':' << fM12 << endl;
+	cleanup.push_back(i);
       }
+    }
+    // cleanup undefined channels
+    int i = cleanup.size();
+    while (--i >= 0) {
+      cerr << "readRUMCFiles-> removing channel " << (*fSignatures)[cleanup[i]].name << endl;
+      fSignatures->erase (fSignatures->begin() +  cleanup[i]);
     }
     return true;
   }
@@ -229,11 +360,23 @@ namespace ra7StatConverter {
     while (in.getline (buffer, 1024)) {
       vector<string> tokens = tokenize (string(buffer));
       if (tokens.size() < 4) continue;
-      if (tokens[0] != "scan") continue;
+      if (tokens[0] != "scan") { // work around bug
+	if (tokens[0][0]>='0' && tokens[0][0]<= '9' && tokens[1][0]>='0' && tokens[1][0]<= '9') {
+	  tokens.resize(tokens.size()+ 2);
+	  int i = tokens.size() - 2;
+	  while (--i >= 0) {
+	    tokens[i+2] = tokens[i];
+	  }
+	  tokens[1] = "charginoneutralino";
+	  tokens[0] = "scan";
+	}
+	else continue;
+      }
       if ((tokens[1] != "m0m12" && tokens[1] != "charginogluino" && tokens[1] != "charginoneutralino") || 
 	  int(atof (tokens[2].c_str())) != fM0 || int(atof (tokens[3].c_str())) != fM12) continue;
-      if (tokens.size() == 13 && tokens[4] == sig->name) {
-	//  0    1    2  3   4           5          6                      7        8         9         10       11         12
+
+      if (tokens.size() == 13 && (tokens[4] == sig->name || ruChannel (tokens[4]) == sig->name)) {
+	//  0    1    2  3   4           5          6                      7        8         9         10       11         12     
       	// scan m0m12 m0 m12 ChannelName Efficiency Efficiency_total_error stat_err MuEff_err ElEff_err TEff_err TauEff_err Trigger_err
 
 	double yield = atof (tokens[5].c_str());
@@ -255,10 +398,47 @@ namespace ra7StatConverter {
 	sig->sigmaBackgroundJes = jesSigma;
 	sig->sigmaBackgroundPdf = pdfSigma;
 	sig->sigmaTrigger = trigSigma;
+
+	double bkg = sig->backgroundDD + sig->backgroundMC;
+	double dbkg = sqrt (sig->sigmaBackgroundDD*sig->sigmaBackgroundDD + 
+			    sig->sigmaBackgroundMC*sig->sigmaBackgroundMC);
+	double dscale = sqrt(sig->sigmaLumi*sig->sigmaLumi +
+			     sig->sigmaYieldStat*sig->sigmaYieldStat +
+			     sig->sigmaYieldJes*sig->sigmaYieldJes +
+			     sig->sigmaYieldPdf*sig->sigmaYieldPdf +
+			     sig->sigmaTrigger*sig->sigmaTrigger +
+			     sig->sigmaYieldMuon*sig->sigmaYieldMuon +
+			     sig->sigmaYieldElectron*sig->sigmaYieldElectron +
+			     sig->sigmaYieldTau*sig->sigmaYieldTau);
+	sig->quickLimit = sig->getQuickLimit ();
+	
 	return true;
       }
     }
     return false;
+  }
+
+  double totalXSection (const std::string& fName, int fM0, int fM12) {
+    char buffer[1024];
+    ifstream in (fName.c_str());
+    if (!in) {
+      cerr << "totalXSection-> Failed to find file " << fName << endl;
+    return 0;
+   }
+    while (in.getline (buffer, 1024)) {
+      vector<string> tokens = tokenize (string(buffer));
+      if (tokens.size() < 6) continue;
+      if (tokens[0] == "scan" && 
+	  int(atof (tokens[2].c_str())) == fM0 && 
+	  int(atof (tokens[3].c_str())) == fM12 &&
+	  (tokens[4] == "NLOXSEC" || tokens[4] == "LOXSEC")) {
+	double result = atof (tokens[5].c_str());
+	return result;
+      }
+    }
+    cerr << "totalXSection-> Failed to find xSection in file " << fName 
+	 << " for the point " << fM0 << ':' << fM12 << endl;
+    return 0;
   }
 
   std::vector<std::pair<int, int> > allMCPoints (const std::string& fName) {
@@ -373,40 +553,40 @@ namespace ra7StatConverter {
 
     fprintf (cfgFile,"%-10s%10s", "LuJeTriPd", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f", 
-					  exp(statChannels[i].sigmaYieldLumiJesTrigPdf),
+					  1.+(statChannels[i].sigmaYieldLumiJesTrigPdf),
 					  1., 
-					  exp(statChannels[i].sigmaBackgroundMCLumiJesTrigPdf)); fprintf(cfgFile, "\n");
+					  1.+(statChannels[i].sigmaBackgroundMCLumiJesTrigPdf)); fprintf(cfgFile, "\n");
     
     fprintf (cfgFile,"%-10s%10s", "SigMCStat", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f", 
-					  exp(statChannels[i].sigmaYieldStat),
+					  1.+(statChannels[i].sigmaYieldStat),
 					  1.,1.); fprintf(cfgFile, "\n");
 
     
     fprintf (cfgFile,"%-10s%10s", "BkgMCStat", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f", 
 					  1.,1.,
-					  exp(statChannels[i].sigmaBackgroundMC)); fprintf(cfgFile, "\n");
+					  1.+(statChannels[i].sigmaBackgroundMC)); fprintf(cfgFile, "\n");
     
     fprintf (cfgFile,"%-10s%10s", "BkgDD", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f",
 					  1., 
-					  exp(statChannels[i].sigmaBackgroundDD),
+					  1.+(statChannels[i].sigmaBackgroundDD),
 					  1.); fprintf(cfgFile, "\n");
     
     fprintf (cfgFile,"%-10s%10s", "muEff", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f",
-					  exp(statChannels[i].sigmaYieldMuon),
+					  1.+(statChannels[i].sigmaYieldMuon),
 					  1., 1.); fprintf(cfgFile, "\n");
     
     fprintf (cfgFile,"%-10s%10s", "eEff", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f",
-					  exp(statChannels[i].sigmaYieldElectron),
+					  1.+(statChannels[i].sigmaYieldElectron),
 					  1., 1.); fprintf(cfgFile, "\n");
     
     fprintf (cfgFile,"%-10s%10s", "tauEff", "lnN"); 
     for (int i=0;i<nChannels;++i) fprintf(cfgFile, "%10.3f%10.3f%10.3f",
-					  exp(statChannels[i].sigmaYieldTau),
+					  1.+(statChannels[i].sigmaYieldTau),
 					  1., 1.); fprintf(cfgFile,"\n");
     
     fclose (cfgFile);
@@ -424,7 +604,7 @@ void runAll () {
   addDataFile ("ra7_2011_data.txt", &sigs);
   readMCFiles ("ra7_2011_msugra3.txt", 180, 240, &sigs);
   sort (sigs.begin(), sigs.end(), lessByYield);
-  //  dump (sigs);
+  //dump (sigs);
   dumpCombined (sigs, "ra7_combined_model.txt", "ra7_combined_model CMSSM 180:240:3", false);
 }
 
@@ -444,7 +624,7 @@ string runStatConverter (const string& datadir, int m0, int m12) {
   sprintf (buffer, "ra7_%d_%d_combinedModel.txt", m0, m12);
   string cardFileName (buffer);
   sprintf (buffer, "ra7_combined_model %s CMSSM %d:%d", datadir.c_str(), m0, m12);
-  // dump (sigs);
+  dump (sigs);
   dumpCombined (sigs, cardFileName, buffer, true);
   return cardFileName;
 }
@@ -466,11 +646,29 @@ string simpleStatConverter (const string& name, int observed, double background,
   fprintf (cfgFile,"%-20s%10s%10s\n", "process", "sig", "bkg");
   fprintf (cfgFile,"%-20s%10.3e%10.3e\n", "rate", 1., background); 
   if (bkgError) {
-    fprintf (cfgFile,"%-10s%10s%10.3f%10.3f\n", "dBkg", "lnN", 1., exp(dBackground/background));
+    fprintf (cfgFile,"%-10s%10s%10.3f%10.3f\n", "dBkg", "lnN", 1., 1.+(dBackground/background));
   }
   if (scaleError) {
-    fprintf (cfgFile,"%-10s%10s%10.3f%10.3f\n", "dScale", "lnN", exp(dScale), 1.);
+    fprintf (cfgFile,"%-10s%10s%10.3f%10.3f\n", "dScale", "lnN", 1.+(dScale), 1.);
   }
   fclose (cfgFile);
   return name;
+}
+
+void dumpYields (const string& datadir, int m0, int m12) {
+  Signatures sigs;
+  addDataFile (datadir + "/data.txt", &sigs);
+  string mcDataDir = datadir + "/output";
+  string mcDataFile = getFile (mcDataDir, m0, m12);
+  if (mcDataFile.empty()) {
+    cout << "Can not find MC data for point " << m0 << ':' << m12 << " in dir " << mcDataDir << endl;
+    return;
+  }
+  readMCFiles (mcDataFile, m0, m12, &sigs);
+  sort (sigs.begin(), sigs.end(), lessByYield);
+  reverse (sigs.begin(), sigs.end());
+  cout << datadir <<", masses " <<  m0 << ':' << m12 << endl;
+  for (size_t i = 0; i < sigs.size(); ++i) {
+    cout << sigs[i].name << ": " << sigs[i].yield/4670. << endl;
+  }
 }

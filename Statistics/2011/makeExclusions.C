@@ -132,13 +132,35 @@ int main (int argc, char* argv[]) {
   }
   else if (string(argv[1]) == "tanb10") {
     dataDir = "data_2011_tanb10_4.7fb";
-    limitFile = "data_2011_lepRPV_4.7fb/combinedModel.out";
+    limitFile = "data_2011_tanb10_4.7fb/combinedModel.out";
     outFile = "exclusions_tanb10_4.7fb.root";
-    m0step = 100;
+    m0step = 40;
     m0min = 100;
-    m0max = 2900;
-    m12step = 100;
+    m0max = 2980;
+    m12step = 20;
     m12min = 100;
+    m12max = 400;
+  }
+  else if (string(argv[1]) == "tanb10_2") {
+    dataDir = "data_2011_tanb10_4.7fb";
+    limitFile = "data_2011_tanb10_4.7fb/combinedModel.out";
+    outFile = "exclusions_tanb10_2_4.7fb.root";
+    m0step = 20;
+    m0min = 100;
+    m0max = 2980;
+    m12step = 20;
+    m12min = 100;
+    m12max = 400;
+  }
+  else if (string(argv[1]) == "tanb40") {
+    dataDir = "data_2011_tanb40_4.7fb";
+    limitFile = "data_2011_tanb40_4.7fb/combinedModel";
+    outFile = "exclusions_tanb40_4.7fb.root";
+    m0step = 40;
+    m0min = 300;
+    m0max = 2980;
+    m12step = 40;
+    m12min = 480;
     m12max = 1000;
   }
   else if (string(argv[1]) == "chaneu") {
@@ -149,12 +171,56 @@ int main (int argc, char* argv[]) {
     m0min = 100;
     m0max = 500;
     m12step = 10;
-    m12min = 10;
-    m12max = 200;
+    m12min = 0;
+    m12max = 480;
+  }
+  else if (string(argv[1]) == "TChiSlepSnu") {
+    dataDir = "data_2011_TChiSlepSnu_4.7fb";
+    limitFile = "data_2011_chaneu_4.7fb/combinedModel.out";
+    outFile = "exclusions_TChiSlepSnu_4.7fb.root";
+    m0step = 10;
+    m0min = 100;
+    m0max = 500;
+    m12step = 10;
+    m12min = 0;
+    m12max = 480;
+  }
+  else if (string(argv[1]) == "TChiSlepSlep") {
+    dataDir = "data_2011_TChiSlepSlep_4.7fb";
+    limitFile = "data_2011_TChiSlepSlep_4.7fb/combinedModel.out";
+    outFile = "exclusions_TChiSlepSlep_4.7fb.root";
+    m0step = 10;
+    m0min = 100;
+    m0max = 500;
+    m12step = 10;
+    m12min = 0;
+    m12max = 480;
+  }
+  else if (string(argv[1]) == "TChizz") {
+    dataDir = "data_2011_chizz_4.7fb";
+    limitFile = "data_2011_chizz_4.7fb/combinedModel.out";
+    outFile = "exclusions_TChizz_4.7fb.root";
+    m0step = 25;
+    m0min = 100;
+    m0max = 500;
+    m12step = 25;
+    m12min = 0;
+    m12max = 400;
+  }
+  else if (string(argv[1]) == "TChiwz") {
+    dataDir = "data_2011_chiwz_4.7fb";
+    limitFile = "data_2011_chiwz_4.7fb/combinedModel.out";
+    outFile = "exclusions_TChiwz_4.7fb.root";
+    m0step = 25;
+    m0min = 100;
+    m0max = 500;
+    m12step = 25;
+    m12min = 0;
+    m12max = 400;
   }
   else {
     cout << "Unknown keyword " << argv[1] << endl
-	 << "Accepted: 10 3 0 HRPV LRPV tanb10 chaneu" << endl; 
+	 << "Accepted: 10 3 0 HRPV LRPV tanb10 tanb40 chaneu TChiSlepSnu TChiSlepSlep TChizz TChiwz" << endl; 
     return -1;
   }
 
@@ -163,6 +229,13 @@ int main (int argc, char* argv[]) {
   TH2D* yieldHists = new TH2D ("yield", "yield",
 			       m0Bins, m0min-0.5*m0step, m0max+0.5*m0step,			  
 			       m12Bins, m12min-0.5*m12step, m12max+0.5*m12step);
+  cout << "book hist: " << m0Bins<<':'<<m0min-0.5*m0step<<':'<<m0max+0.5*m0step
+       << " : " <<m12Bins <<':'<<m12min-0.5*m12step <<':'<<m12max+0.5*m12step << endl;
+
+  TH2D* processXSection = new TH2D(*yieldHists);
+  processXSection->SetName ("processXSection");
+  processXSection->SetTitle ("process total XSection [pb]");
+  
 
   for (int im0 = 1; im0 <= m0Bins; ++im0) {
     for (int im12 = 1; im12 <= m12Bins; ++im12) {
@@ -185,14 +258,19 @@ int main (int argc, char* argv[]) {
 	  cout << m0 << ':' << m12 << " " << iChannel << " " << statChannels[iChannel].yield << endl;
 	}
       }
+      double xSec = totalXSection (mcDataFile, m0, m12);
+      processXSection->Fill (m0, m12, xSec);
     }
   }
   TH2D* yieldOrig = new TH2D(*yieldHists);
   yieldOrig->SetName ("yieldOrig");
   repareHoles(yieldHists);
+  TH2D* processXSectionOrig = new TH2D(*processXSection);
+  processXSectionOrig->SetName ("processXSectionOrig");
+  repareHoles(processXSection);
   TH2D* yieldSmooth = new TH2D(*yieldHists);
   yieldSmooth->SetName ("yieldSmooth");
-
+  //yieldSmooth->Smooth(1,smoothMode);
 
 
   TH2D* hObsLimit = new TH2D("hObsLimit", dataDir.c_str(), 
@@ -240,6 +318,7 @@ int main (int argc, char* argv[]) {
     int m12;
     int tanb;
     float limit[6];
+    if (line[0] == '#') continue;
     sscanf (line.c_str(),"%d:%d cls: %f %f ( %f : %f ) ( %f : %f )",
 	    &m0, &m12, limit, limit+1, limit+2, limit+3, limit+4, limit+5); 
 
@@ -256,6 +335,10 @@ int main (int argc, char* argv[]) {
   hObsLimitSmooth->SetName ("hObsLimitSmooth");
   hObsLimitSmooth->Smooth(1,smoothMode);
   hObsLimitSmooth->Divide (yieldSmooth);
+
+  TH2D* hObsLimitPlain = new TH2D (*hObsLimit);
+  hObsLimitPlain->SetName ("hObsLimitPlain");
+  hObsLimitPlain->Divide (yieldSmooth);
 
   repareHoles(hExpLimit);
   TH2D* hExpLimitSmooth = new TH2D (*hExpLimit);
@@ -290,6 +373,8 @@ int main (int argc, char* argv[]) {
   TFile f (outFile.c_str(), "RECREATE");
   yieldOrig->Write();
   yieldHists->Write();
+  processXSection->Write();
+  processXSectionOrig->Write();
   hObsLimit->Write();
   hExpLimit->Write();
   hExpP1Limit->Write();
@@ -299,11 +384,14 @@ int main (int argc, char* argv[]) {
 
   yieldSmooth->Write();
   hObsLimitSmooth->Write();
+  hObsLimitPlain->Write();
   hExpLimitSmooth->Write();
   hExpP1LimitSmooth->Write();
   hExpM1LimitSmooth->Write();
   hExpP2LimitSmooth->Write();
   hExpM2LimitSmooth->Write();
+
+  cout << "Output file produced: " << outFile << endl;
 
   return 0;
 }
