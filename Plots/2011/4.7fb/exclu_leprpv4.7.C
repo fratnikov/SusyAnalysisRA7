@@ -47,12 +47,46 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
 
    double xx[50];
    double yy[50];
-   
+
+// Graph observed
+  double xx[] = {1179.54, 1214.77, 1201.46, 1213.22, 1220.36, 1241.04, 1264.1, 1311.83, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100};
+  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1088.86, 1038.46, 1014.97, 993.942, 987.138, 983.672, 984.539, 1005.36};
+  TGraph* observed = new TGraph(16, xx, yy);
+  observed->RemovePoint (1);
+// end observed
+
+// Graph expected
+  double xx[] = {1254.79, 1270.07, 1278.93, 1288.71, 1298.32, 1317.44, 1357.01, 1376.4, 1410.68, 1500, 1600, 1700, 1800, 1900, 2000, 2100};
+  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1200, 1125.88, 1089.82, 1065.66, 1051.37, 1041.46, 1036.95, 1049.71};
+  TGraph* expected = new TGraph(16, xx, yy);
+// end expected
+
+// Graph exp1p
+  double xx[] = {1286.76, 1295.64, 1313.52, 1323.68, 1335.77, 1358.49, 1399.32, 1400, 1408.46, 1500, 1600, 1700, 1800, 1900, 2000, 2100};
+  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1393.43, 1300, 1169.55, 1121.28, 1093.35, 1079.96, 1069.15, 1062.04, 1065.82};
+  TGraph* exp1p = new TGraph(16, xx, yy);
+// end exp1p
+
+// Graph exp1m
+  double xx[] = {1204.11, 1230.42, 1223.97, 1235.56, 1245.08, 1264.16, 1286.51, 1329.77, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100};
+  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1115.33, 1059.75, 1034.94, 1013, 1005.41, 999.848, 997.869, 1016.91};
+  TGraph* exp1m = new TGraph(16, xx, yy);
+  exp1m->RemovePoint (1);
+// end exp1m
+
 // Graph exp2p
-  double xx[] = {1288.78, 1282.86, 1298.32, 1314.89, 1330.19, 1349.53, 1400, 1400.66, 1399.62, 1500, 1600, 1700, 1800, 1900, 2000};
-  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1401.71, 1400, 1300, 1177.7, 1120.44, 1090.9, 1072.66, 1062.09, 1055.31};
-  TGraph* exp2p = new TGraph(15, xx, yy);
+  double xx[] = {1311.1, 1313.82, 1329.93, 1342.31, 1356.27, 1381, 1400, 1412.86, 1423.7, 1500, 1600, 1700, 1800, 1900, 2000, 2100};
+  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1443, 1400, 1300, 1204.59, 1143.92, 1116.37, 1102.16, 1090.76, 1068.14, 1066.55};
+  TGraph* exp2p = new TGraph(16, xx, yy);
 // end exp2p
+
+// Graph exp2m
+  double xx[] = {1142.84, 1175.45, 1166.31, 1178.75, 1184.31, 1200, 1207.55, 1222.92, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000};
+  double yy[] = {2000, 1900, 1800, 1700, 1600, 1529.88, 1500, 1400, 1133.75, 1048.34, 997.346, 984.752, 967.314, 962.85, 956.984, 959.367};
+  TGraph* exp2m = new TGraph(16, xx, yy);
+  exp2m->RemovePoint (1);
+// end exp2m
+
    exp2p->SetName("Exp2p");
    exp2p->SetTitle("Exp2p");
    exp2p->SetFillColor(1);
@@ -65,11 +99,6 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
    
    //exp2p->Draw(gopt);
    
-// Graph exp2m
-  double xx[] = {1123.49, 1137., 1145.9, 1163.15, 1171.26, 1189.97, 1200, 1203.97, 1240.82, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000};
-  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1426.83, 1400, 1300, 1101.8, 1024.68, 982.835, 971.936, 951.267, 947.094, 942.347, 947.845};
-  TGraph* exp2m = new TGraph(17, xx, yy);
-// end exp2m
 
    exp2m->SetName("Exp2m");
    exp2m->SetTitle("Exp2m");
@@ -106,11 +135,6 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
    exp2pm->Draw("f");
    exp2pm->Draw("l");
 
-// Graph exp1p
-  double xx[] = {1275.07, 1286.03, 1301.78, 1306.67, 1314.99, 1333.16, 1377.24, 1398, 1400, 1500, 1600, 1700, 1800, 1900, 2000};
-  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1292.83, 1158.88, 1112.35, 1083.94, 1068.05, 1060.99, 1054.31};
-  TGraph* exp1p = new TGraph(15, xx, yy);
-// end exp1p
    exp1p->SetName("Exp1p");
    exp1p->SetTitle("Exp1p");
    exp1p->SetFillColor(1);
@@ -122,11 +146,6 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
    
    //exp1p->Draw(gopt);
    
-// Graph exp1m
-   double xx[] = {1187.67, 1200, 1208.96, 1220.5, 1228.2, 1250.4, 1271.17, 1300, 1316.82, 1330., 1400, 1500, 1600, 1700, 1800, 1900, 2000};
-  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1342.05, 1300, 1220., 1093.04, 1044.04, 1021.33, 999.295, 993.532, 987.666, 987.568};
-  TGraph* exp1m = new TGraph(17, xx, yy);
-// end exp1m
    exp1m->SetName("Exp1m");
    exp1m->SetTitle("Exp1m");
    exp1m->SetFillColor(1);
@@ -160,11 +179,6 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
    exp1pm->Draw("f");
    exp1pm->Draw("l");
 
-// Graph expected
-  double xx[] = {1249.62, 1262.84, 1264.59, 1275.49, 1289.6, 1305.63, 1339.88, 1367.51, 1400, 1500, 1600, 1700, 1800, 1900, 2000};
-  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1193.65, 1106.78, 1075.93, 1052.01, 1040.23, 1033.51, 1031.49};
-  TGraph* expected = new TGraph(15, xx, yy);
-// end expected
    expected->SetName("Expected");
    expected->SetTitle("Expected");
    expected->SetFillColor(1);
@@ -181,11 +195,6 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
    TGraph* expectedStyle2 = new TGraph (*expected);
    expectedStyle2->SetFillColor (exp2pm->GetFillColor());
    
-// Graph observed
-  double xx[] = {1160.27, 1174, 1183.74, 1196.92, 1202.17, 1225.06, 1245.07, 1268, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000};
-  double yy[] = {2000, 1900, 1800, 1700, 1600, 1500, 1400, 1300, 1166.29, 1068.1, 1020.06, 998.525, 979.808, 976.135, 971.716, 973.225};
-  TGraph* observed = new TGraph(16, xx, yy);
-// end observed
 
    observed->SetName("Observed");
    observed->SetTitle("Observed");
@@ -210,7 +219,7 @@ gROOT->ProcessLine(".x ra7PlotStyle.C");
   myleg->AddEntry(expectedStyle2,"NLO expected #pm2#sigma","lf");
   myleg->Draw();
 
-  TLatex* lumilabel = new TLatex(1400,2040,"#sqrt{s} = 7 TeV,   L_{int} = 4.7 fb^{-1}");
+  TLatex* lumilabel = new TLatex(1400,2040,"#sqrt{s} = 7 TeV,   L_{int} = 5.0 fb^{-1}");
   lumilabel->SetTextSize(0.05);
   lumilabel->Draw("same");
 
