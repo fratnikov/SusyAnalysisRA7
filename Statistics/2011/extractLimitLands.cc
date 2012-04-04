@@ -119,30 +119,58 @@ void run(TString inFileName, int m0, int m12){
 
 	//	_m2s = m2s; _m1s=m1s;
 }
+// void run(TString inFileName, TString plotName, TString sfile="bands", double mH = -1, int debug = 0){
+// 	_debug = debug;
+// 	double m2s =	extractLimitAtQuantile(inFileName, plotName+"_-2sigma", 0.0275 );
+// 	double m2s_err = limitErr;
+// 	double m1s =	extractLimitAtQuantile(inFileName, plotName+"_-1sigma", 0.16 );
+// 	double m1s_err = limitErr;
+// 	double med =	extractLimitAtQuantile(inFileName, plotName+"_median", 0.5 );
+// 	double med_err = limitErr;
+// 	double p1s =	extractLimitAtQuantile(inFileName, plotName+"_1sigma", 0.84 );
+// 	double p1s_err = limitErr;
+// 	double p2s =	extractLimitAtQuantile(inFileName, plotName+"_2sigma", 0.975 );
+// 	double p2s_err = limitErr;
+// 	double dat =	extractLimitAtQuantile(inFileName, plotName+"_observed", -1 );
+// 	double dat_err = limitErr;
+
+// 	cout<<"EXPECTED LIMIT BANDS from(obs, -2s,-1s,median,1s,2s) mass= "<<mH<<": ";
+// 	cout<<dat<<"+/-"<<dat_err<<", ";
+// 	cout<<m2s<<"+/-"<<m2s_err<<", "<<m1s<<"+/-"<<m1s_err<<", ";
+// 	cout<<med<<"+/-"<<med_err<<", ";
+// 	cout<<p1s<<"+/-"<<p1s_err<<", "<<p2s<<"+/-"<<p2s_err<<endl;
+
+// 	cout<<"Observed data limit: "<<dat<<endl;
+// 	cout<<"Observed data limit: "<<dat<<" +/- "<<dat_err<<endl;
+// 	cout<<"expected median limit: "<<med<<" +/- "<<med_err<<endl;
+// 	SaveResults(sfile, mH, dat, dat_err, 0, 0, m2s, m1s, med, 0, p1s, p2s);
+
+// 	_m2s = m2s; _m1s=m1s;
+// }
 double extractLimitAtQuantile(TString inFileName, TString plotName, double d_quantile ){
 	TFile *f = TFile::Open(inFileName);
 	TF1 *expoFit = new TF1("expoFit","[0]*exp([1]*(x-[2]))", rMin, rMax);
 	TGraphErrors *limitPlot_ =  new TGraphErrors();
 
-	limit = 0; limitErr = 0;
-
 	bool done = false;
 	if (_debug > 0) std::cout << "Search for upper limit using pre-computed grid of p-values" << std::endl;
 
 	readAllToysFromFile(limitPlot_, f, d_quantile ); 
+	f->Close();
 	limitPlot_->Sort();
 	double minDist=1e3;
 	int n= limitPlot_->GetN();
 	cout<<" Number of points in limitPlot_ : "<<n<<endl;
-	if(n<=1) return 0;
+	if(n<=0) return 0;
 
 	clsMin.first=0;
 	clsMin.second=0;
 	clsMax.first=0;
 	clsMax.second=0;
 
+	limit = 0; limitErr = 0;
 	for (int i = 0; i < n; ++i) {
-		double x = limitPlot_->GetX()[i], y = limitPlot_->GetY()[i], ey = limitPlot_->GetErrorY(i);
+		double x = limitPlot_->GetX()[i], y = limitPlot_->GetY()[i]; //, ey = limitPlot_->GetErrorY(i);
 		if (fabs(y-clsTarget) < minDist) { limit = x; minDist = fabs(y-clsTarget); }
 	}
 	int ntmp =0;
@@ -217,7 +245,7 @@ double extractLimitAtQuantile(TString inFileName, TString plotName, double d_qua
 		} 
 	}
 
-	if (0 && limitPlot_) {
+	if (limitPlot_) {
 		TCanvas *c1 = new TCanvas("c1","c1");
 		limitPlot_->Sort();
 		limitPlot_->SetLineWidth(2);
@@ -234,7 +262,10 @@ double extractLimitAtQuantile(TString inFileName, TString plotName, double d_qua
 		line.SetLineWidth(1); line.SetLineStyle(2);
 		line.DrawLine(limit-limitErr, 0, limit-limitErr, limitPlot_->GetY()[0]);
 		line.DrawLine(limit+limitErr, 0, limit+limitErr, limitPlot_->GetY()[0]);
+		limitPlot_->SetTitle(";#mu;CLs");
 		c1->Print(plotName+".gif");
+
+		if(_debug)limitPlot_->Print("v");
 	}
 
 	std::cout << "\n -- Hybrid New -- \n";
@@ -251,6 +282,7 @@ void readAllToysFromFile(TGraphErrors*tge, TFile*f, double d_quantile) {
 	std::map<double, TTree*> gridCLsb; //r, <clsb, clserr>
 	std::map<double, TTree*> gridCLb; //r, <clsb, clserr>
 	std::map<double, double> gridQdata; //r, q_data
+	bool bdata = false;
 	while ((k = (TKey *) next()) != 0) {
 		double rVal;
 		TString name(k->GetName());
@@ -271,7 +303,20 @@ void readAllToysFromFile(TGraphErrors*tge, TFile*f, double d_quantile) {
 			name.Remove(0,name.Index("_Q")+2);
 			gridQdata[rVal]=name.Atof();
 			if (_debug > 2) std::cout << "  Do " << k->GetName() << " -> " << tmp << " --> " << rVal << " Q_data ="<<name<<" --> "<<name.Atof()<< std::endl;
+			bdata = true;
+		}else if(!bdata && name.BeginsWith("TESTED_R")){
+			rVal = name.ReplaceAll("TESTED_R","").Atof();
+			TTree *t = dynamic_cast<TTree *>(toyDir->Get(k->GetName()));
+			if(t!=NULL) {
+				TBranch *brQ;
+				double q;
+				t->SetBranchAddress("brT", &q, &brQ);
+				t->GetEntry(0);
+				gridQdata[rVal]=q;
+				if (_debug > 2) std::cout << "  Do " << k->GetName() << " -> " << name << " --> " << rVal << " Q_data ="<<q<< std::endl;
+			}
 		}
+
 
 	}
 
@@ -285,6 +330,7 @@ void readAllToysFromFile(TGraphErrors*tge, TFile*f, double d_quantile) {
 		if(cls!=1 and clserr==0)continue;
 		if(cls>0.9) continue;
 		if(cls<0.0001) continue;
+		if(clserr>=cls)continue;
 		n_valid+=1;
 		tge->Set(n_valid);
 		tge->SetPoint(     n_valid-1, itg->first, cls   ); 
@@ -342,7 +388,8 @@ bool GetPValue(vector<double> vqsb, double qdata, double &ret, double &err){
 	double tmp = qdata;
 	int _nexps = vqsb.size();
 	for(int i=0; i<_nexps; i++){
-		if(vqsb[i]>=tmp)
+		//if(int(vqsb[i]*1000)>= int(tmp*1000))
+		if(vqsb[i]>= tmp)
 			ret ++ ;	
 	}		
 	ret/=_nexps;
@@ -359,6 +406,15 @@ bool GetPValue(vector<double> vqsb, double qdata, double &ret, double &err){
 		if(_debug)	cout<<"              Currently, we put p=1./"<<_nexps<<endl;
 		ret = 1./(double)_nexps;
 	}
+
+	if(_debug>=10){
+		cout<<" DELETEME "<<endl;
+		sort(vqsb.begin(), vqsb.end());
+		for(int i=0; i<_nexps; i++){
+			cout<<vqsb[i]<<endl;
+		}
+	}
+
 	return true;
 }
 
