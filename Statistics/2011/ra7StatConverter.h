@@ -65,21 +65,29 @@ namespace ra7StatConverter {
 
   typedef std::vector<StatModelChannel> StatModelChannels;
 
+  string ruChannel (const string& kitCh);
+  string kitChannel (const string& ruCh);
+  int kitChannelI (const string& ruCh);
+
+
   double sumYield (const Signatures& fSignatures);
   int sumObserved (const Signatures& fSignatures);
   double sumBackgrounds (const Signatures& fSignatures);
 
   void dump (const Signature& fSignature);
   void dump (const Signatures& fSignatures);
-  void dumpCombined (const Signatures& fSignatures, const std::string& fFile, const std::string& fTitle = "", bool normalizeYield = false);
+  void dumpCombined (const Signatures& fSignatures, const std::string& fFile, const std::string& fTitle = "", bool normalizeYield = false, int fChannels = 0);
 
   int lessByYield (const Signature& a,const Signature& b) {return a.yield < b.yield;}
   int lessByObserved (const Signature& a,const Signature& b) {return a.observed < b.observed;}
   int lessByBackground (const Signature& a,const Signature& b) {return a.backgroundDD+a.backgroundMC < b.backgroundDD+b.backgroundMC;}
+  bool lessPull (const Signature& a, const Signature& b);
+  bool lessQuickLimit (const Signature& a, const Signature& b);
+  bool lessExpectedLimit (const Signature& a, const Signature& b);
 
   void addDataFile (const std::string& fName, Signatures* fSignatures);
-  bool readMCFiles (const std::string& fRichardFile, int fM0, int fM12, Signatures* fSignatures);
-  bool readRichardMCFile (const std::string& fName, int fM0, int fM12, Signature* fSignature);
+  bool readMCFiles (const std::string& fRichardFile, int fM0, int fM12, Signatures* fSignatures, double fScale = 1);
+  bool readRichardMCFile (const std::string& fName, int fM0, int fM12, Signature* fSignature, double fScale = 1);
   double totalXSection (const std::string& fName, int fM0, int fM12);
   std::vector<std::pair<int, int> > allMCPoints (const std::string& fName);
 

@@ -22,36 +22,6 @@ using namespace std;
 
 namespace {
 
-  string ruChannel (const string& kitCh) {
-    const char* ruChannels [] = {
-      /*1*/ "L4T0METVHTVZV", "L4T0METVHTV", "L4T0METVZV", "L4T0METV", "L4T0HTVZV",
-      /*6*/ "L4T0HTV", "L4T0ZV", "L4T0", "L3DY0T0METVHTV", "L3DY0T0METV",
-      /*11*/ "L3DY0T0HTV", "L3DY0T0", "L3DY1T0METVHTVZV", "L3DY1T0METVHTV", "L3DY1T0METVZV",
-      /*16*/ "L3DY1T0METV", "L3DY1T0HTVZV", "L3DY1T0HTV", "L3DY1T0ZV", "L3DY1T0",
-      /*21*/ "L4T1METVHTVZV", "L4T1METVHTV", "L4T1METVZV", "L4T1METV", "L4T1HTVZV",
-      /*26*/ "L4T1HTV", "L4T1ZV", "L4T1", "L3DY0T1METVHTV", "L3DY0T1METV",
-      /*31*/ "L3DY0T1HTV", "L3DY0T1", "L3DY1T1METVHTVZV", "L3DY1T1METVHTV", "L3DY1T1METVZV",
-      /*36*/ "L3DY1T1METV", "L3DY1T1HTVZV", "L3DY1T1HTV", "L3DY1T1ZV", "L3DY1T1",
-      /*41*/ "L4T2METVHTVZV", "L4T2METVHTV", "L4T2METVZV", "L4T2METV", "L4T2HTVZV",
-      /*46*/ "L4T2HTV", "L4T2ZV", "L4T2", "L3DY0T2METVHTV", "L3DY0T2METV",
-      /*51*/ "L3DY0T2HTV", "L3DY0T2"
-    };
-    if (kitCh.find ("ch") == 0) {
-      int ichannel = atoi (kitCh.c_str()+2);
-      if (ichannel >= 1 && ichannel <= 52) return string(ruChannels[ichannel-1]);
-    }
-    return "undefined";
-  }
-
-  string kitChannel (const string& ruCh) {
-    char kit[] = "chxx";
-    for (int i = 1; i <= 52; ++i) {
-      sprintf (kit, "%2d", i);
-      if (ruChannel (string(kit)) == ruCh) return string(kit);
-    }
-    return "undefined";
-  }
-  
   vector<string> tokenize (const string& fInput) {
     vector<string> result;
     string buf; 
@@ -119,24 +89,6 @@ namespace {
     return fabs(a.sigObserved()) > fabs(b.sigObserved());
   }
 
-  bool lessPull (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
-    double pullA = fabs(a.observed - a.backgroundDD - a.backgroundMC) /
-      sqrt (a.observed*a.observed + 
-	    a.sigmaBackgroundDD*a.sigmaBackgroundDD + 
-	    a.sigmaBackgroundMC*a.sigmaBackgroundMC);
-    double pullB = fabs(b.observed - b.backgroundDD - b.backgroundMC) /
-      sqrt (b.observed*b.observed + 
-	    b.sigmaBackgroundDD*b.sigmaBackgroundDD + 
-	    b.sigmaBackgroundMC*b.sigmaBackgroundMC);
-    return pullA > pullB;
-  }
-
-  bool lessQuickLimit (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
-    return a.quickLimit < b.quickLimit;
-  }
-  bool lessExpectedLimit (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
-    return a.getExpectedLimit() < b.getExpectedLimit();
-  }
 
   double quickCLsCalculator (double signal, double bkg, int observed) {
     double clsb = ROOT::Math::poisson_cdf (observed, signal+bkg);
@@ -174,6 +126,64 @@ namespace {
 }
 
 namespace ra7StatConverter {
+
+  string ruChannel (const string& kitCh) {
+    const char* ruChannels [] = {
+      /*1*/ "L4T0METVHTVZV", "L4T0METVHTV", "L4T0METVZV", "L4T0METV", "L4T0HTVZV",
+      /*6*/ "L4T0HTV", "L4T0ZV", "L4T0", "L3DY0T0METVHTV", "L3DY0T0METV",
+      /*11*/ "L3DY0T0HTV", "L3DY0T0", "L3DY1T0METVHTVZV", "L3DY1T0METVHTV", "L3DY1T0METVZV",
+      /*16*/ "L3DY1T0METV", "L3DY1T0HTVZV", "L3DY1T0HTV", "L3DY1T0ZV", "L3DY1T0",
+      /*21*/ "L4T1METVHTVZV", "L4T1METVHTV", "L4T1METVZV", "L4T1METV", "L4T1HTVZV",
+      /*26*/ "L4T1HTV", "L4T1ZV", "L4T1", "L3DY0T1METVHTV", "L3DY0T1METV",
+      /*31*/ "L3DY0T1HTV", "L3DY0T1", "L3DY1T1METVHTVZV", "L3DY1T1METVHTV", "L3DY1T1METVZV",
+      /*36*/ "L3DY1T1METV", "L3DY1T1HTVZV", "L3DY1T1HTV", "L3DY1T1ZV", "L3DY1T1",
+      /*41*/ "L4T2METVHTVZV", "L4T2METVHTV", "L4T2METVZV", "L4T2METV", "L4T2HTVZV",
+      /*46*/ "L4T2HTV", "L4T2ZV", "L4T2", "L3DY0T2METVHTV", "L3DY0T2METV",
+      /*51*/ "L3DY0T2HTV", "L3DY0T2"
+    };
+    if (kitCh.find ("ch") == 0) {
+      int ichannel = atoi (kitCh.c_str()+2);
+      if (ichannel >= 1 && ichannel <= 52) return string(ruChannels[ichannel-1]);
+    }
+    return "undefined";
+  }
+
+  string kitChannel (const string& ruCh) {
+    char kit[] = "chxx";
+    for (int i = 1; i <= 52; ++i) {
+      sprintf (kit, "%2d", i);
+      if (ruChannel (string(kit)) == ruCh) return string(kit);
+    }
+    return "undefined";
+  }
+
+  int kitChannelI (const string& ruCh) {
+    char kit[] = "chxx";
+    for (int i = 1; i <= 52; ++i) {
+      sprintf (kit, "ch%d", i);
+      if (ruChannel (string(kit)) == ruCh) return i;
+    }
+    return 0;
+  }
+  
+  bool lessPull (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
+    double pullA = fabs(a.observed - a.backgroundDD - a.backgroundMC) /
+      sqrt (a.observed*a.observed + 
+	    a.sigmaBackgroundDD*a.sigmaBackgroundDD + 
+	    a.sigmaBackgroundMC*a.sigmaBackgroundMC);
+    double pullB = fabs(b.observed - b.backgroundDD - b.backgroundMC) /
+      sqrt (b.observed*b.observed + 
+	    b.sigmaBackgroundDD*b.sigmaBackgroundDD + 
+	    b.sigmaBackgroundMC*b.sigmaBackgroundMC);
+    return pullA > pullB;
+  }
+
+  bool lessQuickLimit (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
+    return a.quickLimit < b.quickLimit;
+  }
+  bool lessExpectedLimit (const ra7StatConverter::Signature& a, const ra7StatConverter::Signature& b) {
+    return a.getExpectedLimit() < b.getExpectedLimit();
+  }
 
   double Signature::sigObserved () const {
     double sig = observed - backgroundDD - backgroundMC;
@@ -329,11 +339,11 @@ namespace ra7StatConverter {
     }
   }
 
-  bool readMCFiles (const string& fFile, int fM0, int fM12, Signatures* fSignatures) {
+  bool readMCFiles (const string& fFile, int fM0, int fM12, Signatures* fSignatures, double fScale) {
     vector<size_t> cleanup;
     for (size_t i = 0; i < fSignatures->size(); ++i) {
       Signature* sig = &((*fSignatures)[i]);
-      if (!readRichardMCFile (fFile, fM0, fM12, sig)) {
+      if (!readRichardMCFile (fFile, fM0, fM12, sig, fScale)) {
 	cerr << "readRUMCFiles-> Worning can not find data for signature " <<  sig->name << " in " << fM0 << ':' << fM12 << endl;
 	cleanup.push_back(i);
       }
@@ -347,7 +357,7 @@ namespace ra7StatConverter {
     return true;
   }
 
-  bool readRichardMCFile (const string& fName, int fM0, int fM12, Signature* fSignature) {
+  bool readRichardMCFile (const string& fName, int fM0, int fM12, Signature* fSignature, double fScale) {
     // constants
     double jesSigma = 0.10;
     double pdfSigma = 0.14;
@@ -372,8 +382,13 @@ namespace ra7StatConverter {
 	}
 	else continue;
       }
-      if ((tokens[1] != "m0m12" && tokens[1] != "charginogluino" && tokens[1] != "charginoneutralino") || 
-	  int(atof (tokens[2].c_str())) != fM0 || int(atof (tokens[3].c_str())) != fM12) continue;
+      if ((tokens[1] != "m0m12" && 
+	   tokens[1] != "charginogluino" && 
+	   tokens[1] != "charginoneutralino" && 
+	   tokens[1] != "mCHmLSP") 
+	  || int(atof (tokens[2].c_str())) != fM0 
+	  || int(atof (tokens[3].c_str())) != fM12) 
+	continue;
 
       if (tokens.size() == 13 && (tokens[4] == sig->name || ruChannel (tokens[4]) == sig->name)) {
 	//  0    1    2  3   4           5          6                      7        8         9         10       11         12     
@@ -398,6 +413,7 @@ namespace ra7StatConverter {
 	sig->sigmaBackgroundJes = jesSigma;
 	sig->sigmaBackgroundPdf = pdfSigma;
 	sig->sigmaTrigger = trigSigma;
+	sig->yield *= fScale;
 
 	double bkg = sig->backgroundDD + sig->backgroundMC;
 	double dbkg = sqrt (sig->sigmaBackgroundDD*sig->sigmaBackgroundDD + 
@@ -518,10 +534,13 @@ namespace ra7StatConverter {
     }
   }
 
-  void dumpCombined (const Signatures& fSignatures, const std::string& fFile, const std::string& fTitle, bool normilizeYields) {
+  void dumpCombined (const Signatures& fSignatures, const std::string& fFile, const std::string& fTitle, bool normilizeYields, int fChannels) {
+    Signatures sig_copy (fSignatures); // local copy
+    sort (sig_copy.begin(), sig_copy.end(), lessExpectedLimit);
     StatModelChannels statChannels;
-    convertChannels (fSignatures, statChannels, normilizeYields);
+    convertChannels (sig_copy, statChannels, normilizeYields);
     int nChannels = statChannels.size();
+    if (fChannels > 0 && fChannels < nChannels) nChannels = fChannels;
     // produce configuration in HIGGS combination format
     FILE* cfgFile = fopen (fFile.c_str(), "w");
     fprintf (cfgFile,"# %s\n", fTitle.c_str());
@@ -608,7 +627,7 @@ void runAll () {
   dumpCombined (sigs, "ra7_combined_model.txt", "ra7_combined_model CMSSM 180:240:3", false);
 }
 
-string runStatConverter (const string& datadir, int m0, int m12) {
+string runStatConverter (const string& datadir, int m0, int m12, int maxChannels = 0) {
   Signatures sigs;
   //  addDataFile (datadir + "/data_outfile.txt", &sigs);
   //  addDataFile (datadir + "/data_outfile_RA7_2.1ifb.txt", &sigs);
@@ -625,7 +644,7 @@ string runStatConverter (const string& datadir, int m0, int m12) {
   string cardFileName (buffer);
   sprintf (buffer, "ra7_combined_model %s CMSSM %d:%d", datadir.c_str(), m0, m12);
   dump (sigs);
-  dumpCombined (sigs, cardFileName, buffer, true);
+  dumpCombined (sigs, cardFileName, buffer, true, maxChannels);
   return cardFileName;
 }
 

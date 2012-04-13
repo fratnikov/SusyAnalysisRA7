@@ -10,6 +10,10 @@
 
 const char smoothMode[] = "k3a";
 
+double channelNumber (const string& ch) {
+  if (ch.length() < 3 || ch[0] != 'c' || ch[1]!='h') return 0;
+  return atof (ch.c_str()+2);
+}
 
 void repareHoles (TH2D* hist) {
   for (int iy = 1; iy <= hist->GetNbinsY(); ++iy) {
@@ -60,6 +64,27 @@ void repareHoles (TH2D* hist) {
   }
 }
 
+double getXsection (double x, ifstream& input) {
+  input.seekg(0);
+  double xPrev = -1;
+  double yPrev = -1;
+  while (input) {
+    double xThis, yThis;
+    input >> xThis >> yThis;
+    if (!input) {
+      cerr << "getXsection-> error reading stream" << endl;
+      return 0;
+    }
+    if (xThis > x) {
+      if (xPrev < 0) return yThis;
+      double y = exp (log(yPrev) + (log(yThis)-log(yPrev)) * (x-xPrev)/(xThis-xPrev));
+      return y/1000.;
+    }
+    xPrev = xThis;
+    yPrev = yThis;
+  }
+}
+
 int main (int argc, char* argv[]) {
   if (argc < 2) {
     cout << argv[0] << "" << endl;
@@ -75,6 +100,14 @@ int main (int argc, char* argv[]) {
   double m12step = 0;
   double m12min = 0;
   double m12max = 0;
+  ifstream* xSections = 0;
+  int nChannels = 0;
+  if (argc >= 3) { // scale yields
+    xSections = new ifstream (argv[2]);
+    if (argc >= 4) { // # channels
+      nChannels = atoi (argv[3]);
+    }
+  }
   if (string(argv[1]) == "10") {
     dataDir = "data_2011_tanb10_2.1fb";
     limitFile = "data_2011_tanb10_2.1fb/combinedModel.out";
@@ -236,10 +269,70 @@ int main (int argc, char* argv[]) {
   processXSection->SetName ("processXSection");
   processXSection->SetTitle ("process total XSection [pb]");
   
+  TH2D* mainChannel = new TH2D(*yieldHists);
+  mainChannel->SetName ("mainChannel");
+  mainChannel->SetTitle ("mainChannel");
+  mainChannel->Reset();
+  
+  TH2D* main2Channel = new TH2D(*yieldHists);
+  main2Channel->SetName ("main2Channel");
+  main2Channel->SetTitle ("main2Channel");
+  main2Channel->Reset();
+  
+  TH2D* main3Channel = new TH2D(*yieldHists);
+  main3Channel->SetName ("main3Channel");
+  main3Channel->SetTitle ("main3Channel");
+  main3Channel->Reset();
+  
+  TH2D* main4Channel = new TH2D(*yieldHists);
+  main4Channel->SetName ("main4Channel");
+  main4Channel->SetTitle ("main4Channel");
+  main4Channel->Reset();
+  
+  TH2D* main5Channel = new TH2D(*yieldHists);
+  main5Channel->SetName ("main5Channel");
+  main5Channel->SetTitle ("main5Channel");
+  main5Channel->Reset();
+  
+  TH2D* secondChannel = new TH2D(*yieldHists);
+  secondChannel->SetName ("secondChannel");
+  secondChannel->SetTitle ("secondChannel");
+  secondChannel->Reset();
+  
+  TH2D* ratioChannel = new TH2D(*yieldHists);
+  ratioChannel->SetName ("ratioChannel");
+  ratioChannel->SetTitle ("ratioChannel");
+  ratioChannel->Reset();
+  
+  TH2D* ratio2Channel = new TH2D(*yieldHists);
+  ratio2Channel->SetName ("ratio2Channel");
+  ratio2Channel->SetTitle ("ratio2Channel");
+  ratio2Channel->Reset();
+  
+  TH2D* ratio3Channel = new TH2D(*yieldHists);
+  ratio3Channel->SetName ("ratio3Channel");
+  ratio3Channel->SetTitle ("ratio3Channel");
+  ratio3Channel->Reset();
+  
+  TH2D* ratio4Channel = new TH2D(*yieldHists);
+  ratio4Channel->SetName ("ratio4Channel");
+  ratio4Channel->SetTitle ("ratio4Channel");
+  ratio4Channel->Reset();
+  
+  TH2D* ratio5Channel = new TH2D(*yieldHists);
+  ratio5Channel->SetName ("ratio5Channel");
+  ratio5Channel->SetTitle ("ratio5Channel");
+  ratio5Channel->Reset();
+  
 
   for (int im0 = 1; im0 <= m0Bins; ++im0) {
+    int m0 = int(floor(m0min+(im0-1)*m0step+0.5));
+    double xsecScale = 1;
+    if (xSections) {
+      xsecScale = getXsection (m0, *xSections);
+      cout << "point " << m0 << " xSection=" << xsecScale << endl;
+    }
     for (int im12 = 1; im12 <= m12Bins; ++im12) {
-      int m0 = int(floor(m0min+(im0-1)*m0step+0.5));
       int m12 = int(floor(m12min+(im12-1)*m12step+0.5));
       Signatures sigs;
       addDataFile (dataDir + "/data.txt", &sigs);
@@ -249,16 +342,41 @@ int main (int argc, char* argv[]) {
 	cout << "Can not find MC data for point " << m0 << ':' << m12 << " in dir " << mcDataDir << endl;
 	continue;
       }
-      readMCFiles (mcDataFile, m0, m12, &sigs);
+      readMCFiles (mcDataFile, m0, m12, &sigs, xsecScale);
+      sort (sigs.begin(), sigs.end(), lessExpectedLimit); 
+
+      mainChannel->Fill (m0, m12, channelNumber (sigs[0].name));
+      if (sigs.size() > 1) {
+	main2Channel->Fill (m0, m12, channelNumber (sigs[1].name));
+	ratio2Channel->Fill (m0, m12, sigs[0].getExpectedLimit ()/sigs[1].getExpectedLimit ());
+	if (sigs.size() > 2) {
+	  main3Channel->Fill (m0, m12, channelNumber (sigs[2].name));
+	  ratio3Channel->Fill (m0, m12, sigs[0].getExpectedLimit ()/sigs[2].getExpectedLimit ());
+	  if (sigs.size() > 3) {
+	    main4Channel->Fill (m0, m12, channelNumber (sigs[3].name));
+	    ratio4Channel->Fill (m0, m12, sigs[0].getExpectedLimit ()/sigs[3].getExpectedLimit ());
+	    if (sigs.size() > 4) {
+	      main5Channel->Fill (m0, m12, channelNumber (sigs[4].name));
+	      ratio5Channel->Fill (m0, m12, sigs[0].getExpectedLimit ()/sigs[4].getExpectedLimit ());
+	    }
+	  }
+	}
+      }
+
+      if (nChannels > 0 && nChannels < sigs.size()) {
+	sigs.erase (sigs.begin()+nChannels,sigs.end()); 
+      }
+
       StatModelChannels statChannels;
       convertChannels (sigs, statChannels, false);
+      
       for (size_t iChannel = 0; iChannel < statChannels.size(); ++iChannel) {
 	yieldHists->Fill (m0, m12, statChannels[iChannel].yield);
 	if (m0 == 500 && m12 == 200) {
 	  cout << m0 << ':' << m12 << " " << iChannel << " " << statChannels[iChannel].yield << endl;
 	}
       }
-      double xSec = totalXSection (mcDataFile, m0, m12);
+      double xSec = totalXSection (mcDataFile, m0, m12) * xsecScale;
       processXSection->Fill (m0, m12, xSec);
     }
   }
@@ -375,6 +493,16 @@ int main (int argc, char* argv[]) {
   yieldHists->Write();
   processXSection->Write();
   processXSectionOrig->Write();
+  mainChannel->Write();
+  main2Channel->Write();
+  main3Channel->Write();
+  main4Channel->Write();
+  main5Channel->Write();
+  ratioChannel->Write();
+  ratio2Channel->Write();
+  ratio3Channel->Write();
+  ratio4Channel->Write();
+  ratio5Channel->Write();
   hObsLimit->Write();
   hExpLimit->Write();
   hExpP1Limit->Write();

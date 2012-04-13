@@ -5,23 +5,27 @@
 int main (int argc, char* argv[]) {
   cout << "main..." << endl;
   if (argc < 3) {
-    cout << argv[0] << "<data_points> <maxSignal>" << endl;
+    cout << argv[0] << "<data_points> <maxSignal> [channels]" << endl;
     return 0;
   }
   ifstream datapoints (argv[1]);
   double maxSignal = atof (argv[2]);
+  int maxChannels = 0;
+  if (argc > 3) maxChannels = atoi (argv[3]);
   int m0, m12, tanb;
   while (datapoints) {
     datapoints >> m0 >> m12 >> tanb;
     if (!datapoints) break;
-    cout << endl << argv[0] << " ===============  processing point : " << m0 << ':' << m12 << "  =================" << endl;
+    cout << endl << argv[0] << " ===============  processing point : " << m0 << ':' << m12 
+	 << " max/channels: " << maxSignal << '/' << maxChannels
+	 << "  =================" << endl;
 
 
 
     string dataDir (".");
     
     cout << "runStatConverter..." << endl;
-    string cardFile = runStatConverter (dataDir, m0, m12);
+    string cardFile = runStatConverter (dataDir, m0, m12, maxChannels);
     cout << "combination cards file: " <<  cardFile << endl;
     if (cardFile.empty()) {
       cout << "failed to produce card file for the model " << m0 << ':' << m12 << endl;
