@@ -5,9 +5,9 @@
 % The last version of these macros found before the maketitle will be the one on the front page,
 % so only the main file is tracked.
 % Do not edit by hand!
-\RCS$Revision: 148802 $
+\RCS$Revision: 149549 $
 \RCS$HeadURL: svn+ssh://lshchuts@svn.cern.ch/reps/tdr2/notes/AN-12-351/trunk/AN-12-351.tex $
-\RCS$Id: AN-12-351.tex 148802 2012-09-23 18:52:48Z lshchuts $
+\RCS$Id: AN-12-351.tex 149549 2012-09-27 13:26:51Z mwalker $
 %%%%%%%%%%%%% local definitions %%%%%%%%%%%%%%%%%%%%%
 % This allows for switching between one column and two column (cms@external) layouts
 % The widths should  be modified for your particular figures. You'll need additional copies if you have more than one standard figure size.
@@ -38,12 +38,12 @@
 %Author is always "The CMS Collaboration" for PAS and papers, so author, etc, below will be ignored in those cases
 %For multiple affiliations, create an address entry for the combination
 %To mark authors as primary, use the \author* form
-\address[UF]{University of Florida}
-\address[RUT]{Rutgers University}
-%\address[cern]{CERN}
-%\author[cern]{The CMS Collaboration}
-\author[UF]{Lesya Shchutska}
-\author[RUT]{Matthew Walker}
+%\address[UF]{University of Florida}
+%\address[RUT]{Rutgers University}
+\address[cern]{CERN}
+\author[cern]{SUSY Multilepton EWKino Working Group}
+%\author[UF]{Lesya Shchutska}
+%\author[RUT]{Matthew Walker}
 
 
 % >> Date
@@ -154,6 +154,7 @@ it is not the case, therefore the background estimation from Ref.~\cite{AN2012:2
 The three groups have a variety of ways to estimate the backgrounds from fake leptons (both light leptons and taus). Because one group \cite{AN2012:248} includes the contribution from $\TTbar$ in their data-driven estimate, we average the data-driven contributions summed with the $\TTbar$ simulation contribution used by the two groups in the three lepton channels. Because only two groups \cite{AN2012:255,AN2012:256} are providing the four lepton channels, we synchronize the $\TTbar$ contribution for the four lepton channels and average the data-driven backgrounds.
 
 \input{FinalTable}
+\input{FourLeptons}
 
 \section{Conclusion}
 %
