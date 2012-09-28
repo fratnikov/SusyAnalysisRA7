@@ -5,9 +5,9 @@
 % The last version of these macros found before the maketitle will be the one on the front page,
 % so only the main file is tracked.
 % Do not edit by hand!
-\RCS$Revision: 149549 $
+\RCS$Revision: 149814 $
 \RCS$HeadURL: svn+ssh://lshchuts@svn.cern.ch/reps/tdr2/notes/AN-12-351/trunk/AN-12-351.tex $
-\RCS$Id: AN-12-351.tex 149549 2012-09-27 13:26:51Z mwalker $
+\RCS$Id: AN-12-351.tex 149814 2012-09-28 23:05:22Z lshchuts $
 %%%%%%%%%%%%% local definitions %%%%%%%%%%%%%%%%%%%%%
 % This allows for switching between one column and two column (cms@external) layouts
 % The widths should  be modified for your particular figures. You'll need additional copies if you have more than one standard figure size.
@@ -136,11 +136,13 @@ The background estimates for rare processes are taken from the simulation sample
 /WJetsToLNu\!\_TuneZ2Star\!\_8TeV-madgraph-tarball/Summer12\!\_DR53X-PU\!\_S10\!\_START53\!\_V7A-v1	& 37509    \\ 
 /TTWWJets\!\_8TeV-madgraph/Summer12\!\_DR53X-PU\!\_S10\!\_START53\!\_V7A-v1	& 0.002      \\ 
 /WWGJets\!\_8TeV-madgraph/Summer12\!\_DR53X-PU\!\_S10\!\_START53\!\_V7A-v1	& 1.44     \\ 
-/WWZNoGstarJets\!\_8TeV-madgraph/Summer12\!\_DR53X-PU\!\_S10\!\_START53\!\_V7A-v1	& 0.0633      \\ \hline \hline
+/WWZNoGstarJets\!\_8TeV-madgraph/Summer12\!\_DR53X-PU\!\_S10\!\_START53\!\_V7A-v1	& 0.0633      \\ 
+/WZZNoGstarJets\!\_8TeV-madgraph/Summer12\!\_DR53X-PU\!\_S10\!\_START53\!\_V7A-v1 	& 0.01922      \\  \hline \hline
 \end{tabular}
 \end{center}
 }
 \end{table}
+
 
 \section{Internal Conversion and ZZ}
 The authors of \cite{AN2012:248} and \cite{AN2012:256} use separate data-driven methods to estimate the internal conversion background to light leptons and an official production of ZZJets to estimate the ZZ irreducible background. The authors of \cite{AN2012:255} use a private simulation sample that combines the ZZ irreducible background with the internal conversion background. We take the data-driven estimate described in \cite{AN2012:256,AN2012:257} and a synchronized estimate to account for the ZZ irreducible background.
@@ -157,6 +159,9 @@ The three groups have a variety of ways to estimate the backgrounds from fake le
 \input{FourLeptons}
 
 \section{Conclusion}
+
+\input{3lComparison}
+
 %
 
 
