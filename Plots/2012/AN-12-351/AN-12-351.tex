@@ -5,9 +5,9 @@
 % The last version of these macros found before the maketitle will be the one on the front page,
 % so only the main file is tracked.
 % Do not edit by hand!
-\RCS$Revision: 149814 $
+\RCS$Revision: 150286 $
 \RCS$HeadURL: svn+ssh://lshchuts@svn.cern.ch/reps/tdr2/notes/AN-12-351/trunk/AN-12-351.tex $
-\RCS$Id: AN-12-351.tex 149814 2012-09-28 23:05:22Z lshchuts $
+\RCS$Id: AN-12-351.tex 150286 2012-10-02 19:32:45Z lshchuts $
 %%%%%%%%%%%%% local definitions %%%%%%%%%%%%%%%%%%%%%
 % This allows for switching between one column and two column (cms@external) layouts
 % The widths should  be modified for your particular figures. You'll need additional copies if you have more than one standard figure size.
@@ -148,9 +148,7 @@ The background estimates for rare processes are taken from the simulation sample
 The authors of \cite{AN2012:248} and \cite{AN2012:256} use separate data-driven methods to estimate the internal conversion background to light leptons and an official production of ZZJets to estimate the ZZ irreducible background. The authors of \cite{AN2012:255} use a private simulation sample that combines the ZZ irreducible background with the internal conversion background. We take the data-driven estimate described in \cite{AN2012:256,AN2012:257} and a synchronized estimate to account for the ZZ irreducible background.
 
 \section{WZ}
-WZ production makes up the largest irreducible background for three lepton search regions. The main source of the background estimation comes from the official WZ simulation sample. However, two of the groups apply corrections to make sure that the MET distribution is modeled properly \cite{AN2012:248,AN2012:256}. It could be advantageous to take the average of the three estimates if they are consistent. But at the moment 
-it is not the case, therefore the background estimation from Ref.~\cite{AN2012:248} is used.
-
+WZ production makes up the largest irreducible background for three lepton search regions. The main source of the background estimation comes from the official WZ simulation sample. However, two of the groups apply corrections to make sure that the MET distribution is modeled properly \cite{AN2012:248,AN2012:256}. The data-driven corrections are found to be small and the final result is computed as a simple average of three predictions.
 
 \section{Fake leptons}
 The three groups have a variety of ways to estimate the backgrounds from fake leptons (both light leptons and taus). Because one group \cite{AN2012:248} includes the contribution from $\TTbar$ in their data-driven estimate, we average the data-driven contributions summed with the $\TTbar$ simulation contribution used by the two groups in the three lepton channels. Because only two groups \cite{AN2012:255,AN2012:256} are providing the four lepton channels, we synchronize the $\TTbar$ contribution for the four lepton channels and average the data-driven backgrounds.
