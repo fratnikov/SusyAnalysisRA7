@@ -1,0 +1,27 @@
+\newpage
+\section{Statistical Procedure}
+To build a statistical model for this analysis we consider following sources of systematics
+shared (100\% correlated between channels):
+\begin{itemize}
+\item uncertainties in luminosity, jet energy scale, trigger efficiency
+\item uncertainty of backgrounds: WZ, ZZ, Z$\gamma$, $t\bar{t}$, rare processes
+\item uncertainty of electron reconstruction, identification, selection efficiencies
+\item uncertainty of muon reconstruction, identification, selection efficiencies
+\item uncertainty of tau reconstruction, identification, selection efficiencies
+\end{itemize}
+Every channel also has two nuisances uncorrelated with other channels.
+These uncertainties account for statistical fluctuations affecting
+background estimations, and signal efficiency calculation.
+As the total number of nuisances is proportional to number of channels used,
+and therefore necessary computing resources rise exponentially with number
+of combined channels,
+we have to keep number of channels actually used for the analysis limited.
+For the given point in the model parameter space we select a predefined
+number (currently 10) of the most sensitive
+channels. The sensitivity of the channel is defined as an expected limit
+on the total model cross section obtained by using this channel only.
+This analysis is a typical multi-channel counting experiment. Higgs group combination
+tool, LandS \cite{lands}, is technically used to obtain limits.
+We calculate ``LHC style'' CLs limit \cite{higgsCombination},
+which effectively means using frequentist CLs with one-sided profiled likelyhood
+test statistics.
