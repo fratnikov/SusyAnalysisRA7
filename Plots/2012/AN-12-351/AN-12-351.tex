@@ -5,9 +5,9 @@
 % The last version of these macros found before the maketitle will be the one on the front page,
 % so only the main file is tracked.
 % Do not edit by hand!
-\RCS$Revision: 152688 $
+\RCS$Revision: 152977 $
 \RCS$HeadURL: svn+ssh://lshchuts@svn.cern.ch/reps/tdr2/notes/AN-12-351/trunk/AN-12-351.tex $
-\RCS$Id: AN-12-351.tex 152688 2012-10-14 21:28:47Z lshchuts $
+\RCS$Id: AN-12-351.tex 152977 2012-10-15 23:14:36Z lshchuts $
 %%%%%%%%%%%%% local definitions %%%%%%%%%%%%%%%%%%%%%
 % This allows for switching between one column and two column (cms@external) layouts
 % The widths should  be modified for your particular figures. You'll need additional copies if you have more than one standard figure size.
@@ -21,8 +21,23 @@
 \newcommand{\eisomu}{\eiso(\mu)}
 \newcommand{\eisotr}{\eiso(\mathrm{track})}
 \newcommand{\esb}{\epsilon_\mathrm{sb}}
+\newcommand{\MT}{\ensuremath{M_\mathrm{T}}\xspace} 
+\newcommand{\mdil}{\ensuremath{M_{\ell\ell}}\xspace} 
+\newcommand{\mjj}{\ensuremath{M_{jj}}\xspace} 
 %\newcommand{\MET}{\ensuremath{\displaystyle{\not} E_{\rm T}}}
 \newcommand{\TTbar}{\ensuremath{\rm t\bar{t}}}
+\newcommand{\slep}{\ensuremath{\widetilde{\ell}}\xspace}
+\newcommand{\xslep}{\ensuremath{x_{\slep}}\xspace}
+
+\newcommand{\bjetsnohyphen}{\ensuremath{\cPqb\ \text{jets}}\xspace}
+
+\newcommand{\W}{\ensuremath{\cmsSymbolFace{W}}\xspace} % \Z is defined by default but not \W; there is \PW in PENNAMES
+\newcommand{\zzmet}{$\Z\Z+\MET$\xspace}
+\newcommand{\wzmet}{$\W\Z+\MET$\xspace}
+\newcommand{\wzzmet}{$\W\Z/\Z\Z+\MET$\xspace}
+\newcommand{\cls}{CL$_\text{s}$\xspace}
+
+
 
 \newlength\cmsFigWidth
 \ifthenelse{\boolean{cms@external}}{\setlength\cmsFigWidth{0.85\columnwidth}}{\setlength\cmsFigWidth{0.4\textwidth}}
@@ -160,6 +175,18 @@ The three groups have a variety of ways to estimate the backgrounds from fake le
 \input{StatParagraph}
 
 \section{Conclusion}
+This analysis note presents a summary for searches for supersymmetric charginos and
+neutralinos in three and four leptons final states which were developed
+and presented in several analysis notes.  
+The searches featured here explore the final states with exactly
+three  or exactly four leptons using transverse mass, missing transverse energy 
+and lepton-pair invariant mass.
+No excesses above the standard model
+expectations are observed. The results are used to exclude a range of
+chargino and neutralino masses 
+%from approximately 200 to $700 \GeV$,
+for the models considered in the dedicated analyses where these particles have
+large branching fractions to leptons and vector bosons.
 
 \input{3lComparison}
 
