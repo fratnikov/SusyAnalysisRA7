@@ -1,0 +1,2 @@
+dir ../../../cards/TChiWZ/ucla
+dir ../../../cards/TChiWZ/2l2j

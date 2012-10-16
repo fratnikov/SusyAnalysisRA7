@@ -1,0 +1,2 @@
+#dir ../../../cards/TChiSlepSnu_2i/0.95/ucla
+dir ../../../cards/TChiSlepSnu_2i/0.95/SS
