@@ -1,0 +1,15 @@
+# produced by makeScanFile
+xsec 450 0 0.0217971
+# scan <m1> <m2> <channel id> <yield in pb> <total yield uncertainty> <uncorrelated uncertainty> <muon eff uncertainty> <electron eff uncertainty> <tau eff uncertainty> <trigger eff uncertainty> <JES uncertainty> <theory uncertainties>
+# Remark: <total yield uncertainty> is not used practically
+# Remark: <theory uncertainty> is not used right now but will be needed for producing final plots
+# following are new lines extracted from SS_HT0MET120NJ2bVlV_TChi_datacard_x5.txt
+#scan <m1> <m2> <channel id> <yield in pb> <total yield uncertainty> <uncorrelated uncertainty> <muon eff uncertainty><electron eff uncertainty> <tau eff uncertainty> <trigger eff uncertainty> <JES uncertainty> <theory uncertainties> 
+# Datacard generated for TChi and x5
+# ==================================================================================================
+scan 450   0 182 2.34144e-04 7.56544e-06 1.53459e-05 2.79903e-06 2.79903e-06 0.00000e+00 0.00000e+00 4.66505e-07 1.09483e-07
+# following are new lines extracted from SS_HT0MET200lV_TChi_datacard_x5.txt
+#scan <m1> <m2> <channel id> <yield in pb> <total yield uncertainty> <uncorrelated uncertainty> <muon eff uncertainty><electron eff uncertainty> <tau eff uncertainty> <trigger eff uncertainty> <JES uncertainty> <theory uncertainties> 
+# Datacard generated for TChi and x5
+# ==================================================================================================
+scan 450   0 181 5.60742e-04 6.90491e-06 2.37278e-05 1.16668e-06 1.16668e-06 0.00000e+00 0.00000e+00 0.00000e+00 1.09483e-07
