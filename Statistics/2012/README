@@ -1,0 +1,4 @@
+Directories:
+cards - data cards for backgrounds and different signal models
+scans - working directories for processing limits for different models
+bin - code to run limit setting procedure
