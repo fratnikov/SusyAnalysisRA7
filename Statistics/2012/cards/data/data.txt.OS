@@ -1,0 +1,3 @@
+lumi 9200 400
+#<channel label> <observed> <total background> <total bkg uncertainty> <stat uncertainty> <wz> <wz uncertainty> <ttbar+fakes> <ttbar+fakes uncertainty> <zgamma> <zgamma uncertainty> <zz> <z uncertainty><rare> <rare uncertainty>
+data 0 6.0 13.922420034 4.31900380494 4.31900380494 0 0 0 0 0 0 0 0 0 0
