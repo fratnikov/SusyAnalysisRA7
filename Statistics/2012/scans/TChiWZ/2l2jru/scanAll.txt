@@ -1,2 +1,0 @@
-dir ../../../cards/TChiWZ/ru
-dir ../../../cards/TChiWZ/2l2j
