@@ -1,2 +1,0 @@
-file ../../cards/data/data.txt.3l
-file ../../cards/data/data.txt.SS
