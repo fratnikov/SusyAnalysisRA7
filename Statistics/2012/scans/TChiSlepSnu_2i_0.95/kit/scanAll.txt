@@ -1,2 +1,0 @@
-dir ../../cards/TChiSlepSnu_2i/0.95/kit
-dir ../../cards/TChiSlepSnu_2i/0.95/SS
